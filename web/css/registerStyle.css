@@ -1,0 +1,58 @@
+/*start register form*/
+body{
+    font-weight: 400;
+     background-image: linear-gradient(#C6DAE3, #62AACB , #fff);
+}
+.container{
+    padding:60px;
+    
+}
+
+.card-container{
+    padding: 20px 50px 20px 20px;
+    border-radius: 6px;
+    border-color: linear-gradient(120deg,#3498db,#8e44ad);
+    /*box-shadow: 5px 5px 5px 5px grey;*/    
+}
+.card-navigation{
+    margin-bottom: 10px;
+    padding-right: 50px;
+}
+.tab-content{
+    margin: 20px 20px 20px 20px;
+padding-right: 100px;
+}
+.form-header{
+    padding: 20px 20px 20px 20px;
+    text-align: center;
+}
+.info-text{
+    text-align: center;    
+}
+.singup-form{
+    text-align: right;
+}
+small{
+    color:gray
+}
+.card-footer{
+border-top:1px solid rgba(0, 0, 0, 0.14);
+}
+.pull-left{
+    float: left;
+}
+
+/*
+.form-register{
+width: 50%;
+margin: auto;
+margin-top: 2em;
+text-align: right;
+}
+.form-register input{
+  border: none;
+  border-bottom: 2px solid blue;
+-webkit-box-shadow: 0 1px 0 0 #00C851;
+  box-shadow: 0 1px 0 0 #00C851;
+}*/
+/*ending register form*/
