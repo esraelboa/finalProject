@@ -1,0 +1,110 @@
+
+<html lang="ar" dir="rtl">
+    <head>
+        <title> Final Project </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="css/bootstrap.min.css.map">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="fontawesome.min.css">
+        <link rel="stylesheet" href="css/mainUiStyle.css">
+    </head>
+    <body>
+
+
+        <header class="header site-header affix">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-white bg-white navb">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+
+                            <a class="navbar-brand" href="index.html">        
+                                <image src="image/google_maps_2015_0.png" alt="website template image"/>
+                                عنون عقارك
+                            </a>
+                        </div>
+                        <div id="navbar" class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-left">
+                                <li class="active">
+                                    <a href="index.html">الرئيسية </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        التصنيفات
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
+                                        <a class="dropdown-item" href="#">متاجر</a>
+                                        <a class="dropdown-item" href="#">مطاعم</a>
+                                        <!-- <div class="dropdown-divider"></div>   -->
+                                        <a class="dropdown-item" href="#">غذائية</a>
+                                    </div>          
+                                </li>
+                                <li class="search-box has-feedback">
+                                    <input class="search-text" type="text" name="text" placeholder="بحث عن مكان" >
+                                    <a class="search-btn" href="#">
+                                        <span class=" glyphicon glyphicon-search form-control-feedback"></span>
+                                        <!--<i class="fas fa-search"></i>-->
+                                    </a>
+
+                                </li>
+                                <li  class="btn">
+                                    <!--<input type="submit" class="logbyn" value="تسجيل الدخول">-->
+                                    <input type="submit" class="logbyn" value="انشاء حساب">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <div id="map">
+            <script>
+                var map;
+                var marker;
+                function initMap() {
+                    map = new google.maps.Map(document.getElementById('map'), {
+
+                        center: {lat: 32.885353, lng: 13.180161},
+                        zoom: 8
+                    });
+                    google.maps.event.addListener(map, 'click', function (event) {
+                        placeMarker(map, event.latLng);
+                        map.cleare();
+                    });
+
+                    function placeMarker(map, location) {
+                        marker = new google.maps.Marker({
+                            position: location,
+                            map: map
+                        });
+                        var infowindow = new google.maps.InfoWindow({
+                            content: 'Latitude: ' + location.lat() +
+                                    '<br>Longitude: ' + location.lng()
+                        });
+                        infowindow.open(map, marker);
+                    }
+                    google.maps.event.addListener(marker, 'click', function () {
+                        var pos = map.getZoom();
+                        map.setZoom(15);
+                        map.setCenter(marker.getPosition());
+                        window.setTimeout(function () {
+                            map.setZoom(pos);
+                        }, 9000);
+                    });
+                }
+            </script>
+
+
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlg0cUNThJZD0mkRqavPV--LG4xMy2O8w &callback=initMap"
+            async defer></script>
+        </div>
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="./js/jquery-3.4.1.min.js"></script>
+        <script src="./js/popper.min.js"></script>
+        <script src="./js/bootstrap.min.js"></script>
+        <script src="./js/script.js"></script>
+    </body>
+</html>

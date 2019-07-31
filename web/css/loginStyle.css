@@ -1,0 +1,95 @@
+*{
+    /*margin: 0;*/
+    /*padding: 0;*/
+
+}
+body{
+    min-height: 100vh;  
+    background:white;
+}
+.login-form{
+    width: 500px;
+    background: white;
+    height: 580px;
+    padding: 80px 40px;
+    border-radius: 10px;
+    position: absolute;
+    left: 400px;
+    top:50px;
+    /*transform: translate(-50%,-50%,-50%,-50%);*/
+}
+
+.login-form h1 {
+    text-align: center;
+    margin-bottom: 60px;
+    font-size:30px;
+}
+
+.textb{
+    border-bottom: 2px solid #adadad;
+    position: relative;
+    margin: 30px 0 ;
+}
+
+.textb input{
+    font-size:17px;
+    color: #333;
+    border: none;
+    width: 430px;
+    outline: none;
+    background: none;
+    padding: 0 5px;
+    height: 40px; 
+}
+
+.textb span::before{
+    content: attr(data-placeholder);
+    position: absolute;
+    top: 30%;
+    left: 75%;
+    color:#adadad;
+    transform: translate(-50%);
+    z-index: 3;
+    /*transition: .5s;*/
+}
+
+.textb span::after{
+    content:'';
+    position: absolute;
+    width: 100%;
+    height:2px;
+    background:linear-gradient(120deg,#3498db,#8e44ad);
+    left: 0px;
+    transition:.5s;
+}
+ 
+.focus + span::before{
+    top: -5px;
+    
+}
+
+.focus + spah::after{
+    width: 100%;
+} 
+
+.logbtn{
+    display: block;
+    width: 100%;
+    height: 50px;
+    border:none;
+    background: linear-gradient(120deg,#3498db,#8e44ad);
+    color:#fff;
+    outline: none;
+    cursor:pointer;
+    transition: .5s; 
+}
+
+.logbtn:hover{
+    background-position:left;
+}
+
+.bottom-text{
+    margin-top: 60px;
+    text-align: center;
+    font-size: 13px;
+}

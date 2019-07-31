@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+    <head>
+        <title>Login Form</title>
+        <meta charset="UTF-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="css/bootstrap.min.css.map">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="fontawesome.min.css">
+        <link rel="stylesheet" href="css/loginStyle.css">    </head>
+    <body>
+
+        <form name="login" id="formm" action="loginForm.html" class="login-form needs-validation" novalidate>
+            <h1> تسجيل الدخول </h1>
+            <div class="textb">
+                <input type="email" id="email" name="uname" placeholder="البريد الالكتروني" required >
+                <!--            <span data- ></span>-->
+            </div> 
+            <div class="textb" >
+                <input type="password" id="password" name="pass" placeholder="الرقم السري" required>
+                <!--<span data-></span>-->
+            </div> 
+            <div>
+                <input type="submit" name="submit" class="logbtn" id="btn" value="تسجيل الدخول"><a href="index.html"></a>
+            </div>
+
+            <div class="bottom-text">
+                ليس لديك حساب ؟<a href="#">اشتراك الأن</a>
+            </div>
+        </form>  
+
+
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/script.js"></script>
+
+        <script type="text/javascript" >
+
+            $(document).ready(function () {
+                $('form').on('submit', function (e) {
+                    e.preventDefault();
+                    var Email = $("#email").val();
+                    var Password = $("#password").val();
+                    $.ajax({
+                        url: "http://localhost:8080/finalPojest/servletlogin",
+                        type: "POST",
+                        data: {Email: Email, Password: Password},
+                        dataType: "json",
+                        success: function () {
+//                console.log(successData);
+//                var obj=JSON.parse(successData.toString());
+
+                            console.log("success request");
+                            location.replace("http://localhost:8080/finalPojest/mainInterface.html");
+
+                        },
+                        error: function () {
+                            console.log("Error");
+                        }
+
+                    });
+                });
+            });
+        </script>
+
+    </body>
+</html>
+
+
+
+
+
+
+
+
+<!--        <script>
+
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function () {
+                'use strict';
+                window.addEventListener('load', function () {
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    var forms = document.getElementsByClassName('needs-validation');
+                    // Loop over them and prevent submission
+                    var validation = Array.prototype.filter.call(forms, function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+            })();
+        </script>-->
