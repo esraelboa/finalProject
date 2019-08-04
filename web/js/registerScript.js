@@ -1,95 +1,233 @@
-//         window.addEventListener('load', function () {
-//            // Get the forms we want to add validation styles to
-//            var forms = document.getElementsByClassName('needs-validation');
-//            // Loop over them and prevent submission
-//            var validation = Array.prototype.filter.call(forms, function (form) {
-//                form.addEventListener('submit', function (event) {
-//                    if (form.checkValidity() === false) {
-//                        event.preventDefault();
-//                        event.stopPropagation();
-//                    }
-//                    form.classList.add('was-validated');
-//                }, false);
-//            });
-//        }, false);
-//        var password = document.getElementById("password")
-//                , confirm_password = document.getElementById("passwordComfirm");
-//
-//        function validatePassword() {
-//            if (password.value !== confirm_password.value) {
-//                confirm_password.setCustomValidity("Passwords Don't Match");
-//            } else {
-//                confirm_password.setCustomValidity('');
-//            }
-//        }
-//        password.onchange = validatePassword;
-//        confirm_password.onkeyup = validatePassword;
 $(document).ready(function () {
-    var firstName = $("#firstName").val(),
-            lastName = $("#lastName").val(),
-            email = $("#email").val(),
-            phone = $("#phone").val(),
-            password = $("#password").val(),
-            passwordComfirm = $("#passwordComfirm").val();
-//        check validty
-//        1:true send request and handle response
-//          1.1 if response is ok redirct and open session with user id
-//          1.2 if not give user error message 
-//        2: false give user error message
-    $('form').on('submit', function (e) {
-//        console.log(this.checkValidity());
-        e.preventDefault();
-        var firstName = $("#firstName").val();
-        $.ajax({
-            url: "http://localhost:9090/testfinalproject/SignUp",
-            type: "POST",
-            dataType: "json",
-            data: {
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                phone: phone,
-                password: password
-            },
-            success: function (newData) {
-                if (newData["stuats"] === "1") {
-                    console.log("success");
-                    //window.location.replace("http://localhost:9090/testfinalproject/");
-                    //window.location.href ="http://localhost:9090/testfinalproject/";               
-                } else {
-                    console.log("not success");
-                }
 
-//              console.log(newData);             
-//            var obj = JSON.stringify(newData/*"{\"success\":1}"*/);
-//              console.log(obj);
-//               var obj1 = JSON.parse(obj);
-//               console.log(obj1);  
-//               var obj2 = JSON.parse("{\"1\":\"success\"}");
-//               console.log(obj2);  
-            },
-            error: function () {
-                console.log("request filed");
-            }
-        });
+//    error html element
+    $('#fname_error').hide();
+    $('#lname_error').hide();
+    $('#email_error').hide();
+    $('#phone_error').hide();
+    $('#password_error').hide();
+    $('#re_password_error').hide();
+
+//boolen vars to check validty
+    var error_fname = false,
+            error_lname = false,
+            error_email = false,
+            error_phone = false,
+            error_password = false,
+            error_rePassword = false;
+//  validtion event
+    $('#firstName').focusout(function () {
+        var firstName = $("#firstName").val(),
+                fnameLength = firstName.length,
+                error_element = $('#fname_error');
+        error_fname = check_name(firstName, fnameLength, error_element);
+    });
+    $('#lastName').focusout(function () {
+        var lastName = $("#lastName").val(),
+                lastLength = lastName.length,
+                error_element = $('#lname_error');
+        error_lname = check_name(lastName, lastLength, error_element);
 
     });
+    $('#email').focusout(function () {
+        check_email();
+    });
+    $('#phone').focusout(function () {
+        check_phone();
+    });
+    $('#password').focusout(function () {
+        check_password();
+    });
+    $('#re_password').focusout(function () {
+        check_re_password();
+    });
 
-//   $("form").submit(function(){
-//       var firstName = $("#firstName").val();    
-//       $.ajax({
-//          url:"http://localhost:9090/testfinalproject/SignUp",
-//          type:"POST",
-//          dataType:"json",
-//          data:{FirstName:firstName},
-//          success:function(newData){
-//              console.log(newData);
-//              $(".result").text(firstName);
-//          },
-//          error:function(){
-//              console.log("request filed");
-//          }
-//       });
-//   }); 
+//validtion check functions
 
+    function check_name(name, nameLength, error_element)
+    {
+        var pattren = /^[A-Za-z]{3,20}$/;
+
+        if (name === '' || name === null) {
+            error_element.html("الحقل مطلوب");
+            error_element.show();
+            return true;
+        } else {
+            if (!(pattren.test(name))) {
+                error_element.html("الاسم يجب ان يتكون من تلاته حروف او اكتر");
+                error_element.show();
+                return true;
+            } else {
+                error_element.hide();
+                return false;
+            }
+        }
+    }
+
+    function check_email() {
+        var pattren = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                email = $("#email").val();
+
+        if (email === '' || email === null) {
+            $("#email_error").html("الحقل مطلوب");
+            $("#email_error").show();
+            error_email = true;
+        } else {
+            if (!(pattren.test(email))) {
+                $('#email_error').html("بريد الكتروني غير صحيح");
+                $('#email_error').show();
+                error_email = true;
+            } else {
+                $('#email_error').hide();
+                error_email = false;
+            }
+        }
+    }
+
+    function check_phone() {
+        var pattren = /^[0-9]{10}$/,
+                phone = $("#phone").val();
+        if (phone === '' || phone === null) {
+            $('#phone_error').html("الحقل مطلوب");
+            $('#phone_error').show();
+            error_phone = true;
+        } else {
+            if (!(pattren.test(phone))) {
+                $('#phone_error').html("رقم هاتف غير صحيح");
+                $('#phone_error').show();
+                error_phone = true;
+            } else {
+                $('#phone_error').hide();
+                error_phone = false;
+            }
+        }
+
+    }
+
+    function check_password() {
+        var password = $("#password").val();
+        if (password === '' || password === null) {
+            $('#password_error').html("الحقل مطلوب");
+            $('#password_error').show();
+            error_password = true;
+        } else {
+            if (password.length < 5) {
+                $('#password_error').html("يجب ان تكون اكتر من5 احرف");
+                $('#password_error').show();
+                error_password = true;
+            } else {
+                $('#password_error').hide();
+                error_password = false;
+            }
+
+        }
+    }
+
+    function check_re_password() {
+        var password = $("#password").val(),
+                re_password = $("#re_password").val();
+        if (re_password === '' || re_password === null) {
+            $('#re_password_error').html("الحقل مطلوب");
+            $('#re_password_error').show();
+            error_rePassword = true;
+        } else {
+            if (password !== re_password) {
+                $('#re_password_error').html("كلمة مرور غير متطابقة");
+                $('#re_password_error').show();
+                error_rePassword = true;
+            } else {
+                $('#re_password_error').hide();
+                error_rePassword = false;
+            }
+        }
+    }
+
+//    submiting the  registerion form
+    $('#form_singup').submit(function (e) {
+        var firstName = $("#firstName").val(),
+                lastName = $("#lastName").val(),
+                email = $("#email").val(),
+                phone = $("#phone").val(),
+                password = $("#Password").val(),
+                passwordComfirm = $("#passwordComfirm").val();
+        var error_fname = false,
+                error_lname = false,
+                error_email = false,
+                error_phone = false,
+                error_password = false,
+                error_rePassword = false;
+
+        error_fname = check_name(firstName, firstName.length, $('#fname_error'));
+        error_lname = check_name(lastName, lastName.length, $('#lname_error'));
+        check_email();
+        check_phone();
+        check_password();
+        check_re_password();
+        if (error_fname === false && error_lname === false && error_email === false && error_phone === false
+                && error_password === false && error_rePassword === false) {
+            e.preventDefault();
+            $.ajax({
+                url: "http://localhost:9090/testfinalproject/SignUp",
+                type: "POST",
+                dataType: "json",
+                headers: {"Cookie": document.cookie = "name=ESRA"},
+                cookie: "name=ESRA",
+                data: {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    phoneNumbeer: phone,
+                    password: password
+                },
+                success: function (newData) {
+                    if (newData["stuats"] === "1") {
+                        console.log("success");
+
+                    } else {
+                        console.log("not success");
+                    }
+
+                },
+                error: function () {
+                    console.log("request filed");
+                }
+            });
+        } else {
+            console.log("filed");
+            return false;
+        }
+    });
+//submiting login form 
+    $('#loginform').submit(function (e) {
+        var Email = $("#email").val()
+                , Password = $("#password").val();
+
+        var error_email = false,
+                error_password = false;
+
+        check_email();
+        check_password();
+
+        if (error_email === false && error_password === false) {
+            e.preventDefault();
+            $.ajax({
+                url: "http://localhost:9090/testfinalproject/servletlogin",
+                type: "POST",
+                data: {Email: Email, Password: Password},
+                dataType: "json",
+                success: function () {
+                    console.log("success request");
+                    location.replace("http://localhost:9090/testfinalproject/mainInterface.html");
+
+                },
+                error: function () {
+                    console.log("Error");
+                }
+
+            });
+        } else {
+            console.log("filed");
+            return false;
+        }
+    });
 });

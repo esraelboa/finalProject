@@ -2,7 +2,7 @@
 
 <html lang="ar" dir="rtl">
     <head>
-        <title>Login Form</title>
+        <title>تسجيل الدخول</title>
         <meta charset="UTF-8">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,22 +12,23 @@
         <link rel="stylesheet" href="css/loginStyle.css">    </head>
     <body>
 
-        <form name="login" id="formm" action="loginForm.html" class="login-form needs-validation" novalidate>
+        <form name="login" id="loginform" action="loginForm.html" class="login-form needs-validation" novalidate>
             <h1> تسجيل الدخول </h1>
             <div class="textb">
                 <input type="email" id="email" name="uname" placeholder="البريد الالكتروني" required >
-                <!--            <span data- ></span>-->
+                <div id="email_error" class="invalid-feedback"></div>
             </div> 
             <div class="textb" >
                 <input type="password" id="password" name="pass" placeholder="الرقم السري" required>
-                <!--<span data-></span>-->
+                <div id="password_error" class="invalid-feedback"></div>
+
             </div> 
             <div>
                 <input type="submit" name="submit" class="logbtn" id="btn" value="تسجيل الدخول"><a href="index.html"></a>
             </div>
 
             <div class="bottom-text">
-                ليس لديك حساب ؟<a href="#">اشتراك الأن</a>
+                ليس لديك حساب ؟<a href="register.html">اشتراك الأن</a>
             </div>
         </form>  
 
@@ -38,36 +39,7 @@
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/popper.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/script.js"></script>
-
-        <script type="text/javascript" >
-
-            $(document).ready(function () {
-                $('form').on('submit', function (e) {
-                    e.preventDefault();
-                    var Email = $("#email").val();
-                    var Password = $("#password").val();
-                    $.ajax({
-                        url: "http://localhost:8080/finalPojest/servletlogin",
-                        type: "POST",
-                        data: {Email: Email, Password: Password},
-                        dataType: "json",
-                        success: function () {
-//                console.log(successData);
-//                var obj=JSON.parse(successData.toString());
-
-                            console.log("success request");
-                            location.replace("http://localhost:8080/finalPojest/mainInterface.html");
-
-                        },
-                        error: function () {
-                            console.log("Error");
-                        }
-
-                    });
-                });
-            });
-        </script>
+        <script src="js/registerScript.js"></script>
 
     </body>
 </html>
