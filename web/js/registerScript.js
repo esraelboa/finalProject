@@ -170,8 +170,6 @@ $(document).ready(function () {
                 url: "http://localhost:9090/testfinalproject/SignUp",
                 type: "POST",
                 dataType: "json",
-                headers: {"Cookie": document.cookie = "name=ESRA"},
-                cookie: "name=ESRA",
                 data: {
                     firstName: firstName,
                     lastName: lastName,
