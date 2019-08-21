@@ -20,13 +20,13 @@ $(document).ready(function () {
         var firstName = $("#firstName").val(),
                 fnameLength = firstName.length,
                 error_element = $('#fname_error');
-        error_fname = check_name(firstName, fnameLength, error_element);
+        error_fname = check_name(firstName, error_element);
     });
     $('#lastName').focusout(function () {
         var lastName = $("#lastName").val(),
                 lastLength = lastName.length,
                 error_element = $('#lname_error');
-        error_lname = check_name(lastName, lastLength, error_element);
+        error_lname = check_name(lastName, error_element);
 
     });
     $('#email').focusout(function () {
@@ -44,9 +44,9 @@ $(document).ready(function () {
 
 //validtion check functions
 
-    function check_name(name, nameLength, error_element)
+    function check_name(name, error_element)
     {
-        var pattren = /^[A-Za-z]{3,20}$/;
+        var pattren = /^[A-Za-z]{3,25}$/;
 
         if (name === '' || name === null) {
             error_element.html("الحقل مطلوب");
@@ -111,8 +111,8 @@ $(document).ready(function () {
             $('#password_error').show();
             error_password = true;
         } else {
-            if (password.length < 5) {
-                $('#password_error').html("يجب ان تكون اكتر من5 احرف");
+            if (password.length < 8 || password.lenght>25) {
+                $('#password_error').html(" يجب ان تكون اكتر من8 احرف");
                 $('#password_error').show();
                 error_password = true;
             } else {
