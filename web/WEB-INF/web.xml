@@ -4,9 +4,33 @@
         <servlet-name>servletlogin</servlet-name>
         <servlet-class>servlet.servletlogin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>insertUserServlet</servlet-name>
+        <servlet-class>servlet.insertUserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getUsersServlet</servlet-name>
+        <servlet-class>servlet.getUsersServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>login_servlet</servlet-name>
+        <servlet-class>servlet.login_servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletlogin</servlet-name>
         <url-pattern>/servletlogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>insertUserServlet</servlet-name>
+        <url-pattern>/insertUserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getUsersServlet</servlet-name>
+        <url-pattern>/getUsersServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>login_servlet</servlet-name>
+        <url-pattern>/login_servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -2,40 +2,35 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javaClasses.User;
+import javaClasses.Validation;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
-public class servletlogin extends HttpServlet {
+public class getUsersServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("Application/json;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-          
-            User is = new User();
-         try {
-            JSONObject json = new JSONObject();
-            if(request.getParameter("Email") != null){
-               json.put("success", "1");       
-               String email = request.getParameter("Email");
-               String password = request.getParameter("Password");
+        PrintWriter out = response.getWriter();
+        User us = new User();
+        Validation val = new Validation();
+        JSONObject jsobj = new JSONObject();
+        User user = new User();
+        out.println(user.arrayjson(user.getUsers()));
 
-               json.put("email",email );
-               json.put("Password",is.getUserPassword());
-            }else{
-                json.put("errorcode", 1);
-                json.put("error", "Email not proided");
-            }
-            response.getWriter().write(json.toString());
-        }
-        catch(Exception e){
-        System.out.println(e.getMessage());
-        }     
-    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,18 +48,15 @@ public class servletlogin extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        response.setContentType("Application/json;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        User b = new User();
+        out.println(b.arrayjson(b.getUsers()));
     }
 
     /**

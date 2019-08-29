@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="css/bootstrap.min.css.map">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="fontawesome.min.css">
+    </head>
+    <body>
+     <div id="map">
+            <script>
+                var map;
+                var marker;
+                function initMap() {
+                    map = new google.maps.Map(document.getElementById('map'), {
+
+                        center: {lat: 32.885353, lng: 13.180161},
+                        zoom: 8
+                    });
+                    google.maps.event.addListener(map, 'click', function (event) {
+                        placeMarker(map, event.latLng);
+                        map.cleare();
+                    });
+
+                    function placeMarker(map, location) {
+                        marker = new google.maps.Marker({
+                            position: location,
+                            map: map
+                        });
+                        var infowindow = new google.maps.InfoWindow({
+                            content: 'Latitude: ' + location.lat() +
+                                    '<br>Longitude: ' + location.lng()
+                        });
+                        infowindow.open(map, marker);
+                    }
+                    google.maps.event.addListener(marker, 'click', function () {
+                        var pos = map.getZoom();
+                        map.setZoom(15);
+                        map.setCenter(marker.getPosition());
+                        window.setTimeout(function () {
+                            map.setZoom(pos);
+                        }, 9000);
+                    });
+                }
+            </script>
+
+
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlg0cUNThJZD0mkRqavPV--LG4xMy2O8w &callback=initMap"
+            async defer></script>        
+     </div>
+        
+         <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="./js/jquery-3.4.1.min.js"></script>
+        <script src="./js/popper.min.js"></script>
+        <script src="./js/bootstrap.min.js"></script>
+        <script src="./js/script.js"></script>
+    </body>
+</html>

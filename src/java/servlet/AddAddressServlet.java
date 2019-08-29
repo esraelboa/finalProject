@@ -6,6 +6,7 @@
 package servlet;
 
 import java.io.IOException;
+import javaClasses.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,8 +47,7 @@ public class AddAddressServlet extends HttpServlet {
                 marker.setLng(Double.parseDouble(request.getParameter("lng")));
                 marker.setLat(Double.parseDouble(request.getParameter("lat")));
                 realty.setPosition(marker);
-                realty.setOwnerid(user.getId())
-                );
+                realty.setOwnerid(user.getId());
                 realty.setResidentemail(request.getParameter("residentemail"));
                 int id = RealtyDAO.insertRealty(realty);
                 if (id != 0) {

@@ -1,6 +1,8 @@
 package servlet;
 
 import java.sql.*;
+import DataBase.PostgreSql;
+
 
 /**
  *
@@ -9,6 +11,7 @@ import java.sql.*;
 public class RealtyDAO {
 
     public static Boolean checkRealtyNumber(Realty realty) throws Exception {
+
         Connection c = PostgreSql.getConnection();
         String sql = "select realtynumber from realty where realtynumber=?";
         PreparedStatement pstmt = c.prepareStatement(sql);
@@ -18,6 +21,7 @@ public class RealtyDAO {
     }
 
     public static Boolean checkUserRealtyCount(Realty realty) throws Exception {
+
         Connection c = PostgreSql.getConnection();
         String sql = "select COUNT(*) as count from realty where ownerid=?";
         PreparedStatement pstmt = c.prepareStatement(sql);
@@ -36,10 +40,10 @@ public class RealtyDAO {
                 PreparedStatement pstmt = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 pstmt.setInt(1, realty.getRealtyNumber());
                 Marker marker = realty.getPosition();
-                 pstmt.setDouble(2, marker.getLng());//x
+                pstmt.setDouble(2, marker.getLng());//x
                 pstmt.setDouble(3, marker.getLat());//y
                 pstmt.setInt(4, realty.getOwnerid());
-                pstmt.setString(5,realty.getResidentemail());
+                pstmt.setString(5, realty.getResidentemail());
                 if (pstmt.executeUpdate() > 0) {
                     ResultSet rs = pstmt.getGeneratedKeys();
                     rs.next();
@@ -48,7 +52,7 @@ public class RealtyDAO {
                 }
                 pstmt.close();
                 c.close();
-            }else{
+            } else {
                 System.out.println("count is bigger than 5");
             }
         }
