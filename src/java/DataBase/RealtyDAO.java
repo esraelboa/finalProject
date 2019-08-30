@@ -1,8 +1,8 @@
-package servlet;
+package DataBase;
 
+import javaClasses.Realty;
+import javaClasses.Marker;
 import java.sql.*;
-import DataBase.PostgreSql;
-
 
 /**
  *
@@ -31,9 +31,20 @@ public class RealtyDAO {
         return rs.getInt("count") <= 5;
     }
 
+    public static Boolean checkRealtycoor(Marker marker) throws Exception {
+
+        Connection c = PostgreSql.getConnection();
+        String sql = "select no from citycoor where fence_type_no=3 and ST_Contains(citycoor.coor,ST_SetSRID(ST_POINT(?,?),4326))=true";
+        PreparedStatement pstmt = c.prepareStatement(sql);
+        pstmt.setDouble(1, marker.getLng());
+        pstmt.setDouble(2, marker.getLat());
+        ResultSet rs = pstmt.executeQuery();
+        return rs.next();
+    }
+
     public static int insertRealty(Realty realty) throws Exception {
-        int id = 0;
-        if (checkRealtyNumber(realty)) {
+       int id = 0;
+        if (checkRealtyNumber(realty) && checkRealtycoor(realty.getPosition())) {
             if (checkUserRealtyCount(realty)) {
                 Connection c = PostgreSql.getConnection();
                 String sql = "INSERT INTO realty(realtynumber,position,ownerid,residentemail) values(?,ST_SetSRID(ST_POINT(?,?),4326),?,?);";
@@ -43,7 +54,7 @@ public class RealtyDAO {
                 pstmt.setDouble(2, marker.getLng());//x
                 pstmt.setDouble(3, marker.getLat());//y
                 pstmt.setInt(4, realty.getOwnerid());
-                pstmt.setString(5, realty.getResidentemail());
+                pstmt.setString(5,realty.getResidentemail());
                 if (pstmt.executeUpdate() > 0) {
                     ResultSet rs = pstmt.getGeneratedKeys();
                     rs.next();
@@ -52,7 +63,7 @@ public class RealtyDAO {
                 }
                 pstmt.close();
                 c.close();
-            } else {
+            }else{
                 System.out.println("count is bigger than 5");
             }
         }

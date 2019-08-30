@@ -6,23 +6,21 @@
 package servlet;
 
 import DataBase.AddressDAO;
-import DataBase.RealtyDAO;
-import javaClasses.Realty;
-import javaClasses.Marker;
 import java.io.IOException;
-import javaClasses.User;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javaClasses.Marker;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 
 /**
  *
  * @author esra
  */
-public class AddAddressServlet extends HttpServlet {
+public class SearchServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,41 +33,24 @@ public class AddAddressServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
-        Realty realty = new Realty();
-        Marker marker = new Marker();
-        JSONObject json = new JSONObject();
         try {
-            HttpSession session = request.getSession(false);
-            if (session == null || !request.isRequestedSessionIdValid()) {
-                json.put("key", -1);
-                json.put("message", "invalided session");
+            response.setContentType("application/json;charset=UTF-8");
+            Marker marker = AddressDAO.getAddressCoordinate(request.getParameter("address"));
+            JSONObject json = new JSONObject();
+            if (marker != null) {
+                json.put("key", 1);
+                json.put("message", "address is available");
+                json.put("lng", marker.getLng());
+                json.put("lat", marker.getLat());
+                json.put("descrption",AddressDAO.getAddressDescrption(request.getParameter("address")));
             } else {
-                User user = (User) session.getAttribute("user");
-
-                realty.setRealtyNumber(Integer.parseInt(request.getParameter("realtyNumber")));
-                marker.setLng(Double.parseDouble(request.getParameter("lng")));
-                marker.setLat(Double.parseDouble(request.getParameter("lat")));
-                realty.setPosition(marker);
-                realty.setOwnerid(user.getId());
-                realty.setResidentemail(request.getParameter("residentemail"));
-                int realtyid = RealtyDAO.insertRealty(realty);
-                String description = request.getParameter("description");
-                if (realtyid != 0) {
-                    realty.setId(realtyid);
-                    int addressid = AddressDAO.generatAddress(realty.getId(), description);
-                    AddressDAO.realtyAddress(realtyid, addressid);
-                    json.put("key", 1);
-                    json.put("message", "realty inserted successfully realty id is : " + realtyid + " address id" + addressid);
-                } else {
-                    json.put("key", 0);
-                    json.put("message", "error try again");
-                }
-                response.getWriter().write(json.toString());
+                json.put("key", 0);
+                json.put("message", "error ,not exites address");
             }
-
+             response.getWriter().write(json.toString());
         } catch (Exception ex) {
             System.out.println(ex.toString());
+            Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
