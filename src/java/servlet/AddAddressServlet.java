@@ -65,9 +65,9 @@ public class AddAddressServlet extends HttpServlet {
                     json.put("key", 0);
                     json.put("message", "error try again");
                 }
-                response.getWriter().write(json.toString());
+                
             }
-
+           response.getWriter().write(json.toString());
         } catch (Exception ex) {
             System.out.println(ex.toString());
         }
