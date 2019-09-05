@@ -6,9 +6,9 @@ public class Marker {
     private double lat;//y
    
     public Marker(){}
-    public Marker(double lat, double lng) {
-        this.lat = lat;
+    public Marker( double lng,double lat) { 
         this.lng = lng;
+        this.lat = lat;
     }
     public void setLng(double lon) {
         this.lng = lon;
