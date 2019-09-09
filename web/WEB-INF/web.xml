@@ -17,10 +17,6 @@
         <servlet-class>servlet.login_servlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AddAddressServlet</servlet-name>
-        <servlet-class>servlet.AddAddressServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>SearchServlet</servlet-name>
         <servlet-class>servlet.SearchServlet</servlet-class>
     </servlet>
@@ -39,10 +35,6 @@
     <servlet-mapping>
         <servlet-name>login_servlet</servlet-name>
         <url-pattern>/login_servlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddAddressServlet</servlet-name>
-        <url-pattern>/AddAddressServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
