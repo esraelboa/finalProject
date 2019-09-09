@@ -5,11 +5,11 @@
  */
 package servlet;
 
-import DataBase.AddressDAO;
+import DataBase.RealtyDAO;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javaClasses.Marker;
+import javaClasses.Realty;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,21 +33,22 @@ public class SearchServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            response.setContentType("application/json;charset=UTF-8");
-            Marker marker = AddressDAO.getAddressCoordinate(request.getParameter("address"));
-            JSONObject json = new JSONObject();
-            if (marker != null) {
+        response.setContentType("application/json;charset=UTF-8");
+        JSONObject json = new JSONObject();
+               try {
+
+       Realty realty = RealtyDAO.searchForAddress(request.getParameter("address"));
+            if (realty != null) {
                 json.put("key", 1);
                 json.put("message", "address is available");
-                json.put("lng", marker.getLng());
-                json.put("lat", marker.getLat());
-                json.put("descrption",AddressDAO.getAddressDescrption(request.getParameter("address")));
+                json.put("Lng", realty.getPosition().getLng());
+                json.put("Lat", realty.getPosition().getLat());
+                json.put("Description", realty.getDescription());
             } else {
                 json.put("key", 0);
                 json.put("message", "error ,not exites address");
             }
-             response.getWriter().write(json.toString());
+            response.getWriter().write(json.toString());
         } catch (Exception ex) {
             System.out.println(ex.toString());
             Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);

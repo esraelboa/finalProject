@@ -174,7 +174,7 @@ $(document).ready(function () {
                     firstName: firstName,
                     lastName: lastName,
                     email: email,
-                    phoneNumbeer: phone,
+                    phoneNumber: phone,
                     password: password
                 },
                 success: function (newData) {

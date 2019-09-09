@@ -10,7 +10,8 @@ public class Realty {
     private int realtyNumber;
     private Marker position;
     private int ownerid;
-    private String residentemail;
+    private String address;
+    private String description;
 
     public void setId(int id) {
         this.id = id;
@@ -44,14 +45,19 @@ public class Realty {
         this.ownerid = ownerid;
     }
 
-   
-
-    public void setResidentemail(String residentemail) {
-        this.residentemail = residentemail;
+    public String getAddress() {
+        return address;
     }
 
-    public String getResidentemail() {
-        return residentemail;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
