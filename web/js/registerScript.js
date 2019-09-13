@@ -197,8 +197,8 @@ $(document).ready(function () {
     });
 //submiting login form 
     $('#loginform').submit(function (e) {
-        var Email = $("#email").val()
-                , Password = $("#password").val();
+        var email = $("#email").val()
+          , password = $("#password").val();
 
         var error_email = false,
                 error_password = false;
@@ -209,21 +209,25 @@ $(document).ready(function () {
         if (error_email === false && error_password === false) {
             e.preventDefault();
             $.ajax({
-                url: "http://localhost:9090/testfinalproject/servletlogin",
+                url: 'http://localhost:8080/finalPojest/login_servlet',
                 type: "POST",
-                data: {Email: Email, Password: Password},
-                dataType: "json",
-                success: function () {
-                    console.log("success request");
-                    location.replace("http://localhost:9090/testfinalproject/mainInterface.html");
-
+                data: {email: email, password: password},
+                dataType: "json",         
+                success: function (result) {
+//                    alert("true");
+                   if (result['key'] === 1) {
+                    location.replace('http://localhost:8080/finalPojest/mainInterface.html');   
+                    }
+                     else if (result['key'] === 0) {
+                    alert(result['message']);}
                 },
                 error: function () {
                     console.log("Error");
+                    alert("error");
                 }
-
-            });
-        } else {
+           });
+        } 
+        else {
             console.log("filed");
             return false;
         }

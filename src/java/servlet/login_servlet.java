@@ -25,28 +25,26 @@ public class login_servlet extends HttpServlet {
                 Validation val = new Validation();
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
-                boolean valid = val.val_email(email);
-                boolean vali = val.isRequired(email);
-                boolean valid_password = val.val_passwprd(password);
-                if (val.val_passwprd(password) && (val.val_email(email)) && (val.isRequired(email))) {
-                    User user = new User();
+                User user = new User();
+
+                if (val.val_passwprd(request.getParameter("password")) && (val.val_email(request.getParameter("email"))) && (val.isRequired(request.getParameter("email")))) {
                     user = user.get_email_password(email, password);
+
                     if (user != null) {
                         // init session
                         // put user opject in the session
                         request.getSession().invalidate();
                         HttpSession sassion = request.getSession();
                         sassion.setAttribute("user", user);
-
                         json = user.jsonobject(user);
+                        json.put("key", 1);
+                        json.put("message", "login successfully");
                         out.write(json.toString());
-                    }
 
+                    }
                 } else {
-                    json.put("my email", valid);
-                    json.put("your email is null", vali);
-                    json.put("your paa", valid_password);
-                    out.write(json.toString());
+                    json.put("key", 0);
+                    json.put("message", "login not successfully try again");
                 }
 
             } catch (Exception e) {
