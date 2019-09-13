@@ -20,6 +20,14 @@
         <servlet-name>SearchServlet</servlet-name>
         <servlet-class>servlet.SearchServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>InsertRealtyServlet</servlet-name>
+        <servlet-class>servlet.InsertRealtyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DisplayRealtyinfo</servlet-name>
+        <servlet-class>servlet.DisplayRealtyinfo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletlogin</servlet-name>
         <url-pattern>/servletlogin</url-pattern>
@@ -35,6 +43,14 @@
     <servlet-mapping>
         <servlet-name>login_servlet</servlet-name>
         <url-pattern>/login_servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InsertRealtyServlet</servlet-name>
+        <url-pattern>/InsertRealtyServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DisplayRealtyinfo</servlet-name>
+        <url-pattern>/DisplayRealtyinfo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

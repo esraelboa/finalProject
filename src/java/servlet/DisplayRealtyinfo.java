@@ -7,21 +7,20 @@ package servlet;
 
 import DataBase.RealtyDAO;
 import java.io.IOException;
-import javaClasses.Marker;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javaClasses.Realty;
-import javaClasses.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 
 /**
  *
  * @author esra
  */
-public class InsertRealtyServlet extends HttpServlet {
+public class DisplayRealtyinfo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,40 +34,14 @@ public class InsertRealtyServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
-        Realty realty = new Realty();
-        Marker marker = new Marker();
-        JSONObject json = new JSONObject();
-        int realtyid = 0;
-
         try {
-            HttpSession session = request.getSession(false);
-            if (session == null || !request.isRequestedSessionIdValid()) {
-                json.put("key", -1);
-                json.put("message", "invalided session");
-            } else {
-                User user = (User) session.getAttribute("user");
-                realty.setRealtyNumber(Integer.parseInt(request.getParameter("realtyNumber")));
-                marker.setLng(Double.parseDouble(request.getParameter("lng")));
-                marker.setLat(Double.parseDouble(request.getParameter("lat")));
-                realty.setPosition(marker);
-                realty.setOwnerid(Integer.parseInt(request.getParameter("ownerId"))/*user.getId()*/);
-                realty.setDescription(request.getParameter("description"));
-                realtyid = RealtyDAO.insertRealty(realty);
 
-                if (realtyid != 0) {
-                    realty.setId(realtyid);
-                    json.put("key", 1);
-                    json.put("message", "realty inserted successfully");
-                    json.put("id", realtyid);
-                } else {
-                    json.put("key", 0);
-                    json.put("message", "error try again");
-                }
-            }
+            Realty realty = RealtyDAO.getRealtyinfo(Integer.parseInt(request.getParameter("realtyid")));
+            JSONObject json = realty.convetToJson(realty);
             response.getWriter().write(json.toString());
 
         } catch (Exception ex) {
-            System.out.println(ex.toString());
+            Logger.getLogger(DisplayRealtyinfo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
