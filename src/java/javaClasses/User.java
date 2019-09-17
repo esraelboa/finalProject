@@ -173,24 +173,50 @@ public class User {
     }
        
        
-    public int insertuser(User b) throws ClassNotFoundException, SQLException {
-        int st = 0;
+//    public int insertuser(User b) throws ClassNotFoundException, SQLException {
+//        int st = 0;
+//        int id = 0;
+//        con = c.getConnection();
+//        PreparedStatement ps = con.prepareStatement("INSERT INTO public.userr(firstname, lastname, phonenumber, email, passwordd)VALUES (?, ?, ?,?, ?) RETURNING id;");
+//
+//        ps.setString(1, b.firstName);
+//        ps.setString(2, b.lastName);
+//        ps.setString(3, b.phoneNumber);
+//        ps.setString(4, b.email);
+//        ps.setString(5, b.password);
+//
+//
+//        ResultSet rs = ps.executeQuery();
+//        if (rs.next()) {
+//            id = rs.getInt("id");
+//        }
+//        con.close();
+//        return id;
+//    }
+       
+        public int insertuser(User b) throws ClassNotFoundException, SQLException {
+            int st = 0;
         int id = 0;
-        con = c.getConnection();
-        PreparedStatement ps = con.prepareStatement("INSERT INTO public.userr(firstname, lastname, phonenumber, email, passwordd)VALUES (?, ?, ?,?, ?) RETURNING id;");
-
-        ps.setString(1, b.firstName);
-        ps.setString(2, b.lastName);
-        ps.setString(3, b.phoneNumber);
-        ps.setString(4, b.email);
-        ps.setString(5, b.password);
-
-
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            id = rs.getInt("id");
+         con = c.getConnection();
+        String sql = "INSERT INTO public.userr(firstname, lastname, phonenumber, email, passwordd)VALUES (?, ?, ?,?, ?)";
+        PreparedStatement pstmt = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        pstmt.setString(1, b.firstName);
+        pstmt.setString(2, b.lastName);
+        pstmt.setString(3, b.phoneNumber);
+        pstmt.setString(4, b.email);
+        pstmt.setString(5, b.password);
+        
+        st = pstmt.executeUpdate();      
+        if (st > 0) {      
+            ResultSet rs = pstmt.getGeneratedKeys();
+            rs.next();
+            id = rs.getInt(1);
+            rs.close();
+            System.out.println("book inserted succsfully : " + id);
         }
-        con.close();
+        pstmt.close();
+        c.close();
+
         return id;
     }
 

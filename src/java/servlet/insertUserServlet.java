@@ -44,24 +44,22 @@ public class insertUserServlet extends HttpServlet {
                     && val.val_passwprd(request.getParameter("password")) && val.isRequired(us.getUserPassword())) {
 
                 int id = user.insertuser(us);
-                jsobj.put("The ID for the new User", id);
-//                out.write(jsobj.toString());
+//                jsobj.put("The ID for the new User", id);
                 request.getSession().invalidate();
                 HttpSession sassion = request.getSession();
                 sassion.setAttribute("user", user);
-            }
-else {
-                jsobj.put("error", "Errooooooooooor");
+                jsobj = user.jsonobject(user);
+//                jsobj.put("key", 1);
+//                jsobj.put("message", "login successfully");
+                out.write(jsobj.toString());
+//                out.write(jsobj.toString());
+
+            } else {
+//               jsobj.put("key", 0);
+                    jsobj.put("message", "sin up not successfully try again");
             }
         } catch (Exception e) {
-            try {
-                jsobj.put("error", e.toString());
-                jsobj.put("error", "Error");
-
-                out.write(jsobj.toString());
-            } catch (JSONException ex) {
-//                Logger.getLogger(user.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            System.out.println(e.getMessage());
         }
 
 //        //check lastName :

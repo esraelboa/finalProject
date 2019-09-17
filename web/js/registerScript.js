@@ -1,5 +1,6 @@
+alert("اول الدكمنت ");
 $(document).ready(function () {
-
+ 
 //    error html element
     $('#fname_error').hide();
     $('#lname_error').hide();
@@ -18,13 +19,12 @@ $(document).ready(function () {
 //  validtion event
     $('#firstName').focusout(function () {
         var firstName = $("#firstName").val(),
-                fnameLength = firstName.length,
+                
                 error_element = $('#fname_error');
         error_fname = check_name(firstName, error_element);
     });
     $('#lastName').focusout(function () {
         var lastName = $("#lastName").val(),
-                lastLength = lastName.length,
                 error_element = $('#lname_error');
         error_lname = check_name(lastName, error_element);
 
@@ -32,7 +32,7 @@ $(document).ready(function () {
     $('#email').focusout(function () {
         check_email();
     });
-    $('#phone').focusout(function () {
+    $('#phoneNumber').focusout(function () {
         check_phone();
     });
     $('#password').focusout(function () {
@@ -85,8 +85,11 @@ $(document).ready(function () {
     }
 
     function check_phone() {
-        var pattren = /^[0-9]{10}$/,
-                phone = $("#phone").val();
+        var pattren = /^(?:((?=\\(.*\\).*\\-)|/
+                + /^(?!.*\\()(?!.*\\)))/
+                + /^\\(?|091|092|094\\)?/
+                + /^(((?<=[)])|[\\-\\s])/,
+                phone = $("#phoneNumber").val();
         if (phone === '' || phone === null) {
             $('#phone_error').html("الحقل مطلوب");
             $('#phone_error').show();
@@ -141,58 +144,64 @@ $(document).ready(function () {
             }
         }
     }
-
+            
 //    submiting the  registerion form
     $('#form_singup').submit(function (e) {
         var firstName = $("#firstName").val(),
                 lastName = $("#lastName").val(),
                 email = $("#email").val(),
-                phone = $("#phone").val(),
-                password = $("#Password").val(),
-                passwordComfirm = $("#passwordComfirm").val();
+                phoneNumber = $("#phoneNumber").val(),
+                password = $("#password").val(),
+                passwordComfirm = $("#password").val();
+                  alert($("#firstName").val(),$("#lastName").val(),$("#email").val());
+                 alert("1");
         var error_fname = false,
                 error_lname = false,
                 error_email = false,
                 error_phone = false,
                 error_password = false,
                 error_rePassword = false;
-
-        error_fname = check_name(firstName, firstName.length, $('#fname_error'));
-        error_lname = check_name(lastName, lastName.length, $('#lname_error'));
+ alert("2");
+        error_fname = check_name(firstName,  $('#fname_error'));
+        error_lname = check_name(lastName, $('#lname_error'));
         check_email();
         check_phone();
         check_password();
         check_re_password();
+        alert("3");
         if (error_fname === false && error_lname === false && error_email === false && error_phone === false
                 && error_password === false && error_rePassword === false) {
             e.preventDefault();
             $.ajax({
-                url: "http://localhost:9090/testfinalproject/SignUp",
+                url: 'http://localhost:8080/finalPojest/registerServlet',
                 type: "POST",
-                dataType: "json",
+               
                 data: {
                     firstName: firstName,
                     lastName: lastName,
                     email: email,
-                    phoneNumber: phone,
-                    password: password
-                },
-                success: function (newData) {
-                    if (newData["stuats"] === "1") {
-                        console.log("success");
+                    phoneNumber: phoneNumber,
+                    password: password }, 
+                dataType: "json",
+                success: function (result) {
+                    if (result['key'] === 1) {
+                        location.replace('http://localhost:8080/finalPojest/mainInterface.html'); 
 
-                    } else {
-                        console.log("not success");
                     }
+                       else  if (result['key'] === 0)  {
+                    alert(result['message']);
+                alert(" if error");}
 
                 },
                 error: function () {
-                    console.log("request filed");
+             alert("error");
+
                 }
             });
         } else {
             console.log("filed");
             return false;
+         
         }
     });
 //submiting login form 
