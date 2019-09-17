@@ -60,7 +60,7 @@ $(document).ready(function () {
        
         e.preventDefault();
         $.ajax({
-            url: "http://localhost:9090/testfinalproject/InsertRealtyServlet",
+            url: "http://localhost:8080/finalPojest/InsertRealtyServlet",
             type: "POST",
             data: {realtyNumber: realtyNumber,
                 description: description,
@@ -71,12 +71,12 @@ $(document).ready(function () {
             dataType: "json",
             success: function (result) {
                 if (result['key'] === -1) {
-                    location.replace('http://localhost:9090/testfinalproject/loginForm.html');
+                    location.replace('http://localhost:8080/finalPojest/loginForm.html');
                 } else if (result['key'] === 0) {
                     alert(result['message']);
                 } else if (result['key'] === 1) {                
                     reatyid = result['id'];
-                    location.href = 'http://localhost:9090/testfinalproject/test.html?realyid=' + reatyid;
+                    location.href = 'حطي رابط الصفحة متاع العرض هني' + reatyid;
                 }
             },
             error: function () {
