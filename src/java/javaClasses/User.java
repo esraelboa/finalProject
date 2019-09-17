@@ -212,7 +212,7 @@ public class User {
             rs.next();
             id = rs.getInt(1);
             rs.close();
-            System.out.println("book inserted succsfully : " + id);
+            System.out.println("User inserted succsfully : " + id);
         }
         pstmt.close();
         c.close();

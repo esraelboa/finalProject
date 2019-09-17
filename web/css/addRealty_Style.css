@@ -1,0 +1,31 @@
+
+body{
+    font-family: 'Changa', sans-serif;
+    background-color:  #35A0B1;
+    color: #b6590d; 
+}
+
+h3{
+    color: #b6590d; 
+    font-size: 30px;
+    margin-right: 60px;
+    padding-right: 20px;
+    padding-top: 10px;
+}
+p{
+    margin-bottom: 0px;
+    padding-right: 55px;
+    padding-top: 10px;
+}
+.add-realty *{
+    border-color: #b6590d;
+    font-size:17px;
+}
+input{
+    border-bottom: 2px solid #b6590d;
+   }
+#map{
+    width: 600px;
+    height: 365px;
+    margin-right: 25px;
+}
