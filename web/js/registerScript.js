@@ -206,7 +206,7 @@ $(document).ready(function () {
         if (error_email === false && error_password === false) {
             e.preventDefault();
             $.ajax({
-                url: 'http://localhost:9090/finalPojest/login_servlet',
+                url: 'http://localhost:8080/finalPojest/login_servlet',
                 type: "POST",
                 data: {email: email,
                     password: password},
@@ -214,7 +214,7 @@ $(document).ready(function () {
                 success: function (result) {
                    if (result['key'] === 1) {
                         alert(result['message']);
-                        location.replace('http://localhost:9090/finalPojest/mainInterface.html');
+                        location.replace('http://localhost:8080/finalPojest/mainInterface.html');
                     } else if (result['key'] === 0) {
                         alert(result['message']);
                     }

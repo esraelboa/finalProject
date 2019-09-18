@@ -40,7 +40,8 @@ public class login_servlet extends HttpServlet {
                         json = user.jsonobject(user);
                         json.put("key", 1);
                         json.put("message", "login successfully");
-                      
+                       Cookie c = new Cookie("sessionID",session.getId());
+                      response.addCookie(c);
                     } else {
                         json.put("key", 0);
                         json.put("message", "email or password is wrong or not exists");
