@@ -51,7 +51,7 @@ public class InsertRealtyServlet extends HttpServlet {
                 marker.setLng(Double.parseDouble(request.getParameter("lng")));
                 marker.setLat(Double.parseDouble(request.getParameter("lat")));
                 realty.setPosition(marker);
-                realty.setOwnerid(Integer.parseInt(request.getParameter("ownerId"))/*user.getId()*/);
+                realty.setOwnerid(user.getId());
                 realty.setDescription(request.getParameter("description"));
                 realtyid = RealtyDAO.insertRealty(realty);
 

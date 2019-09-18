@@ -64,7 +64,6 @@ $(document).ready(function () {
             type: "POST",
             data: {realtyNumber: realtyNumber,
                 description: description,
-                ownerId: 2,
                 lng: lng,
                 lat: lat
             },

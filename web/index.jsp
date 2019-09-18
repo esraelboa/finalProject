@@ -1,3 +1,10 @@
+<%-- 
+    Document   : index
+    Created on : Sep 18, 2019, 1:16:32 PM
+    Author     : esra
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>        

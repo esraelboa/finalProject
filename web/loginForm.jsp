@@ -1,5 +1,11 @@
-<!DOCTYPE html>
+<%-- 
+    Document   : loginForm
+    Created on : Sep 18, 2019, 12:51:56 PM
+    Author     : esra
+--%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
     <head>
         <title>تسجيل الدخول</title>
@@ -12,8 +18,12 @@
         <link rel="stylesheet" href="css/loginStyle.css"> 
         <link href="https://fonts.googleapis.com/css?family=Changa&display=swap" rel="stylesheet">        
     </head> 
-    <body onload="checkUserSession()">
-
+    <body>
+  <!--check session validaty--> 
+        <% if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")) {
+            
+        } else {response.sendRedirect("http://localhost:8080/finalPojest/mainInterface.html");
+        }%>
         <form name="login" id="loginform" action="loginForm.html" class="login-form needs-validation" novalidate>
             <h1> تسجيل الدخول </h1>
             <div class="textb">
@@ -34,12 +44,7 @@
                 ليس لديك حساب ؟<a href="register.html">اشتراك الأن</a>
             </div>
         </form>  
-        <script >
-            function checkUserSession(){
-                console.log("on load function");
-            } 
-        </script>
-
+      
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/popper.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -50,32 +55,3 @@
 
     </body>
 </html>
-
-
-
-
-
-
-
-
-<!--        <script>
-
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-            (function () {
-                'use strict';
-                window.addEventListener('load', function () {
-                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                    var forms = document.getElementsByClassName('needs-validation');
-                    // Loop over them and prevent submission
-                    var validation = Array.prototype.filter.call(forms, function (form) {
-                        form.addEventListener('submit', function (event) {
-                            if (form.checkValidity() === false) {
-                                event.preventDefault();
-                                event.stopPropagation();
-                            }
-                            form.classList.add('was-validated');
-                        }, false);
-                    });
-                }, false);
-            })();
-        </script>-->

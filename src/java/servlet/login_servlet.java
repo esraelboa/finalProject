@@ -22,7 +22,6 @@ public class login_servlet extends HttpServlet {
         try {
             JSONObject json = new JSONObject();
             HttpSession session = request.getSession(false);
-            if (session == null || !request.isRequestedSessionIdValid()) {
                 Validation val = new Validation();
                 //get user email and password from request
                 String email = request.getParameter("email");
@@ -51,11 +50,6 @@ public class login_servlet extends HttpServlet {
                     json.put("key", 0);
                     json.put("message", "login not successfully try again");
                 }
-            } else {
-                json.put("key", -1);
-                json.put("message", "there's user logged in");
-            }
-            
             out.write(json.toString());
         } catch (Exception e) {
             System.out.println(e.getMessage());
