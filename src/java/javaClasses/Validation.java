@@ -34,7 +34,7 @@ public class Validation {
 
     }
 
-    public boolean val_passwprd(String password) {
+    public boolean val_password(String password) {
 
         if ((password == null) || (password == "")) {
             System.out.println("الحقل مطلوب");

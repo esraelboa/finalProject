@@ -1,5 +1,6 @@
 package servlet;
 
+import DataBase.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javaClasses.User;
@@ -16,40 +17,40 @@ public class registerServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("Application/json;charset=UTF-8");
-        User us = new User();
         User user = new User();
         Validation val = new Validation();
         JSONObject jsobj = new JSONObject();
         PrintWriter out = response.getWriter();
-        //check firtName :
+
         try {
+            // get All parameters from request
+            user.setFirstName(request.getParameter("firstName"));
+            user.setLastName(request.getParameter("lastName"));
+            user.setPhoneNumber(request.getParameter("phoneNumber"));
+            user.setEmail(request.getParameter("email"));
+            user.setUserPassword(request.getParameter("password"));
 
-            us.setFirstName(request.getParameter("firstName"));
-            us.setLastName(request.getParameter("lastName"));
-            us.setPhoneNumber(request.getParameter("phoneNumber"));
-            us.setEmail(request.getParameter("email"));
-            us.setUserPassword(request.getParameter("password"));
-
-            //firstName lastName phoneNumber email password
-            if (val.val_name(request.getParameter("firstName")) && (val.isRequired(us.getFirstName()))
-                    && val.val_name(request.getParameter("lastName")) && val.isRequired(us.getLastName())
-                    && val.val_phoneNumber(request.getParameter("phoneNumber")) && val.isRequired(us.getPhoneNumber())
-                    && val.val_email(request.getParameter("email")) && val.val_email(us.getEmail())
-                    && val.val_passwprd(request.getParameter("password")) && val.isRequired(us.getUserPassword())) {
-
-                int id = user.insertuser(us);
-//                jsobj.put("The ID for the new User", id);
+            // checking validaty for firstName lastName phoneNumber email password
+            if (val.val_name(user.getFirstName()) && (val.isRequired(user.getFirstName()))
+                    && val.val_name(user.getLastName()) && val.isRequired(user.getLastName())
+                    && val.val_phoneNumber(user.getPhoneNumber()) && val.isRequired(user.getPhoneNumber())
+                    && val.val_email(user.getEmail()) && val.val_email(user.getEmail())
+                    && val.val_password(user.getUserPassword()) && val.isRequired(user.getUserPassword())) {
+            // insert user 
+                int id = UserDAO.insertuser(user);
+            //create user session 
                 request.getSession().invalidate();
                 HttpSession sassion = request.getSession();
                 sassion.setAttribute("user", user);
-//                jsobj = user.jsonobject(user);
-                jsobj.put("user id",id);
+            //fill json object in sussecc 
+                jsobj.put("user id", id);
                 jsobj.put("key", 1);
-                jsobj.put("message", "sin up successfully");
+                jsobj.put("message", "sing up successfully");
 
             } else {
+            //fill json object in failed 
                 jsobj.put("key", 0);
-                jsobj.put("message", "sin up not successfully try again");
+                jsobj.put("message", "sing up not successfully try again");
             }
             out.write(jsobj.toString());
         } catch (Exception e) {

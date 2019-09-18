@@ -1,27 +1,30 @@
-
 package DataBase;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
+public class PostgreSql {
 
-public  class PostgreSql {
-    
-           static Connection con;
+    private static final String driverName = "org.postgresql.Driver";
+    private static final String hostname = "jdbc:postgresql://localhost:5432/finalproject";
+    private static final String username = "admin";
+    private static final String password = "12345";
+    //basma 
+    private static final String sooma = "sooma";
+    private static final String somapassword = "basmasalem1995";
+    //esra
+    private static final String esra = "esra";
+    private static final String esrapassword = "0945830624";
 
-    public static Connection getConnection()throws ClassNotFoundException, SQLException {
-        
-    Class.forName("org.postgresql.Driver");
-    con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/finalProject", "sooma", "basmasalem1995");
-    
-    // Statement stmt = con.createStatement(); 
-   //  ResultSet rs = stmt.executeQuery("select categories_name from category"); 
-     return con;
+    public static Connection getConnection() throws Exception {
+        Connection con = null;
+        Class.forName(driverName);
+        con = DriverManager.getConnection(hostname, username, password);
+        if (con != null) {
+            return con;
+        } else {
+            throw new Exception();
+        }
     }
-    
-    public void close () throws SQLException {   
-        
-        con.close();
-    }
+
 }

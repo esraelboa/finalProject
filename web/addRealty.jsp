@@ -19,7 +19,7 @@
     <body>
         <!--check session validaty--> 
         <% if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")) {
-//        response.sendRedirect("http://localhost:8080/finalPojest/loginForm.html");
+        response.sendRedirect("http://localhost:8080/finalPojest/loginForm.html");
         }%>
         <!--start of upper bar-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">

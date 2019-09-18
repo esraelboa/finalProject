@@ -28,6 +28,10 @@
         <servlet-name>DisplayRealtyinfo</servlet-name>
         <servlet-class>servlet.DisplayRealtyinfo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>registerServlet</servlet-name>
+        <servlet-class>servlet.registerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletlogin</servlet-name>
         <url-pattern>/servletlogin</url-pattern>
@@ -51,6 +55,10 @@
     <servlet-mapping>
         <servlet-name>DisplayRealtyinfo</servlet-name>
         <url-pattern>/DisplayRealtyinfo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>registerServlet</servlet-name>
+        <url-pattern>/registerServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

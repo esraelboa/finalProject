@@ -10,10 +10,9 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="fontawesome.min.css">
         <link rel="stylesheet" href="css/loginStyle.css"> 
-        <link href="https://fonts.googleapis.com/css?family=Changa&display=swap" rel="stylesheet">
-        
+        <link href="https://fonts.googleapis.com/css?family=Changa&display=swap" rel="stylesheet">        
     </head> 
-    <body>
+    <body onload="checkUserSession()">
 
         <form name="login" id="loginform" action="loginForm.html" class="login-form needs-validation" novalidate>
             <h1> تسجيل الدخول </h1>
@@ -27,18 +26,19 @@
 
             </div> 
             <div>
-                <!--<a href="mainInterface.html">--> 
                     <input type="submit" name="submit" class="logbtn" id="btn" value="تسجيل الدخول">
-                    <!--<a href="mainInterface.html" class="logbtn"></a>-->
-               <!--</a>-->
-  
+
             </div>
 
             <div class="bottom-text">
                 ليس لديك حساب ؟<a href="register.html">اشتراك الأن</a>
             </div>
         </form>  
-
+        <script >
+            function checkUserSession(){
+                console.log("on load function");
+            } 
+        </script>
 
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/popper.min.js"></script>

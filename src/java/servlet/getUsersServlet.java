@@ -1,5 +1,6 @@
 package servlet;
 
+import DataBase.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -29,7 +30,11 @@ public class getUsersServlet extends HttpServlet {
         Validation val = new Validation();
         JSONObject jsobj = new JSONObject();
         User user = new User();
-        out.println(user.arrayjson(user.getUsers()));
+        try {
+            out.println(user.arrayjson(UserDAO.getUsers()));
+        } catch (Exception ex) {
+            Logger.getLogger(getUsersServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -51,12 +56,16 @@ public class getUsersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        response.setContentType("Application/json;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-        User b = new User();
-        out.println(b.arrayjson(b.getUsers()));
+        try {
+            processRequest(request, response);
+            response.setContentType("Application/json;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            
+            User user = new User();
+            out.println(user.arrayjson(UserDAO.getUsers()));
+        } catch (Exception ex) {
+            Logger.getLogger(getUsersServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

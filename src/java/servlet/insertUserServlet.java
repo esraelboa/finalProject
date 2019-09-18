@@ -1,5 +1,6 @@
 package servlet;
 
+import DataBase.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -41,9 +42,9 @@ public class insertUserServlet extends HttpServlet {
                     && val.val_name(request.getParameter("lastName")) && val.isRequired(us.getLastName())
                     && val.val_phoneNumber(request.getParameter("phoneNumber")) && val.isRequired(us.getPhoneNumber())
                     && val.val_email(request.getParameter("email")) && val.val_email(us.getEmail())
-                    && val.val_passwprd(request.getParameter("password")) && val.isRequired(us.getUserPassword())) {
+                    && val.val_password(request.getParameter("password")) && val.isRequired(us.getUserPassword())) {
 
-                int id = user.insertuser(us);
+                int id = UserDAO.insertuser(us);
 //                jsobj.put("The ID for the new User", id);
                 request.getSession().invalidate();
                 HttpSession sassion = request.getSession();

@@ -1,6 +1,5 @@
-alert("اول الدكمنت ");
 $(document).ready(function () {
- 
+
 //    error html element
     $('#fname_error').hide();
     $('#lname_error').hide();
@@ -19,7 +18,6 @@ $(document).ready(function () {
 //  validtion event
     $('#firstName').focusout(function () {
         var firstName = $("#firstName").val(),
-                
                 error_element = $('#fname_error');
         error_fname = check_name(firstName, error_element);
     });
@@ -32,7 +30,7 @@ $(document).ready(function () {
     $('#email').focusout(function () {
         check_email();
     });
-    $('#phoneNumber').focusout(function () {
+    $('#phone').focusout(function () {
         check_phone();
     });
     $('#password').focusout(function () {
@@ -85,11 +83,8 @@ $(document).ready(function () {
     }
 
     function check_phone() {
-        var pattren = /^(?:((?=\\(.*\\).*\\-)|/
-                + /^(?!.*\\()(?!.*\\)))/
-                + /^\\(?|091|092|094\\)?/
-                + /^(((?<=[)])|[\\-\\s])/,
-                phone = $("#phoneNumber").val();
+        var pattren = /^[0-9]{10}$/,
+                phone = $("#phone").val();
         if (phone === '' || phone === null) {
             $('#phone_error').html("الحقل مطلوب");
             $('#phone_error').show();
@@ -114,7 +109,7 @@ $(document).ready(function () {
             $('#password_error').show();
             error_password = true;
         } else {
-            if (password.length < 8 || password.lenght>25) {
+            if (password.length < 8 || password.lenght > 25) {
                 $('#password_error').html(" يجب ان تكون اكتر من8 احرف");
                 $('#password_error').show();
                 error_password = true;
@@ -144,99 +139,92 @@ $(document).ready(function () {
             }
         }
     }
-            
+
 //    submiting the  registerion form
     $('#form_singup').submit(function (e) {
         var firstName = $("#firstName").val(),
                 lastName = $("#lastName").val(),
                 email = $("#email").val(),
-                phoneNumber = $("#phoneNumber").val(),
+                phoneNumber = $("#phone").val(),
                 password = $("#password").val(),
                 passwordComfirm = $("#password").val();
-                  alert($("#firstName").val(),$("#lastName").val(),$("#email").val());
-                 alert("1");
         var error_fname = false,
                 error_lname = false,
                 error_email = false,
                 error_phone = false,
                 error_password = false,
                 error_rePassword = false;
- alert("2");
-        error_fname = check_name(firstName,  $('#fname_error'));
+        error_fname = check_name(firstName, $('#fname_error'));
         error_lname = check_name(lastName, $('#lname_error'));
         check_email();
         check_phone();
         check_password();
         check_re_password();
-        alert("3");
         if (error_fname === false && error_lname === false && error_email === false && error_phone === false
                 && error_password === false && error_rePassword === false) {
             e.preventDefault();
             $.ajax({
                 url: 'http://localhost:8080/finalPojest/registerServlet',
                 type: "POST",
-               
                 data: {
                     firstName: firstName,
                     lastName: lastName,
                     email: email,
                     phoneNumber: phoneNumber,
-                    password: password }, 
+                    password: password
+                },
                 dataType: "json",
                 success: function (result) {
                     if (result['key'] === 1) {
-                        location.replace('http://localhost:8080/finalPojest/mainInterface.html'); 
-
+                        alert("تمت عملية الاشتراك بنجاح");
+                        location.replace('http://localhost:8080/finalPojest/mainInterface.html');
+                    } else if (result['key'] === 0) {
+                        alert("حاول مرة اخرى مع بيانات اخرى");
                     }
-                       else  if (result['key'] === 0)  {
-                    alert(result['message']);
-                alert(" if error");}
-
                 },
                 error: function () {
-             alert("error");
-
+                    alert("check your internet conction");
                 }
             });
+
         } else {
             console.log("filed");
             return false;
-         
+
         }
     });
 //submiting login form 
     $('#loginform').submit(function (e) {
         var email = $("#email").val()
-          , password = $("#password").val();
+                , password = $("#password").val();
 
         var error_email = false,
                 error_password = false;
 
         check_email();
         check_password();
-
         if (error_email === false && error_password === false) {
             e.preventDefault();
             $.ajax({
-                url: 'http://localhost:8080/finalPojest/login_servlet',
+                url: 'http://localhost:9090/finalPojest/login_servlet',
                 type: "POST",
-                data: {email: email, password: password},
-                dataType: "json",         
+                data: {email: email,
+                    password: password},
+                dataType: "json",
                 success: function (result) {
-//                    alert("true");
                    if (result['key'] === 1) {
-                    location.replace('http://localhost:8080/finalPojest/mainInterface.html');   
+                        alert(result['message']);
+                        location.replace('http://localhost:9090/finalPojest/mainInterface.html');
+                    } else if (result['key'] === 0) {
+                        alert(result['message']);
                     }
-                     else if (result['key'] === 0) {
-                    alert(result['message']);}
                 },
                 error: function () {
                     console.log("Error");
                     alert("error");
                 }
-           });
-        } 
-        else {
+            });
+        } else {
             console.log("filed");
             return false;
         }
