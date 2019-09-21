@@ -71,7 +71,7 @@ public class Realty {
             jobj.put("realtyid", realty.getId());
             jobj.put("realtynumber", realty.getRealtyNumber());
             jobj.put("lng", realty.getPosition().getLng());
-            jobj.put("lat", realty.getPosition().getLng());
+            jobj.put("lat", realty.getPosition().getLat());
             jobj.put("address", realty.getAddress());
             jobj.put("description", realty.getDescription());
         } catch (JSONException ex) {

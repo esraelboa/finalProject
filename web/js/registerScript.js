@@ -177,7 +177,7 @@ $(document).ready(function () {
                 success: function (result) {
                     if (result['key'] === 1) {
                         alert("تمت عملية الاشتراك بنجاح");
-                        location.replace('http://localhost:8080/finalPojest/mainInterface.html');
+                        location.replace('http://localhost:8080/finalPojest/index.jsp');
                     } else if (result['key'] === 0) {
                         alert("حاول مرة اخرى مع بيانات اخرى");
                     }

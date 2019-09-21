@@ -76,7 +76,7 @@ $(document).ready(function () {
                     alert(result['message']);
                 } else if (result['key'] === 1) {                
                     reatyid = result['id'];
-                    location.href = 'حطي رابط الصفحة متاع العرض هني' + reatyid;
+                    location.href = 'http://localhost:8080/finalPojest/DisplayRealtyinfo.jsp' +"?id="+ reatyid;
                 }
             },
             error: function () {

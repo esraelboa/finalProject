@@ -6,20 +6,24 @@ import java.sql.DriverManager;
 public class PostgreSql {
 
     private static final String driverName = "org.postgresql.Driver";
-    private static final String hostname = "jdbc:postgresql://localhost:5432/finalproject";
-    private static final String username = "admin";
-    private static final String password = "12345";
-    //basma 
-    private static final String sooma = "sooma";
-    private static final String somapassword = "basmasalem1995";
-    //esra
+    private static final String hostname = "jdbc:postgresql://localhost:5432/finalProject";
+    private static final String username = "sooma";
+    private static final String password = "basmasalem1995";
+    //basma soomahostname="jdbc:postgresql://localhost:5432/finalProject"
+//    private static final String sooma = "sooma";
+//    private static final String somapassword = "basmasalem1995";
+    
+    //esraabo esrahostname="jdbc:postgresql://localhost:5432/finalProject"
     private static final String esra = "esra";
     private static final String esrapassword = "0945830624";
-
+    //esraelha esrahostname="jdbc:postgresql://localhost:5432/finalproject"
+    private static final String esraelha = "admin";
+    private static final String esraelhapassword = "12345";
+    
     public static Connection getConnection() throws Exception {
         Connection con = null;
         Class.forName(driverName);
-        con = DriverManager.getConnection(hostname, username, password);
+        con = DriverManager.getConnection(hostname, "sooma", "basmasalem1995");
         if (con != null) {
             return con;
         } else {
