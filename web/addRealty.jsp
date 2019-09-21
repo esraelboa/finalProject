@@ -23,7 +23,7 @@
         }%>
         <!--start of upper bar-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="index.jsp">
                 <img src="img/logo.png"width="40px" height="40px" class="d-inline-block align-top" alt="website logo">                
             </a>
         </nav>

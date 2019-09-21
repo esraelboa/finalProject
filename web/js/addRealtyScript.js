@@ -62,7 +62,8 @@ $(document).ready(function () {
         $.ajax({
             url: "http://localhost:8080/finalPojest/InsertRealtyServlet",
             type: "POST",
-            data: {realtyNumber: realtyNumber,
+            data: {
+                realtyNumber: realtyNumber,
                 description: description,
                 lng: lng,
                 lat: lat
@@ -70,7 +71,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (result) {
                 if (result['key'] === -1) {
-                    location.replace('http://localhost:8080/finalPojest/loginForm.html');
+                    location.replace('http://localhost:8080/finalPojest/loginForm.jsp');
                 } else if (result['key'] === 0) {
                     alert(result['message']);
                 } else if (result['key'] === 1) {                

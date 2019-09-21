@@ -214,7 +214,7 @@ $(document).ready(function () {
                 success: function (result) {
                    if (result['key'] === 1) {
                         alert(result['message']);
-                        location.replace('http://localhost:8080/finalPojest/mainInterface.html');
+                        location.replace('http://localhost:8080/finalPojest/index.jsp');
                     } else if (result['key'] === 0) {
                         alert(result['message']);
                     }

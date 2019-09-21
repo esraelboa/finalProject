@@ -1,0 +1,48 @@
+*{
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Changa', sans-serif;
+    background-color:  #35A0B1;
+    color: #b6590d; 
+    font-size: 17px;
+}
+.main-bar{
+    font-size: 1.25rem;
+
+}
+.main-bar a:link {
+    text-decoration: none;
+}
+
+.main-bar a:visited {
+    text-decoration: none;
+}
+
+.main-bar a:hover {
+    border-bottom: 1px solid #b6590d;
+}
+
+.main-bar a:active {
+    border-bottom: 1px solid #b6590d;
+}
+.btn{
+    border-color: #b6590d;
+}
+
+card-body{
+    padding-right: 210px;
+}
+.search-box{
+    margin-top: 19px;
+    margin-right: 395px;
+    margin-bottom: 2px;
+}
+#map{
+    width: 980px;
+    height: 365px;
+    margin-right: 40px;
+}
+.fun-section .card{
+    padding-bottom: 10px;padding-top: 10px;
+}

@@ -22,7 +22,7 @@
   <!--check session validaty--> 
         <% if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")) {
             
-        } else {response.sendRedirect("http://localhost:8080/finalPojest/mainInterface.html");
+        } else {response.sendRedirect("http://localhost:8080/finalPojest/index.jsp");
         }%>
         <form name="login" id="loginform" action="loginForm.html" class="login-form needs-validation" novalidate>
             <h1> تسجيل الدخول </h1>

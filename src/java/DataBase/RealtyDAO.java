@@ -136,20 +136,24 @@ public class RealtyDAO {
     }
 
     public static Realty searchForAddress(String address) throws Exception {
-        Realty realty = null;
-        Marker marker = new Marker();
+        Realty realty = null; 
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection c = PostgreSql.getConnection();
         String sql = "select st_X(position) as lng , st_Y(position) as lat , description \n"
                 + "from realty where address =?";
-        PreparedStatement pstmt = c.prepareStatement(sql);
+        pstmt = c.prepareStatement(sql);
         pstmt.setString(1, address);
-        ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
+       rs = pstmt.executeQuery();
+        if(rs.next()) {
+            Marker marker = new Marker();
+            realty=new Realty();
             marker.setLng(rs.getDouble("lng"));
             marker.setLat(rs.getDouble("lat"));
             realty.setPosition(marker);
             realty.setDescription(rs.getString("description"));
-        }
+        }c.close();
+        
         return realty;
     }
 }
