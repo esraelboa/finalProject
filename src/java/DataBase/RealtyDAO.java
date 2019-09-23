@@ -1,6 +1,8 @@
 package DataBase;
 
+import static DataBase.PostgreSql.getConnection;
 import java.sql.*;
+import java.util.ArrayList;
 import javaClasses.Marker;
 import javaClasses.Realty;
 
@@ -134,7 +136,7 @@ public class RealtyDAO {
     }
 
     public static Realty searchForAddress(String address) throws Exception {
-        Realty realty = null; 
+        Realty realty = null;
         PreparedStatement pstmt;
         ResultSet rs;
         Connection c = PostgreSql.getConnection();
@@ -142,16 +144,44 @@ public class RealtyDAO {
                 + "from realty where address =?";
         pstmt = c.prepareStatement(sql);
         pstmt.setString(1, address);
-       rs = pstmt.executeQuery();
-        if(rs.next()) {
+        rs = pstmt.executeQuery();
+        if (rs.next()) {
             Marker marker = new Marker();
-            realty=new Realty();
+            realty = new Realty();
             marker.setLng(rs.getDouble("lng"));
             marker.setLat(rs.getDouble("lat"));
             realty.setPosition(marker);
             realty.setDescription(rs.getString("description"));
-        }c.close();
-        
+        }
+        c.close();
+
         return realty;
+    }
+
+    public static ArrayList<Realty> getAllRealty(int ownerId) throws Exception {
+        ArrayList<Realty> list = new ArrayList<>();
+                  Connection c = getConnection();
+            String sql = "select id,realtynumber,St_x(position) as lng, st_y(position) as lat,address,description from realty where ownerid=?";
+
+            PreparedStatement pstmt = c.prepareStatement(sql);
+            pstmt.setInt(1, ownerId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Realty realty = new Realty();
+                 realty.setId(rs.getInt("id"));
+            realty.setRealtyNumber(rs.getInt("realtynumber"));
+            Marker marker = new Marker(rs.getDouble("lng"), rs.getDouble("lat"));
+            realty.setPosition(marker);
+            realty.setAddress(rs.getString("address"));
+            realty.setDescription(rs.getString("description"));
+                list.add(realty);
+            }
+//            System.out.print(list.get(0));
+            rs.close();
+            pstmt.close();
+            c.close();
+ 
+        return list;
     }
 }

@@ -1,7 +1,9 @@
 package javaClasses;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -78,5 +80,12 @@ public class Realty {
             Logger.getLogger(Realty.class.getName()).log(Level.SEVERE, null, ex);
         }
         return jobj;
+    }
+    public JSONArray displayAllRealty(ArrayList<Realty> list) {
+        JSONArray jarr = new JSONArray();
+        for (int i = 0; i < list.size(); i++) {
+            jarr.put(convetToJson(list.get(i)));
+        }
+        return jarr;
     }
 }

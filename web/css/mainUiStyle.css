@@ -75,6 +75,7 @@ body{
 .search-text{
     border: 3px solid #3498db;
     border-radius: 50px;
+    background-color: #ec9b3b;
     /*background: linear-gradient(120deg,#3498db,#8e44ad);*/
     /*border: none;*/
     height: 35px;
@@ -110,5 +111,6 @@ body{
   }
   
   #map{
-       height: 700px;
+       height: 150px;
+       width: 150px;
    }
