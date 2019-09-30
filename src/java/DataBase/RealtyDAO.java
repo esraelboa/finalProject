@@ -3,6 +3,7 @@ package DataBase;
 import static DataBase.PostgreSql.getConnection;
 import java.sql.*;
 import java.util.ArrayList;
+import javaClasses.CommercialRealties;
 import javaClasses.Marker;
 import javaClasses.Realty;
 
@@ -20,7 +21,14 @@ public class RealtyDAO {
         ResultSet rs = pstmt.executeQuery();
         return !rs.next();
     }
-
+ public static Boolean checklicenseNumber(CommercialRealties commercialRealties) throws Exception {
+        Connection c = PostgreSql.getConnection();
+        String sql = "select licenseNumber from commercialRealties where licenseNumber=?";
+        PreparedStatement pstmt = c.prepareStatement(sql);
+        pstmt.setInt(1, commercialRealties.getLicenseNumber());
+        ResultSet rs = pstmt.executeQuery();
+        return !rs.next();
+    }
     public static Boolean checkUserRealtyCount(Realty realty) throws Exception {
         Connection c = PostgreSql.getConnection();
         String sql = "select COUNT(*) as count from realty where ownerid=?";
@@ -184,4 +192,29 @@ public class RealtyDAO {
  
         return list;
     }
+    
+    
+//    public static int insertCommercialRealties(CommercialRealties realties) throws Exception {
+//       int licensenumber;
+//        Connection con = PostgreSql.getConnection();
+//         CommercialRealties commercialRealties = new CommercialRealties();
+//        String sql = "INSERT INTO public.commercialrealties(realtyname, licensenumber, description, img_rea, categoryid)VALUES (?, ?, ?, ?, ?)";
+//        PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+//         pstmt.setString(1,realties.getRealtyNanme());
+//         pstmt.setInt(2,realties.getLicenseNumber());
+//         pstmt.setString(3,realties.getDescription());
+//         pstmt.setString(4,realties.getImg_Rea());
+//         pstmt.setInt(5,realties.getCategoryId());
+//         ResultSet rsu = pstmt.executeQuery();
+//           rsu.next();
+//         licensenumber = rsu.getInt("LicenseNumber");
+//           rsu.close();
+//          
+//         if((licensenumber != 0) && checklicenseNumber(commercialRealties)){
+//        
+//    }
+//       
+//         pstmt.close();
+//        return 1;
+//    }
 }
