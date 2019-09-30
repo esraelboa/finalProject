@@ -99,8 +99,6 @@ public class RealtyDAO {
             rsu.next();
             id = rsu.getInt(1);
             c.commit();
-            System.out.println(id);
-            System.out.println("address : " + address + "." + counter);
             rsu.close();
             c.close();
             pstmt1.close();

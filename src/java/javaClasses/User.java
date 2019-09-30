@@ -16,12 +16,12 @@ import org.json.JSONObject;
 
 public class User {
 
-    int id;
-    String firstName;
-    String lastName;
-    String phoneNumber;
-    String email;
-    String password;
+  private  int id;
+  private  String firstName;
+  private  String lastName;
+  private  String phoneNumber;
+  private  String email;
+  private  String password;
 
 
     public int getId() {

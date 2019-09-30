@@ -5,11 +5,11 @@
  */
 package servlet;
 
-import DataBase.RealtyDAO;
+import DataBase.ResidentDAO;
 import java.io.IOException;
-import javaClasses.Marker;
-import javaClasses.Realty;
+import javaClasses.Resident;
 import javaClasses.User;
+import javaClasses.Validation;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ import org.json.JSONObject;
  *
  * @author esra
  */
-public class InsertRealtyServlet extends HttpServlet {
+public class InsertResidentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,38 +35,44 @@ public class InsertRealtyServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
-        Realty realty = new Realty();
-        Marker marker = new Marker();
         JSONObject json = new JSONObject();
-        int realtyid = 0;
-
         try {
+
             HttpSession session = request.getSession(false);
-            if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")){  
+            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
                 json.put("key", -1);
                 json.put("message", "invalided session");
             } else {
-                User user = (User) session.getAttribute("user");
-                realty.setRealtyNumber(Integer.parseInt(request.getParameter("realtyNumber")));
-                marker.setLng(Double.parseDouble(request.getParameter("lng")));
-                marker.setLat(Double.parseDouble(request.getParameter("lat")));
-                realty.setPosition(marker);
-                realty.setOwnerid(user.getId());
-                realty.setDescription(request.getParameter("description"));
-                realtyid = RealtyDAO.insertRealty(realty);
 
-                if (realtyid != 0) {
-                    realty.setId(realtyid);
-                    json.put("key", 1);
-                    json.put("message", "realty inserted successfully");
-                    json.put("id", realtyid);
+                //getting data from request and session
+                User user = (User) session.getAttribute("user");
+                Resident resident = new Resident();
+                String email = request.getParameter("email");
+                resident.setOwnerId(user.getId());
+                resident.setRealtyId(Integer.parseInt(request.getParameter("realtyid")));
+                resident.setAddress(request.getParameter("address"));
+
+                //check email validalty         
+                if (new Validation().val_email(email)) {
+                    /*checking if there's email in user table with this value 
+                   by returning user id how has this email*/
+                    resident.setResidentId(ResidentDAO.checkResidentEmail(email));
+                    if (resident.getResidentId() != 0 & ResidentDAO.checkResidentIdCount(resident.getResidentId())) {
+                        //insert resident and create address to it
+                        int insertedID = ResidentDAO.insertResident(resident);
+                        json.put("inserted Resident ID", insertedID);
+                        json.put("key", 1);
+                        json.put("message", "Resident inserted successfully");
+                    } else {
+                        json.put("Key", 0);
+                        json.put("message", "resident email not found");
+                    }
                 } else {
-                    json.put("key", 0);
-                    json.put("message", "error try again");
+                    json.put("Key", 0);
+                    json.put("message", "incorrect email");
                 }
             }
             response.getWriter().write(json.toString());
-
         } catch (Exception ex) {
             System.out.println(ex.toString());
         }

@@ -22,7 +22,11 @@
 
     </head>
     <body >
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!--check session validaty--> 
+        <% if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")) {
+        response.sendRedirect("http://localhost:8080/finalPojest/loginForm.jsp");
+        }%>    
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <!--logo-->
             <a class="navbar-brand" href="index.jsp">
                 <img src="image/logo2.png"width="55px" height="60px" class="d-inline-block align-top" alt="website logo">                
@@ -68,7 +72,6 @@
             <div class="card mt-3 pb-2">
                 <div class=" card-title">
                     <h3 class="row text-right mt-3 mr-4">معلومات عقارك :</h3>
-                    <!--<p class="text-right">الرجاء ادخال البيانات المطلوبة وتحديد موقع عقارك على الخريطة</p>-->
                 </div>
                 <div class="card-body">
                     <div class="row mr-5 ">              
@@ -76,41 +79,26 @@
                             <form class="Display-realty form-group text-right mr-3 " >
                                 <div class="form-row mb-3">
                                     <div class="col-4">
-                                        <label class="col-form-label">  عنوانك الالكتروني :</label>
-                                    
+                                        <label class="col-form-label">  رقم العقار</label>
                                     </div>   
                                     <div class="col-form-label" id="realtyNumber" >                                      
                                     </div>
-<!--                                    <div id="realtyNumber">123456</div>-->
                                 </div>
                                 <div class="form-row mb-3">
                                     <div class="col-4">
-                                        <label class="col-form-label">العنوان :</label> 
+                                        <label class="col-form-label">العنوان الالكتروني:</label> 
                                     </div>  
                                     <div class="col-form-label" id="address">
-<!--                                        <select id="incity" class="form-control pt-0 pb-0"></select>
-                                        <label class="col-form-label"> غوط الشعال</label> -->
-
                                     </div>
                                 </div>
                                 <div class="form-row mb-3">
                                     <div class="col-4">
-                                        <label class="col-form-label"> الوصف :</label>   
+                                        <label class="col-form-label"> الوصف العقار:</label>   
                                     </div> 
                                       <div class="col-form-label" id="description">
                                     </div> 
-<!--
-                                    <div class="col-8">
-                                        <input id="realtyNumber" class="form-control pt-0 pb-0 rnumber" pattern= "[0-9]+" required data-toggle="tooltip" title="ادخل رقم العقار المسجل في السجل العقاري"> 
-                                    </div> -->
                                 </div>
-<!--                                <div class="form-row">
-                                    <label class="pr-1">وصف لموقع العقار:</label>  
-                                </div>
-                                <div class="from-row mb-3">
-                                    <textarea id="description" class="form-control" rows="3" data-toggle="tooltip" title="ادخل وصف للمكان الموجود به العقار"></textarea> 
-                                </div>
-                                <input class="btn float-left" type="submit" value="اضافة">  -->
+                               <input class="btn float-left" type="submit" value="اضافة">
                             </form>
                         </div>          
                         <div class="col-8"data-toggle="tooltip" data-placement="top" title="حد موقع عقارك على الخريطة">

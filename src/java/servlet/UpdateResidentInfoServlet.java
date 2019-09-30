@@ -5,11 +5,8 @@
  */
 package servlet;
 
-import DataBase.RealtyDAO;
+import DataBase.ResidentDAO;
 import java.io.IOException;
-import javaClasses.Marker;
-import javaClasses.Realty;
-import javaClasses.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +18,7 @@ import org.json.JSONObject;
  *
  * @author esra
  */
-public class InsertRealtyServlet extends HttpServlet {
+public class UpdateResidentInfoServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,40 +32,28 @@ public class InsertRealtyServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
-        Realty realty = new Realty();
-        Marker marker = new Marker();
         JSONObject json = new JSONObject();
-        int realtyid = 0;
-
         try {
             HttpSession session = request.getSession(false);
-            if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")){  
+            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
                 json.put("key", -1);
                 json.put("message", "invalided session");
             } else {
-                User user = (User) session.getAttribute("user");
-                realty.setRealtyNumber(Integer.parseInt(request.getParameter("realtyNumber")));
-                marker.setLng(Double.parseDouble(request.getParameter("lng")));
-                marker.setLat(Double.parseDouble(request.getParameter("lat")));
-                realty.setPosition(marker);
-                realty.setOwnerid(user.getId());
-                realty.setDescription(request.getParameter("description"));
-                realtyid = RealtyDAO.insertRealty(realty);
-
-                if (realtyid != 0) {
-                    realty.setId(realtyid);
-                    json.put("key", 1);
-                    json.put("message", "realty inserted successfully");
-                    json.put("id", realtyid);
+                String description = request.getParameter("description");
+                int residentid=Integer.parseInt(request.getParameter("residentid"));
+                int effectedRow = ResidentDAO.updateResidentInfo(description, residentid);
+                if (effectedRow > 0) {
+                    json.put("Key", 1);
+                    json.put("Message", "updated successfully");
                 } else {
-                    json.put("key", 0);
-                    json.put("message", "error try again");
+                    json.put("Key", 0);
+                    json.put("Message", "error try again");
                 }
             }
-            response.getWriter().write(json.toString());
 
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
+            response.getWriter().write(json.toString());
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 

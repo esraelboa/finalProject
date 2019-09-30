@@ -1,6 +1,6 @@
 $(document).ready(function () {
    
-   
+ //get id form url function  
 function getUrlVars() {
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
@@ -10,13 +10,6 @@ function getUrlVars() {
     
 };
 var id= getUrlVars()["id"];
-// alert(id);
-//  alert("Page is loaded");
-  
-//   $('#realtyNumber').html("123456");
-
-
-
 
 
 var opt = {
@@ -37,20 +30,7 @@ var opt = {
     }
     ;
 
-
-
-
-
-
-
-
-
-
-
-
-
    var realtyid = id;     
-//        e.preventDefault();
         $.ajax({
             url: "http://localhost:8080/finalPojest/DisplayRealtyinfo",
             type: "GET",
@@ -59,7 +39,6 @@ var opt = {
             },
             dataType: "json",
             success: function (result) {
-//                  $('#realtyNumber').html(realtyid);
                   $('#realtyNumber').text(result['realtynumber']);
                   $('#address').text(result['address']);
                   $('#description').text(result['description']);
@@ -67,9 +46,7 @@ var opt = {
            var latlng = {lng: result['lat'], lat: result['lng']};
                     map.setCenter(latlng);
                     map.setZoom(17);
-                    placeMarker(latlng)
-                  alert(result['lat']);
-                  alert(result['lng']);
+                    placeMarker(latlng);
                   
             },
             error: function () {
@@ -77,12 +54,5 @@ var opt = {
             }
         });
 
-   
-//    realtyNumber: realtyNumber,
-//                description: description,
-//                lng: lng,
-//                lat: lat
-    
-    
     });
 

@@ -37,16 +37,14 @@ public class registerServlet extends HttpServlet {
                     && val.val_email(user.getEmail()) && val.val_email(user.getEmail())
                     && val.val_password(user.getUserPassword()) && val.isRequired(user.getUserPassword())) {
             // insert user 
-                int id = UserDAO.insertuser(user);
+                int id = UserDAO.insertUser(user);
             //create user session 
                 request.getSession().invalidate();
                 HttpSession sassion = request.getSession();
                 sassion.setAttribute("user", user);
             //fill json object in sussecc 
-                jsobj.put("user id", id);
                 jsobj.put("key", 1);
                 jsobj.put("message", "sing up successfully");
-
             } else {
             //fill json object in failed 
                 jsobj.put("key", 0);

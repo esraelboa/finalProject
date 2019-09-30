@@ -18,7 +18,7 @@ import javaClasses.User;
  */
 public class UserDAO {
 
-    public static int insertuser(User user) throws Exception {
+    public static int insertUser(User user) throws Exception {
         int st = 0;
         int id = 0;
         Connection con = PostgreSql.getConnection();

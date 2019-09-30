@@ -44,7 +44,7 @@ public class insertUserServlet extends HttpServlet {
                     && val.val_email(request.getParameter("email")) && val.val_email(us.getEmail())
                     && val.val_password(request.getParameter("password")) && val.isRequired(us.getUserPassword())) {
 
-                int id = UserDAO.insertuser(us);
+                int id = UserDAO.insertUser(us);
 //                jsobj.put("The ID for the new User", id);
                 request.getSession().invalidate();
                 HttpSession sassion = request.getSession();

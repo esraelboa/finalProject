@@ -22,10 +22,27 @@
         response.sendRedirect("http://localhost:8080/finalPojest/loginForm.jsp");
         }%>
         <!--start of upper bar-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+       <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!--logo-->
             <a class="navbar-brand" href="index.jsp">
-                <img src="img/logo.png"width="40px" height="40px" class="d-inline-block align-top" alt="website logo">                
+                <img src="image/logo2.png"width="55px" height="60px" class="d-inline-block align-top" alt="website logo">                
             </a>
+            <!--main page links-->
+            <div class="main-bar justify-content-center">
+                <ul class="navbar-nav ">
+                    <li class="nav-item pl-3">
+                        <a class="nav-link active" href="index.jsp">الرئيسية</a>
+                    </li>
+         <% if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {%>  
+                    <li class="nav-item pl-3">
+                        <a class="nav-link " href="#footer">حول</a>
+                    </li>
+               
+                    <li class="nav-item pl-3">
+                        <a class="nav-link " href="#search">البحث عن عقار</a>
+                    </li> <%} %>
+                </ul>
+            </div>                
         </nav>
         <!--End of upper bar-->
         <div class="container">
