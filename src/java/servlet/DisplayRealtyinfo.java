@@ -35,9 +35,16 @@ public class DisplayRealtyinfo extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         try {
-
+            JSONObject json=new JSONObject();
             Realty realty = RealtyDAO.getRealtyinfo(Integer.parseInt(request.getParameter("realtyid")));
-            JSONObject json = realty.convetToJson(realty);
+           if(realty!=null){
+            json = realty.convetToJson(realty);
+           
+           }
+           else{
+           json.put("key",0);
+
+           }
             response.getWriter().write(json.toString());
 
         } catch (Exception ex) {

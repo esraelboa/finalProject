@@ -50,7 +50,6 @@ public class UpdateResidentInfoServlet extends HttpServlet {
                     json.put("Message", "error try again");
                 }
             }
-
             response.getWriter().write(json.toString());
         } catch (Exception e) {
             System.out.println(e);

@@ -30,16 +30,23 @@ public class ResidentDAO {
         return id;
     }
 
-    public static Boolean checkResidentIdCount(int residentid) throws Exception {
-        Connection c = PostgreSql.getConnection();
-        String sql = "select count(id )from resident where residentid=?";
+//    public static Boolean checkResidentIdCount(int residentid) throws Exception {
+//        Connection c = PostgreSql.getConnection();
+//        String sql = "select count(id )from resident where residentid=?";
+//        PreparedStatement pstmt = c.prepareStatement(sql);
+//        pstmt.setInt(1, residentid);
+//        ResultSet rs = pstmt.executeQuery();
+//        rs.next();
+//        return rs.getInt("count") == 0;
+//    }
+    public static Boolean checkResidentAddress(String address) throws Exception{
+     Connection c = PostgreSql.getConnection();
+        String sql = "select * from resident where address=?";
         PreparedStatement pstmt = c.prepareStatement(sql);
-        pstmt.setInt(1, residentid);
+        pstmt.setString(1,address);
         ResultSet rs = pstmt.executeQuery();
-        rs.next();
-        return rs.getInt("count") == 0;
+        return !rs.next();
     }
-
     public static int insertResident(Resident resident) throws Exception {
         int id = 0;
         Connection c = PostgreSql.getConnection();
@@ -51,6 +58,7 @@ public class ResidentDAO {
         if (rs.next()) {
             String address = rs.getString("address");
             resident.setAddress(address + "," + resident.getAddress());
+            if(checkResidentAddress(resident.getAddress())){
             //insert Resident query
             String insertResident = "insert into resident(ownerid,realtyid,residentid,address) values(?,?,?,?);";
             PreparedStatement pstmt2 = c.prepareStatement(insertResident, Statement.RETURN_GENERATED_KEYS);
@@ -62,6 +70,7 @@ public class ResidentDAO {
             ResultSet rsu = pstmt2.getGeneratedKeys();
             rsu.next();
             id = rsu.getInt(1);
+            }
         }
         return id;
     }

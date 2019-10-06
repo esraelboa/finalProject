@@ -1,5 +1,5 @@
 <%-- 
-    Document   : displayRealtyingo
+    Document   : displayRealtyinfo
     Created on : 18/09/2019, 8:49:55 PM
     Author     : sooma
 --%>

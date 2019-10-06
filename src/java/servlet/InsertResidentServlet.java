@@ -57,12 +57,17 @@ public class InsertResidentServlet extends HttpServlet {
                     /*checking if there's email in user table with this value 
                    by returning user id how has this email*/
                     resident.setResidentId(ResidentDAO.checkResidentEmail(email));
-                    if (resident.getResidentId() != 0 & ResidentDAO.checkResidentIdCount(resident.getResidentId())) {
+                    if (resident.getResidentId() != 0) {
                         //insert resident and create address to it
                         int insertedID = ResidentDAO.insertResident(resident);
-                        json.put("inserted Resident ID", insertedID);
-                        json.put("key", 1);
-                        json.put("message", "Resident inserted successfully");
+                        if(insertedID>0){
+                          json.put("inserted Resident ID", insertedID);
+                          json.put("key", 1);
+                          json.put("message", "Resident inserted successfully");
+                        }else{
+                          json.put("key", -2);
+                          json.put("message", "please Enter anthor address");
+                        }
                     } else {
                         json.put("Key", 0);
                         json.put("message", "resident email not found");

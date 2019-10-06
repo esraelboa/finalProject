@@ -37,16 +37,21 @@ public class getResidentInfoServlet extends HttpServlet {
         JSONObject json = new JSONObject();
         try {
             HttpSession session = request.getSession(false);
-            User user = (User) session.getAttribute("user");
-            int residentid = user.getId();
-            Resident resident = ResidentDAO.displayResidentRealtyInfo(residentid/*resident id from session*/);
-            if (resident != null) {
-                json = new Resident().convetToJson(resident);
-                json.put("key", 1);
-
+            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
+                json.put("key", -1);
+                json.put("message", "invalided session");
             } else {
-                json.put("key", 0);
-                json.put("message", "error try again");
+                User user = (User) session.getAttribute("user");
+                int residentid = user.getId();
+                Resident resident = ResidentDAO.displayResidentRealtyInfo(residentid);
+                if (resident != null) {
+                    json = new Resident().convetToJson(resident);
+                    json.put("key", 1);
+
+                } else {
+                    json.put("key", 0);
+                    json.put("message", "error try again");
+                }
             }
             response.getWriter().write(json.toString());
         } catch (Exception e) {

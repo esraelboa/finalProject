@@ -123,19 +123,21 @@ public class RealtyDAO {
     }
 
     public static Realty getRealtyinfo(int realtyid) throws Exception {
-        Realty realty = new Realty();
+        Realty realty=null;
         Connection c = PostgreSql.getConnection();
         String sql = "select realtynumber,St_x(position) as lng, st_y(position) as lat,address,description from realty where id=?";
         PreparedStatement pstmt = c.prepareStatement(sql);
         pstmt.setInt(1, realtyid);
         ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
+        if (rs.next()) {
+            realty = new Realty();
             realty.setId(realtyid);
             realty.setRealtyNumber(rs.getInt("realtynumber"));
             Marker marker = new Marker(rs.getDouble("lng"), rs.getDouble("lat"));
             realty.setPosition(marker);
             realty.setAddress(rs.getString("address"));
             realty.setDescription(rs.getString("description"));
+        return realty;
         }
         rs.close();
         pstmt.close();

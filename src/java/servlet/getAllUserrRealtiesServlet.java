@@ -7,9 +7,7 @@ package servlet;
 
 import DataBase.RealtyDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import static java.util.Collections.list;
 import javaClasses.Realty;
 import javaClasses.User;
 import javax.servlet.ServletException;
@@ -41,37 +39,32 @@ public class getAllUserrRealtiesServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
-        JSONArray ja = new JSONArray();
         try {
-                       
 
-         HttpSession session = request.getSession(false);
-           if (session == null || !request.isRequestedSessionIdValid()) {
-               json.put("key", -1);
-          json.put("message", "invalided session");
-         
+             HttpSession session = request.getSession(false);
+            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
+                json.put("key", -1);
+                json.put("message", "invalided session");
             } else {
                 User user = (User) session.getAttribute("user");
                 int id = user.getId();
-          ArrayList<Realty> realties = RealtyDAO.getAllRealty(id);  
-          if(realties.size() > 0){
-            ja = new Realty().displayAllRealty(realties);
-          json.put("realties", ja); 
-          
-          }else{
-              json.put("key", 0);
-              json.put("message", "You have no realty");
-          }
-          
-        }
+                ArrayList<Realty> realties = RealtyDAO.getAllRealty(id);
+                if (realties.size() > 0) {
+                    JSONArray ja = new Realty().displayAllRealty(realties);
+                    json.put("realties", ja);
+                } else {
+                    json.put("key", 0);
+                    json.put("message", "You have no realty");
+                }
+
+            }
             response.getWriter().write(json.toString());
         } catch (Exception ex) {
-              System.out.println(ex.toString());
+            System.out.println(ex.toString());
             System.out.println(ex.getMessage());
 
         }
 
-     
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
