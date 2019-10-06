@@ -12,7 +12,9 @@ package javaClasses;
 public class Category {
 
     private int catId;
-
+    private String name;
+    
+    
     public int getCatId() {
         return catId;
     }
@@ -28,5 +30,5 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
-    private String name;
+   
 }

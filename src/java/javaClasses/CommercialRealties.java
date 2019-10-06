@@ -10,24 +10,40 @@ import java.util.logging.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
+/**s
  *
  * @author esra1996
  */
 public class CommercialRealties {
-      
-    private String realtyNanme;
+    private int id; 
+    private String realtyName;
     private int licenseNumber;
     private String description;
-    private String img_Rea;
-    private int categoryId;
+    private int realtyId;
+    private int residentId;
 
-    public String getRealtyNanme() {
-        return realtyNanme;
+    public int getResidentId() {
+        return residentId;
     }
 
-    public void setRealtyNanme(String realtyNanme) {
-        this.realtyNanme = realtyNanme;
+    public void setResidentId(int residentId) {
+        this.residentId = residentId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getRealtyName() {
+        return realtyName;
+    }
+
+    public void setRealtyName(String realtyNanme) {
+        this.realtyName = realtyNanme;
     }
 
     public int getLicenseNumber() {
@@ -46,29 +62,23 @@ public class CommercialRealties {
         this.description = description;
     }
 
-    public String getImg_Rea() {
-        return img_Rea;
+    public int getRealtyId() {
+        return realtyId;
     }
 
-    public void setImg_Rea(String img_Rea) {
-        this.img_Rea = img_Rea;
+    public void setRealtyId(int realtyId) {
+        this.realtyId = realtyId;
     }
 
-    public int getCategoryId() {
-        return categoryId;
-    }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
+   
      public JSONObject convetToJson(CommercialRealties realties) {
         JSONObject jobj = new JSONObject();
         try {
-            jobj.put("realtyName", realties.getRealtyNanme());
+            jobj.put("realtyName", realties.getRealtyName());
             jobj.put("licenseNumber", realties.getLicenseNumber());
             jobj.put("description", realties.getDescription());
-            jobj.put("img_Rea", realties.getImg_Rea());
-            jobj.put("categoryId", realties.getCategoryId());
+            jobj.put("realtyid", realties.getRealtyId());
         } catch (JSONException ex) {
             Logger.getLogger(Realty.class.getName()).log(Level.SEVERE, null, ex);
         }
