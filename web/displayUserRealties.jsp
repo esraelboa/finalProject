@@ -100,6 +100,14 @@
                                 <input id="address" class="form-control" type="text" required>
                             </div>   
                         </div>
+                        <div class="form-row mt-2">
+                            <div class="col-4">  
+                                <label class="">نوع العقار</label>
+                            </div>
+                            <div class="col-6">
+                                <input id="realtyType" class="form-control" type="text" required>
+                            </div>   
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">

@@ -16,30 +16,29 @@ import javaClasses.CommercialRealties;
  * @author esra1996
  */
 public class CommercialRealtiesDAO {
-    public static Boolean checklicenseNumber(CommercialRealties realties) throws Exception {
-        Connection c = PostgreSql.getConnection();
-        String sql = "select licenseNumber from commercialRealties where licenseNumber=?";
-        PreparedStatement pstmt = c.prepareStatement(sql);
-        pstmt.setInt(1, realties.getLicenseNumber());
-     
-        ResultSet rs = pstmt.executeQuery();
-        return !rs.next();
-    }
+//    public static Boolean checklicenseNumber(CommercialRealties realties) throws Exception {
+//        Connection c = PostgreSql.getConnection();
+//        String sql = "select licenseNumber from commercialRealties where licenseNumber=?";
+//        PreparedStatement pstmt = c.prepareStatement(sql);
+//        pstmt.setInt(1, realties.getLicenseNumber());
+//     
+//        ResultSet rs = pstmt.executeQuery();
+//        return !rs.next();
+//    }
     
         public static int insertCommercialRealties(CommercialRealties realties) throws Exception {
-        int id =0;
+        int id = 0;
         Connection con = PostgreSql.getConnection();
    
             
         String sql = "INSERT INTO public.commercialrealties(\n" +
-"            id, realtyname, licensenumber, description, realtyid)\n" +
-"    VALUES (?, ?, ?, ?, ?);";
+"            id, realtyname, licensenumber, description, residentid)\n" +
+"    VALUES (?, ?, ?, ?, ?, ?);";
         PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
          pstmt.setString(1,realties.getRealtyName());
          pstmt.setInt(2,realties.getLicenseNumber());
          pstmt.setString(3,realties.getDescription());
-         pstmt.setInt(4,realties.getRealtyId());
-         pstmt.setInt(5, realties.getResidentId());
+         pstmt.setInt(4, realties.getResidentId());
          pstmt.executeUpdate();
          ResultSet rsu = pstmt.getGeneratedKeys();
 

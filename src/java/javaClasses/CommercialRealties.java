@@ -19,16 +19,7 @@ public class CommercialRealties {
     private String realtyName;
     private int licenseNumber;
     private String description;
-    private int realtyId;
     private int residentId;
-
-    public int getResidentId() {
-        return residentId;
-    }
-
-    public void setResidentId(int residentId) {
-        this.residentId = residentId;
-    }
 
     public int getId() {
         return id;
@@ -42,8 +33,8 @@ public class CommercialRealties {
         return realtyName;
     }
 
-    public void setRealtyName(String realtyNanme) {
-        this.realtyName = realtyNanme;
+    public void setRealtyName(String realtyName) {
+        this.realtyName = realtyName;
     }
 
     public int getLicenseNumber() {
@@ -62,13 +53,15 @@ public class CommercialRealties {
         this.description = description;
     }
 
-    public int getRealtyId() {
-        return realtyId;
+    public int getResidentId() {
+        return residentId;
     }
 
-    public void setRealtyId(int realtyId) {
-        this.realtyId = realtyId;
+    public void setResidentId(int residentId) {
+        this.residentId = residentId;
     }
+
+   
 
 
    
@@ -78,7 +71,7 @@ public class CommercialRealties {
             jobj.put("realtyName", realties.getRealtyName());
             jobj.put("licenseNumber", realties.getLicenseNumber());
             jobj.put("description", realties.getDescription());
-            jobj.put("realtyid", realties.getRealtyId());
+            jobj.put("residentId",realties.getResidentId());
         } catch (JSONException ex) {
             Logger.getLogger(Realty.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -60,12 +60,13 @@ public class ResidentDAO {
             resident.setAddress(address + "," + resident.getAddress());
             if(checkResidentAddress(resident.getAddress())){
             //insert Resident query
-            String insertResident = "insert into resident(ownerid,realtyid,residentid,address) values(?,?,?,?);";
+            String insertResident = "insert into resident(ownerid,realtyid,residentid,address,realty_type) values(?,?,?,?,?);";
             PreparedStatement pstmt2 = c.prepareStatement(insertResident, Statement.RETURN_GENERATED_KEYS);
             pstmt2.setInt(1, resident.getOwnerId());
             pstmt2.setInt(2, resident.getRealtyId());
             pstmt2.setInt(3, resident.getResidentId());
             pstmt2.setString(4, resident.getAddress());
+            pstmt2.setBoolean(5, resident.getRealtyType());
             pstmt2.executeUpdate();
             ResultSet rsu = pstmt2.getGeneratedKeys();
             rsu.next();
