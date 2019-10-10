@@ -15,9 +15,9 @@ public class Resident {
     private String description;
     private boolean realtyType;
 
-    public boolean isRealtyType() {
-        return realtyType;
-    }
+//    public boolean isRealtyType() {
+//        return realtyType;
+//    }
 
     public int getId() {
         return id;

@@ -60,6 +60,10 @@
         <servlet-name>InsertCommercialRealtiesServlet</servlet-name>
         <servlet-class>servlet.InsertCommercialRealtiesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>displayCommercialRealtiesInfo</servlet-name>
+        <servlet-class>servlet.displayCommercialRealtiesInfo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletlogin</servlet-name>
         <url-pattern>/servletlogin</url-pattern>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>InsertCommercialRealtiesServlet</servlet-name>
         <url-pattern>/InsertCommercialRealtiesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>displayCommercialRealtiesInfo</servlet-name>
+        <url-pattern>/displayCommercialRealtiesInfo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

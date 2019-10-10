@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javaClasses.Category;
 import javaClasses.CommercialRealties;
 
 /**
@@ -16,37 +17,59 @@ import javaClasses.CommercialRealties;
  * @author esra1996
  */
 public class CommercialRealtiesDAO {
-//    public static Boolean checklicenseNumber(CommercialRealties realties) throws Exception {
-//        Connection c = PostgreSql.getConnection();
-//        String sql = "select licenseNumber from commercialRealties where licenseNumber=?";
-//        PreparedStatement pstmt = c.prepareStatement(sql);
-//        pstmt.setInt(1, realties.getLicenseNumber());
-//     
-//        ResultSet rs = pstmt.executeQuery();
-//        return !rs.next();
-//    }
+    public static Boolean checklicenseNumber(CommercialRealties  commercialrealties) throws Exception {
+        Connection c = PostgreSql.getConnection();
+        String sql = "select licenseNumber from commercialRealties where licenseNumber=?";
+        PreparedStatement pstmt = c.prepareStatement(sql);
+        pstmt.setInt(1, commercialrealties.getLicenseNumber());
+     
+        ResultSet rs = pstmt.executeQuery();
+        return !rs.next();
+    }
     
-        public static int insertCommercialRealties(CommercialRealties realties) throws Exception {
+        public static int insertCommercialRealties(CommercialRealties commercialrealties) throws Exception {
         int id = 0;
+        
         Connection con = PostgreSql.getConnection();
-   
+     
+   if(checklicenseNumber(commercialrealties)){
             
-        String sql = "INSERT INTO public.commercialrealties(\n" +
-"            id, realtyname, licensenumber, description, residentid)\n" +
-"    VALUES (?, ?, ?, ?, ?, ?);";
+        String sql = "insert  into commercialrealties(realtyname, licensenumber, description, residentid) VALUES (?,?,?,?);";
         PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-         pstmt.setString(1,realties.getRealtyName());
-         pstmt.setInt(2,realties.getLicenseNumber());
-         pstmt.setString(3,realties.getDescription());
-         pstmt.setInt(4, realties.getResidentId());
+         pstmt.setString(1,commercialrealties.getRealtyName());
+         pstmt.setInt(2,commercialrealties.getLicenseNumber());
+         pstmt.setString(3,commercialrealties.getDescription());
+         pstmt.setInt(4, commercialrealties.getResidentId());
          pstmt.executeUpdate();
          ResultSet rsu = pstmt.getGeneratedKeys();
-
          rsu.next();
-        id=rsu.getInt(1);
+         id=rsu.getInt(1);
+     
+       
+    }else{
+         System.out.println("error");
+
+   }
+    return id;
+        }
         
-    
+            public static CommercialRealties displayCommercialRealtiesInfo(int CommercialRealtiesid) throws Exception {
+        CommercialRealties CommercialRealties = null;
+        Category category=null;
         
-        return id;
+        Connection c = PostgreSql.getConnection();
+        String sql = "select commercialrealties.realtyname,category.name,commercialrealties.description from commercialrealties\n" +
+"inner join category on category.catid = commercialRealties.id";
+        PreparedStatement pstmt = c.prepareStatement(sql);
+        pstmt.setInt(1, CommercialRealtiesid);
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+        //    CommercialRealties = new CommercialRealties();
+          CommercialRealties.setRealtyName(rs.getString("realtyName"));
+          category.setName(rs.getString("name"));
+          CommercialRealties.setDescription(rs.getString("description"));
+            
+        }
+        return CommercialRealties;
     }
 }
