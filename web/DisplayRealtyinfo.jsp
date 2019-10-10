@@ -76,7 +76,7 @@
                 <div class="card-body">
                     <div class="row mr-5 ">              
                         <div class="col-4 mt-2 pr-0">
-                            <form class="Display-realty form-group text-right mr-3 " >
+                            <form class="Display-realty form-group text-right mr-3 " id="display">
                                 <div class="form-row mb-3">
                                     <div class="col-4">
                                         <label class="col-form-label">  رقم العقار</label>
@@ -91,14 +91,39 @@
                                     <div class="col-form-label" id="address">
                                     </div>
                                 </div>
-                                <div class="form-row mb-3">
+<!--                                <div class="form-row mb-3">
                                     <div class="col-4">
                                         <label class="col-form-label"> الوصف العقار:</label>   
                                     </div> 
                                       <div class="col-form-label" id="description">
                                     </div> 
+                                </div>-->
+                               <!--<input class="btn float-left" type="submit" value="اضافة">-->
+                         <div class="form-row mb-3">
+                                    <div class="col-4">
+                                        <label id="des" class="col-form-label"> الوصف :</label> 
+                                          
+                                    </div> 
+                                    <div class="col-form-label" id="description">
+                                    <!--<textarea id="description" class="form-control" rows="3" data-toggle="tooltip" title="ادخل التعديل "></textarea>-->
+                                    </div>    
+                                     <div class="form-row mb-3">
+                                    <div class="col-4">
+                                        <label id="lid" class="col-form-label"> تعديل الوصف:</label> 
+                                          
+                                    </div> 
+                                    <!--<div class="col-form-label" id="description">-->
+                                    <textarea  class="form-control" id="updatedescription"  title="ادخل التعديل "></textarea>
+                                    </div>    
                                 </div>
-                               <input class="btn float-left" type="submit" value="اضافة">
+                                <div class="col-4">
+                                      <div>
+                                        <input id="update" class="col-form-label" value="تعديل">  
+                                    </div>
+                                    <div>
+                                        <input id="subupdate" class="col-form-label"  name="submit" type="submit" value="حفظ">  
+                                    </div>
+                                    </div>
                             </form>
                         </div>          
                         <div class="col-8"data-toggle="tooltip" data-placement="top" title="حد موقع عقارك على الخريطة">
@@ -113,6 +138,8 @@
         <script src="js/popper.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/DisplayRealtyinfo.js"></script>
+         <script src="js/updateRealtyinfo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoo2pQ0D9cwpMAgIoHkilDLP2O5psQ4Wg"></script>
    
 </html>

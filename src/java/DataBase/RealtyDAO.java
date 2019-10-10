@@ -21,7 +21,8 @@ public class RealtyDAO {
         ResultSet rs = pstmt.executeQuery();
         return !rs.next();
     }
- public static Boolean checklicenseNumber(CommercialRealties commercialRealties) throws Exception {
+
+    public static Boolean checklicenseNumber(CommercialRealties commercialRealties) throws Exception {
         Connection c = PostgreSql.getConnection();
         String sql = "select licenseNumber from commercialRealties where licenseNumber=?";
         PreparedStatement pstmt = c.prepareStatement(sql);
@@ -29,6 +30,7 @@ public class RealtyDAO {
         ResultSet rs = pstmt.executeQuery();
         return !rs.next();
     }
+
     public static Boolean checkUserRealtyCount(Realty realty) throws Exception {
         Connection c = PostgreSql.getConnection();
         String sql = "select COUNT(*) as count from realty where ownerid=?";
@@ -48,7 +50,7 @@ public class RealtyDAO {
         PreparedStatement pstmt4 = null;
         String address;
         int id = 0;
-
+        
         c = PostgreSql.getConnection();
         Marker marker = realty.getPosition();
         double lng = marker.getLng();
@@ -123,7 +125,7 @@ public class RealtyDAO {
     }
 
     public static Realty getRealtyinfo(int realtyid) throws Exception {
-        Realty realty=null;
+        Realty realty = null;
         Connection c = PostgreSql.getConnection();
         String sql = "select realtynumber,St_x(position) as lng, st_y(position) as lat,address,description from realty where id=?";
         PreparedStatement pstmt = c.prepareStatement(sql);
@@ -137,7 +139,7 @@ public class RealtyDAO {
             realty.setPosition(marker);
             realty.setAddress(rs.getString("address"));
             realty.setDescription(rs.getString("description"));
-        return realty;
+            return realty;
         }
         rs.close();
         pstmt.close();
@@ -170,32 +172,67 @@ public class RealtyDAO {
 
     public static ArrayList<Realty> getAllRealty(int ownerId) throws Exception {
         ArrayList<Realty> list = new ArrayList<>();
-                  Connection c = getConnection();
-            String sql = "select id,realtynumber,St_x(position) as lng, st_y(position) as lat,address,description from realty where ownerid=?";
+        Connection c = getConnection();
+        String sql = "select id,realtynumber,St_x(position) as lng, st_y(position) as lat,address,description from realty where ownerid=?";
 
-            PreparedStatement pstmt = c.prepareStatement(sql);
-            pstmt.setInt(1, ownerId);
-            ResultSet rs = pstmt.executeQuery();
+        PreparedStatement pstmt = c.prepareStatement(sql);
+        pstmt.setInt(1, ownerId);
+        ResultSet rs = pstmt.executeQuery();
 
-            while (rs.next()) {
-                Realty realty = new Realty();
-                 realty.setId(rs.getInt("id"));
+        while (rs.next()) {
+            Realty realty = new Realty();
+            realty.setId(rs.getInt("id"));
             realty.setRealtyNumber(rs.getInt("realtynumber"));
             Marker marker = new Marker(rs.getDouble("lng"), rs.getDouble("lat"));
             realty.setPosition(marker);
             realty.setAddress(rs.getString("address"));
             realty.setDescription(rs.getString("description"));
-                list.add(realty);
-            }
+            list.add(realty);
+        }
 //            System.out.print(list.get(0));
-            rs.close();
-            pstmt.close();
-            c.close();
- 
+        rs.close();
+        pstmt.close();
+        c.close();
+
         return list;
     }
-    
-    
+
+    public static boolean editRealtyinfo(Realty realty) throws Exception {
+//        Realty realty = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs;
+        Connection c = PostgreSql.getConnection();
+        String sql = "UPDATE public.realty SET description=? WHERE id=?";
+        boolean rowUbdated = false;
+        pstmt = c.prepareStatement(sql);
+        pstmt.setString(1, realty.getDescription());
+        pstmt.setInt(2, realty.getId());
+
+        rowUbdated = pstmt.executeUpdate() > 0;
+        pstmt.close();
+        c.close();
+
+        return rowUbdated;
+    }
+
+    public static  boolean updateeditRealtyinfo(Realty realty) throws Exception {
+        PreparedStatement pstmt = null;
+        ResultSet rs;
+        Connection c = PostgreSql.getConnection();
+        String sql = "UPDATE public.realty SET description=? WHERE id=?";
+                boolean rowUbdated = false;
+
+        pstmt = c.prepareStatement(sql);
+        pstmt.setString(1,  realty.getDescription());
+        pstmt.setInt(2, realty.getId());
+       rowUbdated = pstmt.executeUpdate() > 0;
+        pstmt.close();
+        c.close();
+
+        return rowUbdated;
+    }
+}
+
 //    public static int insertCommercialRealties(CommercialRealties realties) throws Exception {
 //       int licensenumber;
 //        Connection con = PostgreSql.getConnection();
@@ -219,4 +256,4 @@ public class RealtyDAO {
 //         pstmt.close();
 //        return 1;
 //    }
-}
+

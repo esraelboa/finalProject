@@ -9,9 +9,10 @@ public class PostgreSql {
     private static final String hostname = "jdbc:postgresql://localhost:5432/finalProject";
     private static final String username =  "admin";
     private static final String password = "12345";
+    
     //basma soomahostname="jdbc:postgresql://localhost:5432/finalProject"
-//    private static final String sooma = "sooma";
-//    private static final String somapassword = "basmasalem1995";
+    private static final String sooma = "sooma";
+    private static final String somapassword = "basmasalem1995";
     
     //esraabo esrahostname="jdbc:postgresql://localhost:5432/finalProject"
     private static final String esra = "esra";
@@ -23,7 +24,7 @@ public class PostgreSql {
     public static Connection getConnection() throws Exception {
         Connection con = null;
         Class.forName(driverName);
-        con = DriverManager.getConnection(hostname, esra,esrapassword);
+        con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/finalProject", sooma,somapassword);
         if (con != null) {
             return con;
         } else {

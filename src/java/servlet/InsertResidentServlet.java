@@ -51,7 +51,7 @@ public class InsertResidentServlet extends HttpServlet {
                 resident.setOwnerId(user.getId());
                 resident.setRealtyId(Integer.parseInt(request.getParameter("realtyid")));
                 resident.setAddress(request.getParameter("address"));
-                resident.setRealtyType(Boolean.parseBoolean(request.getParameter("realtyType")));
+                resident.setRealtytype(Integer.parseInt(request.getParameter("realtyType")));
 
                 //check email validalty         
                 if (new Validation().val_email(email)) {

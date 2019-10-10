@@ -66,7 +66,7 @@ public class ResidentDAO {
             pstmt2.setInt(2, resident.getRealtyId());
             pstmt2.setInt(3, resident.getResidentId());
             pstmt2.setString(4, resident.getAddress());
-            pstmt2.setBoolean(5, resident.getRealtyType());
+            pstmt2.setInt(5, resident.getRealtytype());
             pstmt2.executeUpdate();
             ResultSet rsu = pstmt2.getGeneratedKeys();
             rsu.next();
