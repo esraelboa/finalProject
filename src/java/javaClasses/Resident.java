@@ -13,7 +13,7 @@ public class Resident {
     private int residentId;
     private String address;
     private String description;
-    private boolean realtyType;
+    private int realtytype;
 
 //    public boolean isRealtyType() {
 //        return realtyType;
@@ -65,22 +65,22 @@ public class Resident {
     public void setDescription(String description) {
         this.description = description;
     }
-      public void setRealtyType(boolean realtyType) {
-        this.realtyType = realtyType;
+
+    public int getRealtyType() {
+        return realtytype;
     }
-   
-    
-     public boolean getRealtyType() {
-        return realtyType;
+
+    public void setRealtyType(int realtytype) {
+        this.realtytype = realtytype;
     }
-    
+
     public JSONObject convetToJson(Resident resident) {
         JSONObject jobj = new JSONObject();
         try {
             jobj.put("id",resident.getId());
             jobj.put("address", resident.getAddress());
             jobj.put("description", resident.getDescription());
-            jobj.put("realtyType",resident.getRealtyType());
+            jobj.put("realtytype",resident.getRealtyType());
         } catch (JSONException ex) {
             Logger.getLogger(Realty.class.getName()).log(Level.SEVERE, null, ex);
         }

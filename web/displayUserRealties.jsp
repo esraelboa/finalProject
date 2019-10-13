@@ -105,7 +105,7 @@
                                 <label class="">نوع العقار</label>
                             </div>
                             <div class="col-6">
-                                <input id="realtyType" class="form-control" type="text" required>
+                                <input id="realtytype" class="form-control" type="text" required>
                             </div>   
                         </div>
                     </form>

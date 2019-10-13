@@ -54,7 +54,7 @@ $(document).ready(function () {
   var realtyid= $('.AddResbtn').val(),
       email=$('#email').val(),
       address=$('#address').val(),
-      realtyType=$('#RealtyType').val();
+      realtytype=$('#realtytype').val();
       
         $.ajax({
             url: "http://localhost:8080/finalPojest/InsertResidentServlet",
@@ -63,7 +63,7 @@ $(document).ready(function () {
                 realtyid:realtyid,
                 email: email,
                 address: address,
-                realtyType: realtyType
+                realtytype: realtytype
             },
             dataType: "json",
             success: function (result) {
