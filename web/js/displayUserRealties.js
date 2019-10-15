@@ -55,7 +55,7 @@ $(document).ready(function () {
       email=$('#email').val(),
       address=$('#address').val(),
       realtytype=$('#realtytype').val();
-      
+      console.log(realtytype);
         $.ajax({
             url: "http://localhost:8080/finalPojest/InsertResidentServlet",
             type: 'POST',

@@ -6,7 +6,7 @@
 package servlet;
 
 import DataBase.CommercialRealtiesDAO;
-import DataBase.ResidentDAO;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javaClasses.CommercialRealties;

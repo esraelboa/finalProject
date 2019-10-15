@@ -74,6 +74,8 @@ public class Resident {
         this.realtytype = realtytype;
     }
 
+   
+
     public JSONObject convetToJson(Resident resident) {
         JSONObject jobj = new JSONObject();
         try {

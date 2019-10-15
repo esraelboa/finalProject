@@ -20,6 +20,15 @@ public class CommercialRealties {
     private int licenseNumber;
     private String description;
     private int residentId;
+    private int categoryId;
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public int getId() {
         return id;
@@ -72,6 +81,7 @@ public class CommercialRealties {
             jobj.put("licenseNumber", realties.getLicenseNumber());
             jobj.put("description", realties.getDescription());
             jobj.put("residentId",realties.getResidentId());
+            jobj.put("categoryId", realties.getCategoryId());
         } catch (JSONException ex) {
             Logger.getLogger(Realty.class.getName()).log(Level.SEVERE, null, ex);
         }

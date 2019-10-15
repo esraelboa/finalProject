@@ -46,6 +46,7 @@ public class InsertResidentServlet extends HttpServlet {
 
                 //getting data from request and session
                 User user = (User) session.getAttribute("user");
+                System.out.println(user.getId());
                 Resident resident = new Resident();
                 String email = request.getParameter("email");
                 resident.setOwnerId(user.getId());

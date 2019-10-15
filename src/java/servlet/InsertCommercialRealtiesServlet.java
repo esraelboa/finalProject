@@ -50,6 +50,7 @@ public class InsertCommercialRealtiesServlet extends HttpServlet {
             realtie.setLicenseNumber(Integer.parseInt(request.getParameter("licenseNumber")));
             realtie.setDescription(request.getParameter("description"));
             realtie.setResidentId(Integer.parseInt(request.getParameter("residentId")));
+            realtie.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
            
        
      reaaltiesId = CommercialRealtiesDAO.insertCommercialRealties(realtie);
