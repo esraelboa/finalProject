@@ -40,7 +40,7 @@ public class displayCommercialRealtiesInfo extends HttpServlet {
 //            response.setContentType("application/json;charset=UTF-8");
 //        JSONObject json = new JSONObject();
 //        try {
-//            HttpSession session = request.getSession(false);
+//            HttpSession session = request.getSession();
 //            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
 //                json.put("key", -1);
 //                json.put("message", "invalided session");

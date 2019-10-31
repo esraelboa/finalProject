@@ -47,8 +47,6 @@ var opt = {
                     map.setCenter(latlng);
                     map.setZoom(17);
                     placeMarker(latlng);
-//                  alert(result['lat']);
-//                  alert(result['lng']);
                   
             },
             error: function () {

@@ -5,12 +5,19 @@
  */
 package servlet;
 
+import DataBase.CategoryDAO;
+import DataBase.CommercialRealtiesDAO;
+import DataBase.RealtyDAO;
 import DataBase.ResidentDAO;
 import java.io.IOException;
+import java.util.ArrayList;
+import javaClasses.Realty;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -30,13 +37,37 @@ public class test extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("application/json;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
-        try { 
-            
-           int i= ResidentDAO.updateResidentInfo("cat cat cat ",5);
-           json.put("i", i);
-  response.getWriter().write(json.toString());          
+        try {
+            HttpSession session = request.getSession(false);
+            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
+                json.put("key", -1);
+                json.put("message", "invalided session");
+            } else {
+                String name = request.getParameter("name");
+                int id = CategoryDAO.insertCategory(name);
+                if (id > 0) {
+                    json.put("id", id);
+                    json.put("key", 1);
+                    json.put("message", "Category inserted successfully");
+                } else {
+                    json.put("key", 0);
+                    json.put("message", "error ,not exites address");
+                }
+            }
+            response.getWriter().write(json.toString());
+
+//           int i= ResidentDAO.updateResidentInfo("cat cat cat ",5);
+//           json.put("i", i);
+//   ArrayList<Realty> l= CommercialRealtiesDAO.searchForAddress(request.getParameter("address"));
+//                if (l.size() > 0) {
+//                    JSONArray ja = new Realty().displayAllRealty(l);
+//                    json.put("realties", ja);
+//                } else {
+//                    json.put("key", 0);
+//                    json.put("message", "error ,not exites address");
+//                }
 //           HttpSession session = request.getSession(false);
 //            if (session == null || !request.isRequestedSessionIdValid()) {
 //                json.put("key", -1);

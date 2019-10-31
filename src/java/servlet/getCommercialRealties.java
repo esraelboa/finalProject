@@ -1,7 +1,13 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package servlet;
 
-import DataBase.RealtyDAO;
+import DataBase.CommercialRealtiesDAO;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaClasses.Realty;
@@ -9,41 +15,42 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class UpdateRealtyinfo extends HttpServlet {
+/**
+ *
+ * @author esra
+ */
+public class getCommercialRealties extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
-        Realty realty = new Realty();
         JSONObject json = new JSONObject();
         try {
-            HttpSession session = request.getSession(false);
-            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
-                json.put("key", -1);
-                json.put("message", "invalided session");
+            ArrayList<Realty> l = CommercialRealtiesDAO.searchForAddress(request.getParameter("address"));
+            if (l.size() > 0) {
+                JSONArray ja = new Realty().displayAllRealty(l);
+                json.put("realties", ja);
             } else {
-                int id = Integer.parseInt(request.getParameter("id"));
-                realty.setId(id);
-                realty.setDescription(request.getParameter("description"));
-                String dis = request.getParameter("description");
-                boolean b = RealtyDAO.updateeditRealtyinfo(realty);
-
-                if (b == true) {
-                    json.put("id", request.getParameter("id"));
-                    json.put("dis", request.getParameter("description"));
-                    json.put("key", 1);
-                    json.put("message", "تم التعديل");
-                } else {
-                    json.put("key", 0);
-                    json.put("message", "حدث خطأ في التعديل اعد المحاوله مره اخري");
-                }
-                response.getWriter().write(json.toString());
+                json.put("key", 0);
+                json.put("message", "error ,not exites address");
             }
+
+            response.getWriter().write(json.toString());
         } catch (Exception ex) {
-            Logger.getLogger(DisplayRealtyinfo.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
+            Logger.getLogger(getCommercialRealties.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -132,14 +132,14 @@
     <footer id="footer" class="page-footer bg-light mt-2">
         <div class="footer-copyright text-center py-3">
             2019-2020
-            <p> DEV : EBE</p>
+            <!--<p> DEV : EBE</p>-->
         </div>
     </footer>
     <!--end of footer-->
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoo2pQ0D9cwpMAgIoHkilDLP2O5psQ4Wg">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj6bSQBi8o4w7eUm5a8cJ-EpTmf4n_WTo">
     </script>
     <script src="js/script.js"></script>
 </body>

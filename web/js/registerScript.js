@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
 //    error html element
     $('#fname_error').hide();
     $('#lname_error').hide();

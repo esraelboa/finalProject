@@ -140,6 +140,6 @@
         <script src="js/DisplayRealtyinfo.js"></script>
          <script src="js/updateRealtyinfo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoo2pQ0D9cwpMAgIoHkilDLP2O5psQ4Wg"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj6bSQBi8o4w7eUm5a8cJ-EpTmf4n_WTo"></script>
    
 </html>

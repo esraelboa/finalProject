@@ -8,7 +8,6 @@ package servlet;
 
 import DataBase.CommercialRealtiesDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javaClasses.CommercialRealties;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +39,7 @@ public class InsertCommercialRealtiesServlet extends HttpServlet {
         int reaaltiesId;
         try{
         HttpSession session =request.getSession();
-        if(session == null || !request.isRequestedSessionIdValid()){
+     if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")){  
            json.put("key", -1);
            json.put("message", "invalided session");
            

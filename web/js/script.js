@@ -8,56 +8,80 @@ $(document).ready(function () {
     var map = new google.maps.Map(document.getElementById('map'), opt);
 //create marker and add to map 
     var marker = new google.maps.Marker({
-        position: {lat: 32.885353, lng: 13.180161},
-        Draggable: true,
         map: map
     });
     var infowindow = new google.maps.InfoWindow();
 //places marker in spesfic position
-    function placeMarker(latLng,desc) {
+    function placeMarker(latLng, desc) {
         marker.setPosition(latLng);
         marker.setDraggable(false);
         marker.setMap(map);
         infowindow.setContent(desc);
-                    infowindow.open(map, marker); 
+        infowindow.open(map, marker);
     }
     ;
-//click event for map to add marker in spesfic position    
-    google.maps.event.addListener(map, 'click', function (e) {
-        placeMarker(e.latLng);
-    });
-//drage event to change marker postion in nes position    
-    google.maps.event.addListener(marker, 'dragend', function (e) {
-        placeMarker(e.latLng);
-    });
+    //places marker for commercial Realties in spesfic position   
+    function placeCMarker(latLng, desc) {
+        var marker = new google.maps.Marker({map: map});
+        var infowindow = new google.maps.InfoWindow();
+        marker.setPosition(latLng);
+        marker.setDraggable(false);
+        marker.setMap(map);
+        infowindow.setContent(desc);
+        infowindow.open(map, marker);
+    }
+    ;
     //search request 
     $('#search').submit(function (e) {
         //get fileds and marker values 
-        var Address = $('#address').val();
-        if(Address===''){
-             alert('الحقل فارغ الرجاء ادخال العنوان الالكتروني للعقارات');
-        }else{
-        e.preventDefault();
-        $.ajax({
-            url: "http://localhost:8080/finalPojest/SearchServlet",
-            type: "POST",
-            data: {address: Address},
-            dataType: "json",
-            success: function (result) {
-                if (result['key'] === 1) {
-                    var latlng = {lng: result['Lat'], lat: result['Lng']};
-                    map.setCenter(latlng);
-                    map.setZoom(17);
-                    placeMarker(latlng,"وصف مكان العقار :<br>" + result['Description']);
-                   
-                } else if (result['key'] === 0) {
-                    alert("لايوجد عقار بهذا العنوان");
+        var address = $('#address').val();
+        var a = address.split(".");
+        if (address === '') {
+            alert('الحقل فارغ الرجاء ادخال العنوان الالكتروني للعقارات');
+        } else if (a.length >= 4) {
+            e.preventDefault();
+            $.ajax({
+                url: "http://localhost:8080/finalPojest/SearchServlet",
+                type: "GET",
+                data: {address: address},
+                dataType: "json",
+                success: function (result) {
+                    if (result['key'] === 1) {
+                        var latlng = {lng: result['Lat'], lat: result['Lng']};
+                        map.setCenter(latlng);
+                        map.setZoom(17);
+                        placeMarker(latlng, "وصف مكان العقار :<br>" + result['Description']);
+                    } else if (result['key'] === 0) {
+                        alert("لايوجد عقار بهذا العنوان");
+                    }
+                },
+                error: function () {
+                    console.log("Error");
                 }
-            },
-            error: function () {
-                console.log("Error");
-            }
-        });
+            });
+        } else if (a.length < 4) {
+            e.preventDefault();
+            $.ajax({
+                url: "http://localhost:8080/finalPojest/getCommercialRealties",
+                type: "GET",
+                data: {address: address},
+                dataType: "json",
+                success: function (result) {
+                    if (result['key'] === 0) {
+                        alert("لايوجد عقار بهذا العنوان");
+                    } else {
+                        var realties = result["realties"];
+                        for (var i = 0; i < realties.length; i++) {
+                            var latlng = {lng: realties[i].lat, lat: realties[i].lng};
+                            map.setCenter(latlng);
+                            placeCMarker(latlng, realties[i].description + '<br> <a href="#">عرض تفاصيل</a>');
+                        }
+                    }
+                },
+                error: function () {
+                    console.log("Error");
+                }
+            });
         }
     });
 });

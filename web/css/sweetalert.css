@@ -30,7 +30,7 @@
     height: 100%;
   }
 
-  &--show-modal {
+  &--show-modal{
     opacity: 1;
     pointer-events: auto;
 

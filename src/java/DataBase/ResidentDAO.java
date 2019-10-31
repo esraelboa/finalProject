@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javaClasses.Marker;
+import javaClasses.Realty;
 import javaClasses.Resident;
 
 /**
@@ -39,14 +41,15 @@ public class ResidentDAO {
 //        rs.next();
 //        return rs.getInt("count") == 0;
 //    }
-    public static Boolean checkResidentAddress(String address) throws Exception{
-     Connection c = PostgreSql.getConnection();
+    public static Boolean checkResidentAddress(String address) throws Exception {
+        Connection c = PostgreSql.getConnection();
         String sql = "select * from resident where address=?";
         PreparedStatement pstmt = c.prepareStatement(sql);
-        pstmt.setString(1,address);
+        pstmt.setString(1, address);
         ResultSet rs = pstmt.executeQuery();
         return !rs.next();
     }
+
     public static int insertResident(Resident resident) throws Exception {
         int id = 0;
         Connection c = PostgreSql.getConnection();
@@ -58,19 +61,19 @@ public class ResidentDAO {
         if (rs.next()) {
             String address = rs.getString("address");
             resident.setAddress(address + "," + resident.getAddress());
-            if(checkResidentAddress(resident.getAddress())){
-            //insert Resident query
-            String insertResident = "insert into resident(ownerid,realtyid,residentid,address,realtytype) values(?,?,?,?,?);";
-            PreparedStatement pstmt2 = c.prepareStatement(insertResident, Statement.RETURN_GENERATED_KEYS);
-            pstmt2.setInt(1, resident.getOwnerId());
-            pstmt2.setInt(2, resident.getRealtyId());
-            pstmt2.setInt(3, resident.getResidentId());
-            pstmt2.setString(4, resident.getAddress());
-            pstmt2.setInt(5, resident.getRealtyType());
-            pstmt2.executeUpdate();
-            ResultSet rsu = pstmt2.getGeneratedKeys();
-            rsu.next();
-            id = rsu.getInt(1);
+            if (checkResidentAddress(resident.getAddress())) {
+                //insert Resident query
+                String insertResident = "insert into resident(ownerid,realtyid,residentid,address,realtytype) values(?,?,?,?,?);";
+                PreparedStatement pstmt2 = c.prepareStatement(insertResident, Statement.RETURN_GENERATED_KEYS);
+                pstmt2.setInt(1, resident.getOwnerId());
+                pstmt2.setInt(2, resident.getRealtyId());
+                pstmt2.setInt(3, resident.getResidentId());
+                pstmt2.setString(4, resident.getAddress());
+                pstmt2.setInt(5, resident.getRealtyType());
+                pstmt2.executeUpdate();
+                ResultSet rsu = pstmt2.getGeneratedKeys();
+                rsu.next();
+                id = rsu.getInt(1);
             }
         }
         return id;
@@ -93,16 +96,41 @@ public class ResidentDAO {
         return resident;
     }
 
-    public static int updateResidentInfo(String description,int id) throws Exception {
+    public static int updateResidentInfo(String description, int id) throws Exception {
         Connection c = PostgreSql.getConnection();
         String sql = "update resident\n"
-                    + "set description=?\n"
-                    + "where id=?";
+                + "set description=?\n"
+                + "where id=?";
         PreparedStatement pstmt = c.prepareStatement(sql);
         pstmt.setString(1, description);
         pstmt.setInt(2, id);
-       int effectedRows= pstmt.executeUpdate();
-       return effectedRows;
+        int effectedRows = pstmt.executeUpdate();
+        return effectedRows;
 
+    }
+
+    public static Realty searchForAddress(String address) throws Exception {
+        Realty realty = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
+        Connection c = PostgreSql.getConnection();
+        String sql = "select resident.id,st_x(realty.position) as lng , st_y(realty.position) as lat , resident.description\n"
+                + "from realty inner join resident on realty.id=resident.realtyid\n"
+                + "where resident.address like ?";
+        pstmt = c.prepareStatement(sql);
+        pstmt.setString(1, address);
+        rs = pstmt.executeQuery();
+        if (rs.next()) {
+            Marker marker = new Marker();
+            realty = new Realty();
+            realty.setId(rs.getInt("id"));
+            marker.setLng(rs.getDouble("lng"));
+            marker.setLat(rs.getDouble("lat"));
+            realty.setPosition(marker);
+            realty.setDescription(rs.getString("description"));
+        }
+        c.close();
+
+        return realty;
     }
 }

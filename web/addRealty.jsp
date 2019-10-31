@@ -60,7 +60,8 @@
                                         <label class="col-form-label"> المدينة:</label>
                                     </div>                         
                                     <div class="col-8">
-                                        <select id="cities" class="form-control pt-0 pb-0"></select>
+                                      طرابلس
+                                        <!--<select id="cities" class="form-control pt-0 pb-0"></select>-->
                                     </div>
                                 </div>
                                 <div class="form-row mb-3">
@@ -68,7 +69,8 @@
                                         <label class="col-form-label">المنطقة :</label> 
                                     </div>  
                                     <div class="col-8">
-                                        <select id="incity" class="form-control pt-0 pb-0"></select>
+                                        غوط الشعال
+                                        <!--<select id="incity" class="form-control pt-0 pb-0"></select>-->
                                     </div>
                                 </div>
                                 <div class="form-row mb-3">
@@ -99,6 +101,6 @@
         <script src="js/popper.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/addRealtyScript.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoo2pQ0D9cwpMAgIoHkilDLP2O5psQ4Wg"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj6bSQBi8o4w7eUm5a8cJ-EpTmf4n_WTo"></script>
     </body>
 </html>

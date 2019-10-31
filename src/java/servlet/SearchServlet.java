@@ -6,6 +6,7 @@
 package servlet;
 
 import DataBase.RealtyDAO;
+import DataBase.ResidentDAO;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,12 +36,26 @@ public class SearchServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
-               try {
+        try {
+            Realty realty = null;
+            String input = request.getParameter("address");
+            String[] a = input.split("[.,]");
+            switch (a.length) {
+                case 4:
+                    realty = RealtyDAO.searchForAddress(request.getParameter("address"));
+                    break;
+                case 5:
+                    realty = ResidentDAO.searchForAddress(request.getParameter("address"));
+                    break;
+                default:
+                    response.sendRedirect("getCommercialRealties?address="+input);
+                    break;
+            }
 
-       Realty realty = RealtyDAO.searchForAddress(request.getParameter("address"));
             if (realty != null) {
                 json.put("key", 1);
                 json.put("message", "address is available");
+                json.put("id", realty.getId());
                 json.put("Lng", realty.getPosition().getLng());
                 json.put("Lat", realty.getPosition().getLat());
                 json.put("Description", realty.getDescription());

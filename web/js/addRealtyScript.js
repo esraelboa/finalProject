@@ -3,8 +3,8 @@ $(document).ready(function () {
 //get select elemant 
     let cities = $('#cities');
     let incity = $('#incity');
-    const citiesUrl = 'http://localhost:8080/finalProject/getAllCityServlet?type=1';
-    const incityUrl = 'http://localhost:8080/finalProject/getAllCityServlet?type=2';
+    const citiesUrl = 'http://localhost:8080/finalPojest/getAllCityServlet?type=1';
+    const incityUrl = 'http://localhost:8080/finalPojest/getAllCityServlet?type=2';
     fillList(cities, citiesUrl);
     fillList(incity, incityUrl);
     var reatyid;

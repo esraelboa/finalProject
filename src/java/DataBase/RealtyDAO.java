@@ -7,10 +7,6 @@ import javaClasses.CommercialRealties;
 import javaClasses.Marker;
 import javaClasses.Realty;
 
-/**
- *
- * @author esra
- */
 public class RealtyDAO {
 
     public static Boolean checkRealtyNumber(Realty realty) throws Exception {
@@ -49,16 +45,15 @@ public class RealtyDAO {
         PreparedStatement pstmt3 = null;
         PreparedStatement pstmt4 = null;
         String address;
-        int id = 0;
-        
+        int id = 0;     
         c = PostgreSql.getConnection();
         Marker marker = realty.getPosition();
         double lng = marker.getLng();
         double lat = marker.getLat();
 // gets number of points in avaliable location where system allow it (Now in Tripoli )
         String getAddress = "select String_AGG(no::text,'.') as Address ,count(no) from "
-                + "(select no from citycoor where ST_Contains(citycoor.coor, St_setsrid(St_Point(?,?),4326))  order by fence_type_no ) as subquery ";
-
+     + "(select no from citycoor where ST_Contains(citycoor.coor, St_setsrid(St_Point(?,?),4326)) "
+     + " order by fence_type_no ) as subquery ";
         pstmt1 = c.prepareStatement(getAddress);
         pstmt1.setDouble(1, lng);
         pstmt1.setDouble(2, lat);
@@ -71,7 +66,6 @@ public class RealtyDAO {
         rs.close();
         //check if loction avaliable 
         if ((address != null && count == 3) && checkRealtyNumber(realty) && checkUserRealtyCount(realty)) {
-
             //update counter
             c.setAutoCommit(false);
             String updateCounter = "update citycoor \n"
@@ -81,7 +75,6 @@ public class RealtyDAO {
             pstmt2.setDouble(1, lng);
             pstmt2.setDouble(2, lat);
             pstmt2.executeUpdate();
-
             //select counter
             String getUpdatedCounter = "select counter from citycoor \n"
                     + "where  ST_Contains(citycoor.coor, St_setsrid(St_Point(?,?),4326)) and fence_type_no=3;";
@@ -92,10 +85,8 @@ public class RealtyDAO {
             rs2.next();
             int counter = rs2.getInt("counter");
             rs.close();
-
             //marge both point number and counter 
             realty.setAddress(address + "." + counter);
-
             //insert realty
             String insertRealty = "insert into realty(realtynumber,position,ownerid,address,description) \n"
                     + "values(?,st_setsrid(St_Point(?,?),4326),?,?,?);";
@@ -127,7 +118,8 @@ public class RealtyDAO {
     public static Realty getRealtyinfo(int realtyid) throws Exception {
         Realty realty = null;
         Connection c = PostgreSql.getConnection();
-        String sql = "select realtynumber,St_x(position) as lng, st_y(position) as lat,address,description from realty where id=?";
+        String sql = "select realtynumber,St_x(position) as lng, st_y(position) as lat,address,description"
+                   + " from realty where id=?";
         PreparedStatement pstmt = c.prepareStatement(sql);
         pstmt.setInt(1, realtyid);
         ResultSet rs = pstmt.executeQuery();
@@ -152,14 +144,15 @@ public class RealtyDAO {
         PreparedStatement pstmt;
         ResultSet rs;
         Connection c = PostgreSql.getConnection();
-        String sql = "select st_X(position) as lng , st_Y(position) as lat , description \n"
-                + "from realty where address =?";
+        String sql = "select id, st_X(position) as lng , st_Y(position) as lat , description \n"
+                   + "from realty where address =?";
         pstmt = c.prepareStatement(sql);
         pstmt.setString(1, address);
         rs = pstmt.executeQuery();
         if (rs.next()) {
             Marker marker = new Marker();
             realty = new Realty();
+            realty.setId(rs.getInt("id"));
             marker.setLng(rs.getDouble("lng"));
             marker.setLat(rs.getDouble("lat"));
             realty.setPosition(marker);
@@ -173,7 +166,8 @@ public class RealtyDAO {
     public static ArrayList<Realty> getAllRealty(int ownerId) throws Exception {
         ArrayList<Realty> list = new ArrayList<>();
         Connection c = getConnection();
-        String sql = "select id,realtynumber,St_x(position) as lng, st_y(position) as lat,address,description from realty where ownerid=?";
+        String sql = "select id,realtynumber,St_x(position) as lng, st_y(position) as lat"
+                   + ",address,description from realty where ownerid=?";
 
         PreparedStatement pstmt = c.prepareStatement(sql);
         pstmt.setInt(1, ownerId);
@@ -189,7 +183,6 @@ public class RealtyDAO {
             realty.setDescription(rs.getString("description"));
             list.add(realty);
         }
-//            System.out.print(list.get(0));
         rs.close();
         pstmt.close();
         c.close();
@@ -198,9 +191,9 @@ public class RealtyDAO {
     }
 
     public static boolean editRealtyinfo(Realty realty) throws Exception {
-//        Realty realty = null;
         PreparedStatement pstmt = null;
         ResultSet rs;
+        
         Connection c = PostgreSql.getConnection();
         String sql = "UPDATE public.realty SET description=? WHERE id=?";
         boolean rowUbdated = false;
@@ -232,28 +225,4 @@ public class RealtyDAO {
         return rowUbdated;
     }
 }
-
-//    public static int insertCommercialRealties(CommercialRealties realties) throws Exception {
-//       int licensenumber;
-//        Connection con = PostgreSql.getConnection();
-//         CommercialRealties commercialRealties = new CommercialRealties();
-//        String sql = "INSERT INTO public.commercialrealties(realtyname, licensenumber, description, img_rea, categoryid)VALUES (?, ?, ?, ?, ?)";
-//        PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-//         pstmt.setString(1,realties.getRealtyNanme());
-//         pstmt.setInt(2,realties.getLicenseNumber());
-//         pstmt.setString(3,realties.getDescription());
-//         pstmt.setString(4,realties.getImg_Rea());
-//         pstmt.setInt(5,realties.getCategoryId());
-//         ResultSet rsu = pstmt.executeQuery();
-//           rsu.next();
-//         licensenumber = rsu.getInt("LicenseNumber");
-//           rsu.close();
-//          
-//         if((licensenumber != 0) && checklicenseNumber(commercialRealties)){
-//        
-//    }
-//       
-//         pstmt.close();
-//        return 1;
-//    }
 

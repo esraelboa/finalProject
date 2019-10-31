@@ -56,6 +56,34 @@
         <servlet-name>InsertResidentServlet</servlet-name>
         <servlet-class>servlet.InsertResidentServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateRealtyinfo</servlet-name>
+        <servlet-class>servlet.UpdateRealtyinfo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getAllCategoriesServlet</servlet-name>
+        <servlet-class>servlet.getAllCategoriesServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getResidentInfoServlet</servlet-name>
+        <servlet-class>servlet.getResidentInfoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getCommercialRealties</servlet-name>
+        <servlet-class>servlet.getCommercialRealties</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>insertCategoryServlet</servlet-name>
+        <servlet-class>servlet.insertCategoryServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateCategoryServlet</servlet-name>
+        <servlet-class>servlet.UpdateCategoryServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateResidentInfoServlet</servlet-name>
+        <servlet-class>servlet.UpdateResidentInfoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletlogin</servlet-name>
         <url-pattern>/servletlogin</url-pattern>
@@ -111,6 +139,34 @@
     <servlet-mapping>
         <servlet-name>InsertResidentServlet</servlet-name>
         <url-pattern>/InsertResidentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateRealtyinfo</servlet-name>
+        <url-pattern>/UpdateRealtyinfo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getAllCategoriesServlet</servlet-name>
+        <url-pattern>/getAllCategoriesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getResidentInfoServlet</servlet-name>
+        <url-pattern>/getResidentInfoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getCommercialRealties</servlet-name>
+        <url-pattern>/getCommercialRealties</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>insertCategoryServlet</servlet-name>
+        <url-pattern>/insertCategoryServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateCategoryServlet</servlet-name>
+        <url-pattern>/UpdateCategoryServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateResidentInfoServlet</servlet-name>
+        <url-pattern>/UpdateResidentInfoServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

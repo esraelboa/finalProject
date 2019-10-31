@@ -21,7 +21,7 @@ public class login_servlet extends HttpServlet {
         try {
             JSONObject json = new JSONObject();
             //HttpSession session = request.getSession(false);
-            request.getSession(false).invalidate();
+            request.getSession().invalidate();
             Validation val = new Validation();
             //get user email and password from request
             String email = request.getParameter("email");
