@@ -84,6 +84,22 @@
         <servlet-name>UpdateResidentInfoServlet</servlet-name>
         <servlet-class>servlet.UpdateResidentInfoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DisplayCommercialRealtyInfo</servlet-name>
+        <servlet-class>servlet.DisplayCommercialRealtyInfo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getAllRealtyResidents</servlet-name>
+        <servlet-class>servlet.getAllRealtyResidents</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getAllCommercialRealties</servlet-name>
+        <servlet-class>servlet.getAllCommercialRealties</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateCommercialRealtyInfo</servlet-name>
+        <servlet-class>servlet.UpdateCommercialRealtyInfo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletlogin</servlet-name>
         <url-pattern>/servletlogin</url-pattern>
@@ -167,6 +183,22 @@
     <servlet-mapping>
         <servlet-name>UpdateResidentInfoServlet</servlet-name>
         <url-pattern>/UpdateResidentInfoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DisplayCommercialRealtyInfo</servlet-name>
+        <url-pattern>/DisplayCommercialRealtyInfo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getAllRealtyResidents</servlet-name>
+        <url-pattern>/getAllRealtyResidents</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getAllCommercialRealties</servlet-name>
+        <url-pattern>/getAllCommercialRealties</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateCommercialRealtyInfo</servlet-name>
+        <url-pattern>/UpdateCommercialRealtyInfo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

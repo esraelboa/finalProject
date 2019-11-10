@@ -5,8 +5,10 @@
  */
 package javaClasses;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,15 +21,15 @@ public class CommercialRealties {
     private String realtyName;
     private int licenseNumber;
     private String description;
-    private int residentId;
-    private int categoryId;
+    private Resident residentId;
+    private Category category;
 
-    public int getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public int getId() {
@@ -62,29 +64,34 @@ public class CommercialRealties {
         this.description = description;
     }
 
-    public int getResidentId() {
+    public Resident getResident() {
         return residentId;
     }
 
-    public void setResidentId(int residentId) {
+    public void setResident(Resident residentId) {
         this.residentId = residentId;
     }
 
-   
-
-
-   
      public JSONObject convetToJson(CommercialRealties realties) {
         JSONObject jobj = new JSONObject();
         try {
+            jobj.put("id",realties.getId());
             jobj.put("realtyName", realties.getRealtyName());
             jobj.put("licenseNumber", realties.getLicenseNumber());
             jobj.put("description", realties.getDescription());
-            jobj.put("residentId",realties.getResidentId());
-            jobj.put("categoryId", realties.getCategoryId());
+            jobj.put("resident",realties.getResident());
+            jobj.put("category", realties.getCategory().getName());
         } catch (JSONException ex) {
             Logger.getLogger(Realty.class.getName()).log(Level.SEVERE, null, ex);
         }
         return jobj;
     }
+     public JSONArray displayAllCommercialRealties(ArrayList<CommercialRealties> list) {
+        JSONArray jarr = new JSONArray();
+        for (int i = 0; i < list.size(); i++) {
+            jarr.put(convetToJson(list.get(i)));
+        }
+        return jarr;
+    }
+  
 }

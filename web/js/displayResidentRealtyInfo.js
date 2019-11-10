@@ -1,7 +1,7 @@
 $(document).ready(function () {
     //   get resident realty info   
     $.ajax({
-        url: " http://localhost:8080/finalPojest/getResidentInfoServlet",
+        url: " http://localhost:9090/finalPojest/getResidentInfoServlet",
         type: "GET",
         dataType: "json",
         success: function (result) {
@@ -23,7 +23,7 @@ $(document).ready(function () {
         var description = $('#textdescription').val(),
                 residentid = $('#residentId').html();
         $.ajax({
-            url: " http://localhost:8080/finalPojest/UpdateResidentInfoServlet",
+            url: " http://localhost:9090/finalPojest/UpdateResidentInfoServlet",
             type: 'POST',
             data: {
                 description: description,
@@ -46,7 +46,7 @@ $(document).ready(function () {
             $modal.modal("hide");
             $modal.on("hidden.bs.modal", function () {
                alert("تمت العملية بنجاح");
-                location.href = 'http://localhost:8080/finalPojest/displayResidentRealtyInfo.jsp';
+                location.href = 'http://localhost:9090/finalPojest/displayResidentRealtyInfo.jsp';
             });
         });
     });

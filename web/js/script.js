@@ -41,7 +41,7 @@ $(document).ready(function () {
         } else if (a.length >= 4) {
             e.preventDefault();
             $.ajax({
-                url: "http://localhost:8080/finalPojest/SearchServlet",
+                url: "http://localhost:9090/finalPojest/SearchServlet",
                 type: "GET",
                 data: {address: address},
                 dataType: "json",
@@ -50,7 +50,7 @@ $(document).ready(function () {
                         var latlng = {lng: result['Lat'], lat: result['Lng']};
                         map.setCenter(latlng);
                         map.setZoom(17);
-                        placeMarker(latlng, "وصف مكان العقار :<br>" + result['Description']);
+                        placeMarker(latlng, '<h5 class="t">وصف مكان العقار :</h5>' + result['Description']);
                     } else if (result['key'] === 0) {
                         alert("لايوجد عقار بهذا العنوان");
                     }
@@ -62,7 +62,7 @@ $(document).ready(function () {
         } else if (a.length < 4) {
             e.preventDefault();
             $.ajax({
-                url: "http://localhost:8080/finalPojest/getCommercialRealties",
+                url: "http://localhost:9090/finalPojest/getCommercialRealties",
                 type: "GET",
                 data: {address: address},
                 dataType: "json",
@@ -74,7 +74,9 @@ $(document).ready(function () {
                         for (var i = 0; i < realties.length; i++) {
                             var latlng = {lng: realties[i].lat, lat: realties[i].lng};
                             map.setCenter(latlng);
-                            placeCMarker(latlng, realties[i].description + '<br> <a href="#">عرض تفاصيل</a>');
+                            var content='<div id="iw_container"><div class="iw-title">'+realties[i].description+'</div></div>';
+                         //   placeCMarker(latlng, '<div class="card"> <h5 class="t">'+realties[i].description+'</h5>'+'<div class="card-body"> عرض تفاصيل </div></div>');
+                       placeCMarker(latlng,content);
                         }
                     }
                 },

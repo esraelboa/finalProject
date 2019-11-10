@@ -31,7 +31,7 @@ public class UpdateResidentInfoServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-               response.setContentType("application/json;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
         try {
             HttpSession session = request.getSession(false);
@@ -40,7 +40,7 @@ public class UpdateResidentInfoServlet extends HttpServlet {
                 json.put("message", "invalided session");
             } else {
                 String description = request.getParameter("description");
-                int residentid=Integer.parseInt(request.getParameter("residentid"));
+                int residentid = Integer.parseInt(request.getParameter("residentid"));
                 int effectedRow = ResidentDAO.updateResidentInfo(description, residentid);
                 if (effectedRow > 0) {
                     json.put("Key", 1);

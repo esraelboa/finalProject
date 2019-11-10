@@ -1,7 +1,9 @@
 package javaClasses;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -88,6 +90,12 @@ public class Resident {
         }
         return jobj;
     }
-
+ public JSONArray displayAllResidents(ArrayList<Resident> list) {
+        JSONArray jarr = new JSONArray();
+        for (int i = 0; i < list.size(); i++) {
+            jarr.put(convetToJson(list.get(i)));
+        }
+        return jarr;
+    }
   
 }

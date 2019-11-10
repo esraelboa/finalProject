@@ -1,4 +1,3 @@
-
 package servlet;
 
 import DataBase.CityDAO;
@@ -31,9 +30,8 @@ public class getAllCityServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         try {
-            JSONObject jsonCities = new JSONObject();
+            JSONArray jsonCities = new City().convertCitiestoJsonArry(CityDAO.getAllCities(Integer.parseInt(request.getParameter("type"))));
             City cities = new City();
-            jsonCities.put("citis", cities.convertCitiestoJsonArry(CityDAO.getAllCities(Integer.parseInt(request.getParameter("type")))));
             response.getWriter().write(jsonCities.toString());
         } catch (Exception ex) {
             System.out.print(ex.toString());

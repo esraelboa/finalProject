@@ -19,7 +19,7 @@
     <body>
         <!--check session validaty--> 
         <% if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")) {
-        response.sendRedirect("http://localhost:8080/finalPojest/loginForm.jsp");
+        response.sendRedirect("http://localhost:9090/finalPojest/loginForm.jsp");
         }%>
         <!--start of upper bar-->
        <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -59,19 +59,17 @@
                                     <div class="col-4">
                                         <label class="col-form-label"> المدينة:</label>
                                     </div>                         
-                                    <div class="col-8">
-                                      طرابلس
-                                        <!--<select id="cities" class="form-control pt-0 pb-0"></select>-->
+                                     <div class="col-8">
+                                        <select id="cities" class="form-control pt-0 pb-0"></select>
                                     </div>
                                 </div>
                                 <div class="form-row mb-3">
                                     <div class="col-4">
                                         <label class="col-form-label">المنطقة :</label> 
                                     </div>  
-                                    <div class="col-8">
-                                        غوط الشعال
-                                        <!--<select id="incity" class="form-control pt-0 pb-0"></select>-->
-                                    </div>
+                                   <div class="col-8">
+                                        <select id="incity" class="form-control pt-0 pb-0"></select>
+                                   </div>
                                 </div>
                                 <div class="form-row mb-3">
                                     <div class="col-4">

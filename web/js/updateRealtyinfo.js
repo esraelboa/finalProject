@@ -30,7 +30,7 @@ $(document).ready(function () {
         e.preventDefault();
         var that = $(this);
         $.ajax({
-            url: 'http://localhost:8080/finalPojest/UpdateRealtyinfo',
+            url: 'http://localhost:9090/finalPojest/UpdateRealtyinfo',
             type: "GET",
             data: {
                 id: id,
@@ -50,7 +50,7 @@ $(document).ready(function () {
                         animation: "slide-from-top"
                     });
 
-                    location.replace('http://localhost:8080/finalPojest/DisplayRealtyinfo.jsp' + "?id=" + id);
+                    location.replace('http://localhost:9090/finalPojest/DisplayRealtyinfo.jsp' + "?id=" + id);
                 } else if (result['key'] === 0) {
 //                    alert(result['message']);
                     Swal.fire({

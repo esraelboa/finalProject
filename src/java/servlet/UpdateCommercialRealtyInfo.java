@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,10 +6,11 @@
 package servlet;
 
 import DataBase.CommercialRealtiesDAO;
+import DataBase.ResidentDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javaClasses.Category;
 import javaClasses.CommercialRealties;
-import javaClasses.Resident;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +20,9 @@ import org.json.JSONObject;
 
 /**
  *
- * @author esra1996
+ * @author esra
  */
-public class InsertCommercialRealtiesServlet extends HttpServlet {
+public class UpdateCommercialRealtyInfo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,44 +35,34 @@ public class InsertCommercialRealtiesServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          response.setContentType("application/json;charset=UTF-8");
+         response.setContentType("application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
-        CommercialRealties  realtie=new  CommercialRealties();
-        int reaaltiesId;
-        try{
-        HttpSession session =request.getSession();
-     if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")){  
-           json.put("key", -1);
-           json.put("message", "invalided session");
-           
-        }else{
-          
-            realtie.setRealtyName(request.getParameter("realtyName"));
-            realtie.setLicenseNumber(Integer.parseInt(request.getParameter("licenseNumber")));
-            realtie.setDescription(request.getParameter("description"));
-            Resident resident=new Resident();
-            resident.setId(Integer.parseInt(request.getParameter("residentId")));
-            realtie.setResident(resident);
-            Category category=new Category();
-            category.setCatId(Integer.parseInt(request.getParameter("categoryId")));
-            realtie.setCategory(category);
-           
-       
-     reaaltiesId = CommercialRealtiesDAO.insertCommercialRealties(realtie);
+        try {
+//            HttpSession session = request.getSession(false);
+//            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
+//                json.put("key", -1);
+//                json.put("message", "invalided session");
+//            } else {
+               CommercialRealties commercialRealty =new CommercialRealties();
+               commercialRealty.setId(Integer.parseInt(request.getParameter("id")));
+               commercialRealty.setRealtyName(request.getParameter("realtyName"));
+               commercialRealty.setDescription(request.getParameter("description"));
+               Category category=new Category();
+               category.setCatId(Integer.parseInt(request.getParameter("catId")));
+               commercialRealty.setCategory(category);
 
-                if (reaaltiesId > 0) {
-                    json.put("key", 1);
-                    json.put("message", "realty inserted successfully");
-                    json.put("id",reaaltiesId );
+                int effectedRow = CommercialRealtiesDAO.updateCommercialRealtyInfo(commercialRealty);
+                if (effectedRow > 0) {
+                    json.put("Key", 1);
+                    json.put("Message", "updated successfully");
                 } else {
-                    json.put("key", 0);
-                    json.put("message", "error ");
+                    json.put("Key", 0);
+                    json.put("Message", "error try again");
                 }
-        }
-  response.getWriter().write(json.toString());
-
-        }catch (Exception ex) {
-            System.out.println(ex.toString());
+//            }
+            response.getWriter().write(json.toString());
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 

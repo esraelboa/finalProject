@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,22 +6,26 @@
 package servlet;
 
 import DataBase.CommercialRealtiesDAO;
+import DataBase.ResidentDAO;
 import java.io.IOException;
-import javaClasses.Category;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import javaClasses.CommercialRealties;
 import javaClasses.Resident;
+import javaClasses.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
  *
- * @author esra1996
+ * @author esra
  */
-public class InsertCommercialRealtiesServlet extends HttpServlet {
+public class getAllCommercialRealties extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,44 +38,31 @@ public class InsertCommercialRealtiesServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          response.setContentType("application/json;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
-        CommercialRealties  realtie=new  CommercialRealties();
-        int reaaltiesId;
-        try{
-        HttpSession session =request.getSession();
-     if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")){  
-           json.put("key", -1);
-           json.put("message", "invalided session");
-           
-        }else{
-          
-            realtie.setRealtyName(request.getParameter("realtyName"));
-            realtie.setLicenseNumber(Integer.parseInt(request.getParameter("licenseNumber")));
-            realtie.setDescription(request.getParameter("description"));
-            Resident resident=new Resident();
-            resident.setId(Integer.parseInt(request.getParameter("residentId")));
-            realtie.setResident(resident);
-            Category category=new Category();
-            category.setCatId(Integer.parseInt(request.getParameter("categoryId")));
-            realtie.setCategory(category);
-           
-       
-     reaaltiesId = CommercialRealtiesDAO.insertCommercialRealties(realtie);
+        try {
 
-                if (reaaltiesId > 0) {
-                    json.put("key", 1);
-                    json.put("message", "realty inserted successfully");
-                    json.put("id",reaaltiesId );
-                } else {
-                    json.put("key", 0);
-                    json.put("message", "error ");
-                }
-        }
-  response.getWriter().write(json.toString());
+//             HttpSession session = request.getSession();
+//            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
+//                json.put("key", -1);
+//                json.put("message", "invalided session");
+//            } else {
+// User user = (User) session.getAttribute("user");
+// int residentId=user.getId();
+            ArrayList<CommercialRealties> commercialRealties = CommercialRealtiesDAO.getAllCommercialRealties(Integer.parseInt(request.getParameter("id")));
+            if (commercialRealties.size() > 0) {
+                json.put("realties", commercialRealties);
+            } else {
+                json.put("key", 0);
+                json.put("message", "You have no realty");
+            }
 
-        }catch (Exception ex) {
+//            }
+            response.getWriter().write(json.toString());
+        } catch (Exception ex) {
             System.out.println(ex.toString());
+            System.out.println(ex.getMessage());
+            
         }
     }
 

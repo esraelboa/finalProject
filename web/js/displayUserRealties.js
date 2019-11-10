@@ -2,7 +2,7 @@ $(document).ready(function () {
     //get all Realties
     var realties = [];
     $.ajax({
-        url: " http://localhost:8080/finalPojest/getAllUserrRealtiesServlet",
+        url: " http://localhost:9090/finalPojest/getAllUserrRealtiesServlet",
         type: "GET",
         dataType: "json",
         success: function (result) {
@@ -57,7 +57,7 @@ $(document).ready(function () {
       realtytype=$('#realtytype').val();
       console.log(realtytype);
         $.ajax({
-            url: "http://localhost:8080/finalPojest/InsertResidentServlet",
+            url: "http://localhost:9090/finalPojest/InsertResidentServlet",
             type: 'POST',
             data: {
                 realtyid:realtyid,

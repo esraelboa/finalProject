@@ -5,10 +5,12 @@
  */
 package DataBase;
 
+import static DataBase.PostgreSql.getConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javaClasses.Marker;
 import javaClasses.Realty;
 import javaClasses.Resident;
@@ -108,7 +110,30 @@ public class ResidentDAO {
         return effectedRows;
 
     }
+    
+    public static  ArrayList<Resident> getAllRealtyResidents(int realtyId) throws Exception{
+      ArrayList<Resident> list = new ArrayList<>();
+        Connection c = getConnection();
+        String sql = "select id,address,description,realtytype from resident where realtyid=?";
 
+        PreparedStatement pstmt = c.prepareStatement(sql);
+        pstmt.setInt(1, realtyId);
+        ResultSet rs = pstmt.executeQuery();
+
+        while (rs.next()) {
+           Resident resident=new Resident();
+            resident.setId(rs.getInt("id"));
+            resident.setAddress(rs.getString("address"));
+            resident.setDescription(rs.getString("description"));
+            resident.setRealtyType(rs.getInt("realtytype"));
+            list.add(resident);
+        }
+        rs.close();
+        pstmt.close();
+        c.close();
+        return list;
+    }
+    
     public static Realty searchForAddress(String address) throws Exception {
         Realty realty = null;
         PreparedStatement pstmt;
