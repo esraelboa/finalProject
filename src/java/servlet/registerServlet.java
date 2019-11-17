@@ -29,6 +29,7 @@ public class registerServlet extends HttpServlet {
             user.setPhoneNumber(request.getParameter("phoneNumber"));
             user.setEmail(request.getParameter("email"));
             user.setUserPassword(request.getParameter("password"));
+//            user.setIsAdmin(Boolean.parseBoolean(request.getParameter("asAdmin")));
 
             // checking validaty for firstName lastName phoneNumber email password
             if (val.val_name(user.getFirstName()) && (val.isRequired(user.getFirstName()))

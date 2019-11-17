@@ -5,12 +5,11 @@
  */
 package servlet;
 
-import DataBase.ResidentDAO;
+import DataBase.UserDAO;
 import java.io.IOException;
-import javaClasses.Resident;
-import javaClasses.User;
-import javaClasses.Validation;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,9 +18,10 @@ import org.json.JSONObject;
 
 /**
  *
- * @author esra
+ * @author esra1996
  */
-public class InsertResidentServlet extends HttpServlet {
+@WebServlet(name = "UpdateUserrServlet", urlPatterns = {"/UpdateUserrServlet"})
+public class UpdateUserrServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,54 +34,32 @@ public class InsertResidentServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
+     response.setContentType("application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
-        try {
-
+           try {
             HttpSession session = request.getSession();
             if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
                 json.put("key", -1);
                 json.put("message", "invalided session");
             } else {
-
-                //getting data from request and session
-                User user = (User) session.getAttribute("user");
-                Resident resident = new Resident();
-                String email = request.getParameter("email");
-                System.out.println(email);
-                resident.setOwnerId(user.getId());
-                resident.setRealtyId(Integer.parseInt(request.getParameter("realtyid")));
-                resident.setAddress(request.getParameter("address"));
-                resident.setRealtyType(Integer.parseInt(request.getParameter("realtytype")));
-
-                //check email validalty         
-                if (new Validation().val_email(email)) {
-                    /*checking if there's email in user table with this value 
-                   by returning user id how has this email*/
-                    resident.setResidentId(ResidentDAO.checkResidentEmail(email));
-                    if (resident.getResidentId() != 0) {
-                        //insert resident and create address to it
-                        int insertedID = ResidentDAO.insertResident(resident);
-                        if(insertedID>0){
-                          json.put("id", insertedID);
-                          json.put("key", 1);
-                          json.put("message", "Resident inserted successfully");
-                        }else{
-                          json.put("key", -2);
-                          json.put("message", "please Enter anthor address");
-                        }
-                    } else {
-                        json.put("Key", 0);
-                        json.put("message", "resident email not found");
-                    }
+                int id=Integer.parseInt(request.getParameter("id"));
+                String firstname = request.getParameter("firstname");
+                String lastname = request.getParameter("lastname");
+                String passwordd = request.getParameter("password");
+           
+              int effectedRows = UserDAO.UpdateUser(id, firstname, lastname, passwordd);
+                if (effectedRows > 0) {
+                    json.put("Key", 1);
+                    json.put("Message", "updated successfully");
                 } else {
                     json.put("Key", 0);
-                    json.put("message", "incorrect email");
+                    json.put("Message", "error try again");
                 }
-            }
-            response.getWriter().write(json.toString());
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
+           }
+            
+         response.getWriter().write(json.toString());
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 

@@ -22,6 +22,15 @@ public class User {
   private  String phoneNumber;
   private  String email;
   private  String password;
+  private  boolean isAdmin;
+ 
+    public boolean isIsAdmin() {   
+        return isAdmin;
+ 
+        }
+ 
+    public void setIsAdmin(boolean asAdmin) {
+        this.isAdmin = asAdmin;   }
 
     public int getId() {
         return id;

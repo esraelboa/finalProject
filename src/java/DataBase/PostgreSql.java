@@ -24,7 +24,7 @@ public class PostgreSql {
     public static Connection getConnection() throws Exception {
         Connection con = null;
         Class.forName(driverName);
-        con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/finalproject",username,password);
+        con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/finalProject",esra,esrapassword);
         if (con != null) {
             return con;
         } else {

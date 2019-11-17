@@ -32,7 +32,7 @@ var opt = {
 
    var realtyid = id;     
         $.ajax({
-            url: "http://localhost:9090/finalPojest/DisplayRealtyinfo",
+            url: "http://localhost:8080/finalPojest/DisplayRealtyinfo",
             type: "GET",
             data: {
                 realtyid :realtyid            

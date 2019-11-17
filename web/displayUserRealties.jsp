@@ -19,7 +19,7 @@
     <body>  
         <!--check session validaty--> 
         <%  if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")) {
-        response.sendRedirect("http://localhost:9090/finalPojest/loginForm.jsp");
+        response.sendRedirect("http://localhost:8080/finalPojest/loginForm.jsp");
         }%> 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <!--logo-->
@@ -111,7 +111,63 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button  id="addResident" type="submit" class="btn ml-2">حفظ</button>
+                    <button  id="addResident" type="submit" class="btn ml-2" >حفظ</button>
+                    <button type="button" class="btn" data-dismiss="modal">الغاء الامر</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <!-- add Resident Modal -->
+    <div class="modal fade" id="addCommercialRealtiesModal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-top: 100px">
+                <div class="modal-header ">
+                    <h5 class="modal-title" id="modalLabel">اضافة عقار تجاري:</h5>
+                    <button type="button" class="close mr-auto ml-2" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addCommercialRealtiesForm " class="add-form">
+                        <div class="form-row">
+                            <div class="col-4">    
+                                <lable class="">إسم العقار</lable>
+                            </div>
+                            <div class="col-6">
+                                <input id="realtyName"class="form-control" type="text" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row mt-2">
+                            <div class="col-4">  
+                                <label class="">رقم الرخصة</label>
+                            </div>
+                            <div class="col-6">
+                                <input id=" licensenumber" class="form-control" type="text" required>
+                            </div>   
+                        </div>
+                        <div class="form-row mt-2">
+                            <div class="col-4">  
+                                <label class="">الوصف</label>
+                            </div>
+                            <div class="col-6">
+                                <input id="description" class="form-control" type="text" required>
+                            </div>   
+                        </div>
+                          
+                            <div class="form-row mt-2">
+                                    <div class="col-4">
+                                        <label class="col-form-label">التصنيفات</label>
+                                    </div>                         
+                                    <div class="col-6">
+                                        <select id="catogory" class="form-control pt-0 pb-0"></select>
+                                    </div>
+                                </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button  id="addCommercialRealties" type="submit" class="btn ml-2">حفظ</button>
                     <button type="button" class="btn" data-dismiss="modal">الغاء الامر</button>
                 </div>
             </div>

@@ -15,9 +15,10 @@
         <link rel="stylesheet" href="css/registerStyle.css">
           <link href="https://fonts.googleapis.com/css?family=Changa&display=swap" rel="stylesheet">
     </head>
-     <%  if((session.getAttribute("user") != null)||(session.getAttribute("user") != "")) {
-    response.sendRedirect("http://localhost:9090/finalPojest/");
-        }%>
+     <%  //if((session.getAttribute("user") != null)||(session.getAttribute("user") != "")) {
+   // response.sendRedirect("http://localhost:8080/finalPojest/");
+       // }
+     %>
     <body class="bg-light">
         <div class="container">           
             <div class="card card-container ">

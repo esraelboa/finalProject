@@ -20,13 +20,14 @@ public class UserDAO {
         int st = 0;
         int id = 0;
         Connection con = PostgreSql.getConnection();
-        String sql = "INSERT INTO userr(firstname, lastname, phonenumber, email, passwordd)VALUES (?, ?, ?,?, ?)";
+        String sql = "INSERT INTO userr(firstname, lastname, phonenumber, email, passwordd,isadmin)VALUES (?, ?, ?,?, ?,?)";
         PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         pstmt.setString(1, user.getFirstName());
         pstmt.setString(2, user.getLastName());
         pstmt.setString(3, user.getPhoneNumber());
         pstmt.setString(4, user.getEmail());
         pstmt.setString(5, user.getUserPassword());
+        pstmt.setBoolean(6, false);
 
         st = pstmt.executeUpdate();
         if (st > 0) {
@@ -58,6 +59,7 @@ public class UserDAO {
             user.setPhoneNumber(rs.getString(4));
             user.setEmail(rs.getString(1));
             user.setUserPassword(rs.getString(2));
+            user.setIsAdmin(rs.getBoolean(5));
             list.add(user);
         }
 
@@ -86,4 +88,35 @@ public class UserDAO {
         con.close();
         return us;
     }
+    
+    public static int UpdateUser(int id, String firstName, String lastName,String passwordd) throws  Exception {
+     User user=new User();
+        Connection c = PostgreSql.getConnection();
+
+String sql = "UPDATE userr SET  firstname=?, lastname=?,  passwordd=? WHERE id=?;";
+        PreparedStatement pstmt = c.prepareStatement(sql);
+       
+        pstmt.setString(1, firstName);
+        pstmt.setString(2, lastName);
+        pstmt.setString(3, passwordd);
+         pstmt.setInt(4, id);
+          int effectedRows = pstmt.executeUpdate();
+  return effectedRows; 
+    }
+    
+    
+        public static int deleteUser(int id){  
+        int status=0; 
+         try{ 
+        Connection c = PostgreSql.getConnection();
+         String sql = "DELETE FROM userr WHERE id=44;";
+        PreparedStatement pstmt = c.prepareStatement(sql);
+            pstmt.setInt(1,id);  
+            status=pstmt.executeUpdate();
+            c.close();
+                }catch(Exception e){e.printStackTrace();}  
+            
+       
+        return status;  
+    }  
 }
