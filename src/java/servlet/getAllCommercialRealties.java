@@ -8,10 +8,8 @@ package servlet;
 import DataBase.CommercialRealtiesDAO;
 import DataBase.ResidentDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javaClasses.CommercialRealties;
-import javaClasses.Resident;
 import javaClasses.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,6 +40,7 @@ public class getAllCommercialRealties extends HttpServlet {
         JSONObject json = new JSONObject();
         try {
 
+            //get all C-Realties for User wich's owne it
 //             HttpSession session = request.getSession();
 //            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
 //                json.put("key", -1);

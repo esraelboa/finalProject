@@ -19,7 +19,7 @@
     <body>
         <!--check session validaty--> 
         <% if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")) {
-        response.sendRedirect("http://localhost:8080/finalPojest/loginForm.jsp");
+        response.sendRedirect("http://localhost:9090/finalPojest/loginForm.jsp");
         }%>
         <!--start of upper bar-->
        <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -48,10 +48,10 @@
         <div class="container">
             <div class="card mt-3 pb-2">
                 <div class=" card-title">
-                    <h3 class="row text-right mt-3 mr-4">معلومات الموقع</h3>
+                    <h3 class="row text-right mt-2 mr-4">معلومات الموقع</h3>
                     <p class="text-right">الرجاء ادخال البيانات المطلوبة وتحديد موقع عقارك على الخريطة</p>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="padding-top: 0px;">
                     <div class="row mr-5 ">              
                         <div class="col-4 mt-2 pr-0">
                             <form class="add-realty form-group text-right mr-3 " >
@@ -88,7 +88,7 @@
                                 <input class="btn float-left" type="submit" value="اضافة">  
                             </form>
                         </div>          
-                        <div class="col-8"data-toggle="tooltip" data-placement="top" title="حد موقع عقارك على الخريطة">
+                        <div class="col-8" data-toggle="tooltip" data-placement="top" title="حد موقع عقارك على الخريطة">
                             <div id="map"></div>
                         </div>
                     </div>                       

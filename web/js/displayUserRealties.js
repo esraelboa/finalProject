@@ -3,7 +3,7 @@ $(document).ready(function () {
     //get all Realties
     var realties = [];
     $.ajax({
-        url: " http://localhost:8080/finalPojest/getAllUserrRealtiesServlet",
+        url: " http://localhost:9090/finalPojest/getAllUserrRealtiesServlet",
         type: "GET",
         dataType: "json",
         success: function (result) {
@@ -16,7 +16,7 @@ $(document).ready(function () {
                         "رقم العقار": result['realties'][i].realtynumber,
                         "العنوان": result['realties'][i].address,
                         " ": '<a class="btn" href="DisplayRealtyinfo.jsp?id=' + result['realties'][i].realtyid + '">عرض تفاصيل</a>',
-                        "": '<button class="btn AddResbtn" data-toggle="modal" data-target="#addResidentModal" value="' + result['realties'][i].realtyid + '" >اضافة ساكن</button>'};
+                        "": '<button class="btn AddResbtn" data-toggle="modal" data-target="#addResidentModal" value="' + result['realties'][i].realtyid + '" >اضافة مستأجر</button>'};
                     realties.push(obj);
                 }
                 createRealtiesTable(realties);
@@ -47,43 +47,34 @@ $(document).ready(function () {
         table += '</table>';
         $('#realtiesData').html(table);
     }
-    $('.AddRes').click(function () {
-        console.log("clicked");
-    });
-
-   //get select elemant 
-    let catogory = $('#catogory');
-    const catogoryUrl = 'http://localhost:8080/finalPojest/getAllCategoriesServlet';
-    fillList(catogory, catogoryUrl);
-    var catid;
-    //fill dropdown with json
-    function fillList(dropdown, url) {
-        dropdown.empty();
-        $.getJSON(url, function (data) {
-            $.each(data, function (index, value) {
-//                dropdown.append ($('<option></option>').val(data[0].Value).html(data[0].Text)); 
-//$.each(data, function(k, v) {
-//
-                dropdown.append('<option value="' + value.catid+ '">' + value.name + '</option>');
-//
-//            });
-//     dropdown.append($('<option  value=name id=catid>name</option').attr('value', entry.abbreviation).text(entry.name));
-          
+   
+    fillDropDownWitheCategories();
+//fill dropDownList with Categories
+    function fillDropDownWitheCategories() {
+        $('#catogories').empty();
+        var optiones = '<option value="0">التصنيفات</option>';
+        var catURL = 'http://localhost:9090/finalPojest/getAllCategoriesServlet';
+        $.getJSON(catURL, function (data) {
+            for (var i = 0; i < data.length; i++) {
+                optiones += '<option value="' + data[i].catid + '">' + data[i].name + '</option>';
+            }
+            $('#catogoryList').html(optiones);
         });
-        dropdown.prop('selectedIndex', 0);
-    });
-}
-    
-    
-    $('#addResident').click(function () {
+    }
+    ;
+
+    var insertedId;
+
+    $('#addResident').click(function (e) {
         var realtyid = $('.AddResbtn').val(),
                 email = $('#email').val(),
-                address = $('#address').val(),
-                realtytype = $('#realtytype').val();
-        console.log(realtytype);
-     
+                address = $('#resAddress').val(),
+                realtytype = $("input[type='radio']:checked").val();
+
+        e.preventDefault();
+
         $.ajax({
-            url: "http://localhost:8080/finalPojest/InsertResidentServlet",
+            url: "http://localhost:9090/finalPojest/InsertResidentServlet",
             type: 'POST',
             data: {
                 realtyid: realtyid,
@@ -93,66 +84,57 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (result) {
-                
-//       if (realtytype === 0){
-                      console.log(realtytype);
-           console.log(result);
+                if (result['key'] === 1) {
+                    if (realtytype === '1') {
+                        $('#addCommercialRealtiesModal').modal('show');
+                        $('#addResidentModal').modal('hide');
+                        insertedId = result['id'];
 
-//                if (result['key'] === -1) {
-//                    alert("الرجاء تسجيل الدخول");
-//                } else if (result['key'] === 0) {
-//                    alert("ﻻ يوجد مستخدم بهذا البريد الالكتروني");
-//                } else if (result['key'] === -2) {
-//                    alert('عنوان مكرر ');
-//                } else if (result['key'] === 1) {
-////                   alert('تمت عملية بنجاح');
-//                    console.log(result['id']);
-//                    }
-//                }
-//                }else if (realtytype === 1) {               
-//                var resdintId=result['id'];
-//           console.log(resdintId);
-//        $('#addCommercialRealties').click(function (){
-//       //     var resdintId=result['id'];
-//            var realtyname =$('#realtyName').val(),
-//                licensenumber=$('#licensenumber').val(),
-//                description=$('#description').val(),
-//                catogory=$('#catogory').val();
-//              console.log(" addCommercialRealties cliked")
-//            console.log($('option').html());
-//                console.log($('option').val());
-//                $.ajax({
-//                 url: "http://localhost:8080/finalPojest/InsertCommercialRealtiesServlet",
-//            type: 'POST',
-//            data: {
-//                realtyname: realtyname,
-//                licensenumber: licensenumber,
-//                description: description,
-//                catogory: catogory
-//            },
-//            dataType: "json",
-//            success: function (result) {
-//                  if (result['key'] === -1) {
-//                    alert("الرجاء تسجيل الدخول");
-//                } else if (result['key'] === 0) {
-//                    alert("ﻻ يوجد مستخدم بهذا البريد الالكتروني");
-//                } else if (result['key'] === -2) {
-//                    alert('عنوان مكرر ');
-//                } else if (result['key'] === 1) {
-//                    alert('تمت عملية بنجاح');
-//                    }           
-//     },
-//            error: function () {
-//                console.log("Error");
-//            }
-//        
-//    });});
-//                }
+                    } else if (realtytype === '0') {
+                        alert('تمت عملية بنجاح');
+                    }
+                } else {
+                    console.log(result['message']);
+                }
             },
-    error: function () {
+            error: function () {
                 console.log("Error");
             }
-    });
+        });
 
+    });
+    $('#addCommercialRealties').click(function (e) {
+        var realtyname = $('#realtyName').val(),
+                licensenumber = $('#CRlicensenumber').val(),
+                description = $('#CRdescription').val(),
+                selectedOpt = $('#catogoryList option:selected').val();
+
+        e.preventDefault();
+        $.ajax({
+            url: "http://localhost:9090/finalPojest/InsertCommercialRealtiesServlet",
+            type: 'POST',
+            data: {
+                realtyName: realtyname,
+                licenseNumber: licensenumber,
+                description: description,
+                residentId: insertedId,
+                categoryId: selectedOpt
+            },
+            dataType: "json",
+            success: function (result) {
+                if (result['key'] === -1) {
+                    alert("الرجاء تسجيل الدخول");
+                } else if (result['key'] === 0) {
+                    alert("خطا الرجاء المحاولة مرة اخرى");
+                } else if (result['key'] === 1) {
+                    alert('تمت عملية بنجاح');
+                    $('#addCommercialRealtiesModal').modal('hide');
+                }
+            },
+            error: function () {
+                console.log("Error");
+            }
+
+        });
     });
 });

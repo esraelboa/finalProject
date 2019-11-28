@@ -146,6 +146,30 @@ public class CommercialRealtiesDAO {
         return list;
     }
 
+    public static ArrayList<Realty> getAllCommercialRealtiesByCategory(int catId) throws Exception {
+        ArrayList<Realty> list = new ArrayList<>();
+        Realty realty = null;
+        Connection c = PostgreSql.getConnection();
+        String sql = "select  commercialrealties.id,realtyname,St_x(realty.position) as lng,St_y(realty.position) as lat from commercialrealties \n" +
+"                inner join resident on commercialrealties.residentid=resident.id\n" +
+"                inner join realty on realty.id=resident.realtyid\n" +
+"                inner join category on category.catid = commercialRealties.categoryid where category.catid=?";
+        PreparedStatement pstmt = c.prepareStatement(sql);
+        pstmt.setInt(1, catId);
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+           Marker marker = new Marker();
+            realty = new Realty();
+            realty.setId(rs.getInt("id"));
+            marker.setLng(rs.getDouble("lng"));
+            marker.setLat(rs.getDouble("lat"));
+            realty.setPosition(marker);
+            realty.setDescription(rs.getString("realtyname"));
+            list.add(realty);  
+        }
+        return list;
+    }
+
     public static int updateCommercialRealtyInfo(CommercialRealties realty) throws Exception {
         Connection c = PostgreSql.getConnection();
         String sql = "Update commercialrealties\n"
@@ -157,7 +181,7 @@ public class CommercialRealtiesDAO {
         pstmt.setString(1, realty.getRealtyName());
         pstmt.setString(2, realty.getDescription());
         pstmt.setInt(3, realty.getCategory().getCatId());
-        pstmt.setInt(4,realty.getId());
+        pstmt.setInt(4, realty.getId());
         int effectedRows = pstmt.executeUpdate();
         return effectedRows;
     }

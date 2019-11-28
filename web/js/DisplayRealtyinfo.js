@@ -1,18 +1,19 @@
 $(document).ready(function () {
-   
- //get id form url function  
-function getUrlVars() {
-    var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        vars[key] = value;
-    });
-    return vars;
-    
-};
-var id= getUrlVars()["id"];
+    $('#hideRealtyResidents').hide();
+    //get id form url function  
+    function getUrlVars() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+            vars[key] = value;
+        });
+        return vars;
+
+    }
+    ;
+    var id = getUrlVars()["id"];
 
 
-var opt = {
+    var opt = {
         center: {lat: 32.885353, lng: 13.180161},
         zoom: 11
     };
@@ -30,24 +31,63 @@ var opt = {
     }
     ;
 
-   var realtyid = id;     
+    var realtyid = id;
+    $.ajax({
+        url: "http://localhost:9090/finalPojest/DisplayRealtyinfo",
+        type: "GET",
+        data: {
+            realtyid: realtyid
+        },
+        dataType: "json",
+        success: function (result) {
+            $('#realtyNumber').text(result['realtynumber']);
+            $('#realtyaddress').text(result['address']);
+            $('#description').text(result['description']);
+
+            var latlng = {lng: result['lat'], lat: result['lng']};
+            map.setCenter(latlng);
+            map.setZoom(17);
+            placeMarker(latlng);
+
+        },
+        error: function () {
+            console.log("Error");
+        }
+    });
+    $('#showRealtyResidents').click(function (e) {
+        $('#showRealtyResidents').hide();
+        $('#hideRealtyResidents').show();
+        console.log(realtyid);
+        e.preventDefault();
         $.ajax({
-            url: "http://localhost:8080/finalPojest/DisplayRealtyinfo",
+            url: "http://localhost:9090/finalPojest/getAllRealtyResidents",
             type: "GET",
             data: {
-                realtyid :realtyid            
+                realtyId: realtyid
             },
             dataType: "json",
             success: function (result) {
-                  $('#realtyNumber').text(result['realtynumber']);
-                  $('#address').text(result['address']);
-                  $('#description').text(result['description']);
-                  
-           var latlng = {lng: result['lat'], lat: result['lng']};
-                    map.setCenter(latlng);
-                    map.setZoom(17);
-                    placeMarker(latlng);
-                  
+                if (result['key'] === 0) {
+                    $('#alertmessage').html('ﻻيوجد مستأجرين لهذا العقار<a class="mr-3"href="displayUserRealties.jsp">اضف مستأجر الان</a>');
+                } else {
+                    var table = '<table>', row = 0;
+                    var th = '<tr><th></th><th>نوع النشاط</th><th>العنوان</th></tr>';
+                    table += th;
+                    var realtytype = {0: "سكني", 1: "تجاري"};
+                    for (var i = 0; i < result['realties'].length; i++) {
+                        table += '<tr>';
+                        table += '<td>' + (row + 1) + '</td>';
+                        table += '<td><span class="badge badge-primary badge-pill">' + realtytype[result['realties'][i].realtytype] + '</span></td>';
+                        table += '<td>' + result['realties'][i].address + '</td>';
+                        table += '</tr>';
+                        row += 1;
+                    }
+                    table += '</table>';
+                    $('#allresident').html(table);
+                    $('#allresident').show();
+                }
+
+
             },
             error: function () {
                 console.log("Error");
@@ -55,4 +95,11 @@ var opt = {
         });
 
     });
+    $('#hideRealtyResidents').click(function (e) {
+        $('#hideRealtyResidents').hide();
+        $('#allresident').hide();
+        $('#showRealtyResidents').show();
+    });
+
+});
 

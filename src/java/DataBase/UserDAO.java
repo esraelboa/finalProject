@@ -66,13 +66,30 @@ public class UserDAO {
         return list;
     }
 
+    public static User getUserInfo(int id) throws Exception {
+        User user = null;
+        Connection c = PostgreSql.getConnection();
+        String sql = "select id,firstname,lastname,passwordd from userr where id=?";
+        PreparedStatement pstmt = c.prepareStatement(sql);
+        pstmt.setInt(1, id);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            user = new User();
+            user.setId(rs.getInt("id"));
+            user.setFirstName(rs.getString("firstname"));
+            user.setLastName(rs.getString("lastname"));
+            user.setUserPassword(rs.getString("passwordd"));
+        }
+        return user;
+    }
+
     public static User get_email_password(String email, String password) throws Exception {
         User us = null;
         PreparedStatement ps;
         ResultSet rs;
 
         Connection con = PostgreSql.getConnection();
-        ps = con.prepareStatement("SELECT id , firstname ,lastname , phonenumber FROM userr WHERE email=? and passwordd=?;");
+        ps = con.prepareStatement("SELECT id , firstname ,lastname , phonenumber,isadmin FROM userr WHERE email=? and passwordd=?;");
         ps.setString(1, email);
         ps.setString(2, password);
 
@@ -83,40 +100,62 @@ public class UserDAO {
             us.setFirstName(rs.getString(2));
             us.setLastName(rs.getString(3));
             us.setPhoneNumber(rs.getString(4));
-
+            us.setIsAdmin(rs.getBoolean(5));
         }
         con.close();
         return us;
     }
-    
-    public static int UpdateUser(int id, String firstName, String lastName,String passwordd) throws  Exception {
-     User user=new User();
+
+    public static int UpdateUser(int id, String firstName, String lastName) throws Exception {
+        User user = new User();
         Connection c = PostgreSql.getConnection();
 
-String sql = "UPDATE userr SET  firstname=?, lastname=?,  passwordd=? WHERE id=?;";
+        String sql = "UPDATE userr SET  firstname=?, lastname=? WHERE id=?;";
         PreparedStatement pstmt = c.prepareStatement(sql);
-       
+
         pstmt.setString(1, firstName);
         pstmt.setString(2, lastName);
-        pstmt.setString(3, passwordd);
-         pstmt.setInt(4, id);
-          int effectedRows = pstmt.executeUpdate();
-  return effectedRows; 
+        pstmt.setInt(3, id);
+        int effectedRows = pstmt.executeUpdate();
+        return effectedRows;
     }
-    
-    
-        public static int deleteUser(int id){  
-        int status=0; 
-         try{ 
+
+    public static int changeUserPassword(String currentPassword,String password, int id) throws Exception {
+        int effectedRows = 0;
         Connection c = PostgreSql.getConnection();
-         String sql = "DELETE FROM userr WHERE id=44;";
+        if (checkUserCurrentPassword(currentPassword, id)) {
+            String sql = "UPDATE userr SET  passwordd=? WHERE id=?;";
+            PreparedStatement pstmt = c.prepareStatement(sql);
+            pstmt.setString(1, password);
+            pstmt.setInt(2, id);
+            effectedRows = pstmt.executeUpdate();
+        }
+        return effectedRows;
+    }
+
+    public static boolean checkUserCurrentPassword(String password, int id) throws Exception {
+        Connection c = PostgreSql.getConnection();
+        String sql = "select passwordd from userr where passwordd like ? and id =?";
         PreparedStatement pstmt = c.prepareStatement(sql);
-            pstmt.setInt(1,id);  
-            status=pstmt.executeUpdate();
+        pstmt.setString(1, password);
+        pstmt.setInt(2, id);
+        ResultSet rs = pstmt.executeQuery();
+        return rs.next();
+    }
+
+    public static int deleteUser(int id) {
+        int status = 0;
+        try {
+            Connection c = PostgreSql.getConnection();
+            String sql = "DELETE FROM userr WHERE id=44;";
+            PreparedStatement pstmt = c.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            status = pstmt.executeUpdate();
             c.close();
-                }catch(Exception e){e.printStackTrace();}  
-            
-       
-        return status;  
-    }  
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return status;
+    }
 }

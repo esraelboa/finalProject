@@ -14,7 +14,19 @@ body {
 .btn{
  border-color: #b6590d;
 }
+.sidebar {
 
+  width: 200px;
+  position: fixed;
+  height: 100%;
+}
+.sidebar li{
+  
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
 th ,td{
     /*align-text: center;*/
 }

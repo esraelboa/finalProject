@@ -10,9 +10,13 @@
     <head>        
         <title> Address Generator</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name=”viewport” content=”width=device-width, initial-scale=1.0">      
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css.map">
         <link rel="stylesheet" href="css/style.css">
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
         <link href="https://fonts.googleapis.com/css?family=Changa&display=swap" rel="stylesheet"> 
     </head>
     <body>        
@@ -24,16 +28,22 @@
             <!--main page links-->
             <div class="main-bar justify-content-center">
                 <ul class="navbar-nav ">
-                    <li class="nav-item pl-3">
+                    <li class="nav-item">
                         <a class="nav-link active" href="index.jsp">الرئيسية</a>
                     </li>
-                    <% if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {%>  
-                    <li class="nav-item pl-3">
-                        <a class="nav-link " href="#search">البحث عن عقار</a>
-                    </li> 
-                     <li class="nav-item pl-3">
-                        <a class="nav-link " href="#footer">حول</a>
-                    </li><%} %>
+                    <li class="nav-item mt-1">
+                        <form class="search-box" id="search"> 
+                            <div class="input-group">
+                                <div class="input-group-prepend">  
+                                    <select id="catogories" class="form-control form-inline">
+                                    </select>
+                                    <input class="form-control form-inline" id="address" placeholder="العنوان الالكتروني للعقار" type="search" data-toggle="tooltip" data-placement="top" title="الرجاء ادخال العنوان الرقمي للعقار الذي تريد البحث عنه او الاسم التجاري ">
+                                    <input id="btn" class="btn form-control form-inline" type="submit" value="بحث">
+                                </div>
+                            </div>
+                        </form> 
+                    </li>
+                </ul>
             </div>  
             <% if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {%>  
             <div class="nav-item mr-5 pr-5 mr-auto">  
@@ -43,11 +53,16 @@
                 User user = (User) session.getAttribute("user");
                 pageContext.setAttribute("name", user.getFirstName());
             %>
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item ">
-                    <h5 class="align-baseline pt-2 pl-2">  مرحبا بك : ${name}  </h5>    
+            <ul class="navbar-nav mr-auto ">
+                <li class="nav-item dropdown">
+                    <a class="nav-link align-baseline pt-2 pl-2 dropdown-toggle"  id="n" data-toggle="dropdown">
+                        مرحبا بك : ${name}  </a>    
+                    <div  class="dropdown-menu" aria-labelledby="n">
+                        <a class="dropdown-item" href="updateUserinfo.jsp">
+                            <i class="fas fa-user-cog"></i>
+                            تعديل بيانات حساب</a>
+                    </div>
                 </li> 
-
                 <li class="nav-item pr-2">
                     <a class="btn" href="LogoutServlet" onclick="alert('logout successfully')">
                         تسجيل الخروج</a>                        
@@ -55,7 +70,7 @@
             </ul>
         </ul>
 
-            <% }%>
+        <% }%>
 
     </nav>
     <!--محتوى الصفحة-->
@@ -89,53 +104,74 @@
                 </a>
             </div>
         </div>
-        <%} else { %> 
+        <%} else {
+            User user = (User) session.getAttribute("user");
+            if (!user.isIsAdmin()) { %> 
         <div class="fun-section mt-2">
-            <div class="card">
-                <div class="row">
-                    <div class="col-6 text-center">
-                        <img src="image/addRealtyy.png" class="card-img-top w-25">
-                        <p class="mb-2">اضف عقارك وتحصل على عنوان الكتروني له</p>
-                        <a class="btn mb-2" href="addRealty.jsp"> اضافة عقار</a>   
-                    </div> 
-                    <div class="col-6 text-center">
-                        <img src="image/ed.png" class="card-img-top w-25">
-                        <p class="mb-2" style="padding-top: 1px;">يمكنك عرض وتحديث بيانات عقاراتك</p>
-
-                        <a class="btn" href="displayUserRealties.jsp">ادارة العقارات</a>   
-                    </div> 
+            <div class="row mt-3">
+                <div class="col-6 text-center">    
+                    <div class="card">
+                        <img src="image/addRealtyy.png" class="card-img-top w-50" style="margin-right: 150px">
+                        <div class="card-body">
+                            <p class="mb-2">اضف عقارك وتحصل على عنوان الكتروني له</p>
+                            <a class="btn mb-2" href="addRealty.jsp"> اضافة عقار</a> 
+                        </div>
+                    </div>
+                </div> 
+                <div class="col-6 text-center">    
+                    <div class="card">
+                        <img src="image/ed.png" class="card-img-top w-50" style="margin-right: 150px">
+                        <div class="card-body"style="margin-bottom: 8px;">
+                            <p class="mb-2" style="padding-top: 1px;">يمكنك عرض وتحديث بيانات عقاراتك</p>
+                            <a class="btn" href="displayUserRealties.jsp">ادارة العقارات</a>   
+                        </div>
+                    </div>            
                 </div>
             </div>
-            <%}%>
-            <!--end of section one-->
-            <!--section two-->
-            <div  id="search" class="card mt-3 pb-2">                                
-                <div class="card-body text-center">  
-                    <h3 class="">بحث عن عقار</h3>  
-                    <form class="search-box" id="search">  
-                        <div class="input-group">
-                            <div class="input-group-append">      
-                                <input class="form-control mb-2" id="address" placeholder="عنوان العقار" type="search" data-toggle="tooltip" data-placement="top" title="الرجاء ادخال العنوان الرقمي للعقار الذي تريد البحث عنه ">
-                                <input class="btn form-control" type="submit" value="بحث">
-                            </div>
-                        </div>
-                    </form>   
-                    <div id="map"></div>
-                </div>
-            </div> 
-            <!--end of section two-->
         </div>
+        <%} else {%>
+        <div class="fun-section mt-2">
+            <div class="row mt-3">
+
+                <div class="col-6 text-center">    
+                    <div class="card">
+                        <img src="image/cateditt.png" class="card-img-top w-50" style="margin-right: 150px">
+                        <div class="card-body">
+                            <!--<p class="mb-2">اضف عقارك وتحصل على عنوان الكتروني له</p>-->
+                            <a class="btn mb-2" href="displayAllCategories.jsp"> ادارة التصنيفات</a> 
+                        </div>
+                    </div>
+                </div> 
+                <div class="col-6 text-center">    
+                    <div class="card">
+                        <img src="image/ed.png" class="card-img-top w-50" style="margin-right: 150px">
+                        <div class="card-body"style="margin-bottom: 8px;">
+                            <!--<p class="mb-2" style="padding-top: 1px;">يمكنك عرض وتحديث بيانات عقاراتك</p>-->
+                            <a class="btn" href="displayUserRealties.jsp">ادارة العقارات</a>   
+                        </div>
+                    </div>            
+                </div>
+            </div>
+
+        </div>
+        <%}
+            }%>
+
+
     </div>
+    <!--end of section two-->
 
     <!--نهاية محتوى الصفحة-->
     <!--start of footer-->
-    <footer id="footer" class="page-footer bg-light mt-2">
+    <footer id="footer" class="page-footer bg-light mt-2 fixed-bottom">
         <div class="footer-copyright text-center py-3">
             2019-2020
             <!--<p> DEV : EBE</p>-->
         </div>
     </footer>
+
     <!--end of footer-->
+
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

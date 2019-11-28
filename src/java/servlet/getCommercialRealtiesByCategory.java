@@ -6,25 +6,23 @@
 package servlet;
 
 import DataBase.CommercialRealtiesDAO;
-
 import java.io.IOException;
-import java.io.PrintWriter;
-import javaClasses.CommercialRealties;
-import javaClasses.User;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javaClasses.Realty;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
  *
- * @author esra1996
+ * @author esra
  */
-@WebServlet(name = "displayCommercialRealtiesInfo", urlPatterns = {"/displayCommercialRealtiesInfo"})
-public class displayCommercialRealtiesInfo extends HttpServlet {
+public class getCommercialRealtiesByCategory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,30 +35,25 @@ public class displayCommercialRealtiesInfo extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//            response.setContentType("application/json;charset=UTF-8");
-//        JSONObject json = new JSONObject();
-//        try {
-//            HttpSession session = request.getSession();
-//            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
-//                json.put("key", -1);
-//                json.put("message", "invalided session");
-//            } else {
-////            User user = (User) session.getAttribute("user");
-////                int id = user.getId();
-//                CommercialRealties commercialRealties = CommercialRealtiesDAO.displayCommercialRealtiesInfo(id);
-//                if (commercialRealties != null) {
-//                    json = new CommercialRealties().convetToJson(commercialRealties);
-//                    json.put("key", 1);
-//
-//                } else {
-//                    json.put("key", 0);
-//                    json.put("message", "error try again");
-//                }
-//            }
-//            response.getWriter().write(json.toString());
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
+      response.setContentType("application/json;charset=UTF-8");
+        JSONObject json = new JSONObject();
+        try {
+            //get realties in seach with catid
+            ArrayList<Realty> l = CommercialRealtiesDAO.getAllCommercialRealtiesByCategory(Integer.parseInt(request.getParameter("catId")));
+            if (l.size() > 0) {
+                JSONArray ja = new Realty().displayAllRealty(l);
+                json.put("realties",ja);
+            } else {
+                json.put("key", 0);
+                json.put("message", "there's no realties in this category");
+            }
+
+            response.getWriter().write(json.toString());
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            Logger.getLogger(getCommercialRealties.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

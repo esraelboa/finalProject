@@ -7,7 +7,8 @@ package servlet;
 
 import DataBase.UserDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import javaClasses.User;
+import javaClasses.Validation;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,30 +35,38 @@ public class UpdateUserrServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-     response.setContentType("application/json;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
-           try {
+        try {
             HttpSession session = request.getSession();
             if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
                 json.put("key", -1);
                 json.put("message", "invalided session");
             } else {
-                int id=Integer.parseInt(request.getParameter("id"));
+                
+                Validation val = new Validation();
+                User user = (User) session.getAttribute("user");
+                int id = user.getId();
                 String firstname = request.getParameter("firstname");
                 String lastname = request.getParameter("lastname");
-                String passwordd = request.getParameter("password");
-           
-              int effectedRows = UserDAO.UpdateUser(id, firstname, lastname, passwordd);
-                if (effectedRows > 0) {
-                    json.put("Key", 1);
-                    json.put("Message", "updated successfully");
+                //check user validtion       
+                if (val.val_name(firstname) && val.isRequired(firstname)
+                        && val.val_name(lastname) && val.isRequired(lastname)){
+                    int effectedRows = UserDAO.UpdateUser(id, firstname, lastname);
+                    if (effectedRows > 0) {
+                        json.put("Key", 1);
+                        json.put("Message", "updated successfully");
+                    } else {
+                        json.put("Key", 0);
+                        json.put("Message", "error try again");
+                    }
                 } else {
-                    json.put("Key", 0);
-                    json.put("Message", "error try again");
+                    //fill json object in failed 
+                    json.put("key", 0);
+                    json.put("message", "error try again");
                 }
-           }
-            
-         response.getWriter().write(json.toString());
+            }
+            response.getWriter().write(json.toString());
         } catch (Exception e) {
             System.out.println(e);
         }

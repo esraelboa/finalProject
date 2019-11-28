@@ -5,19 +5,23 @@
  */
 package servlet;
 
-import DataBase.CategoryDAO;
+import DataBase.UserDAO;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javaClasses.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 
 /**
  *
  * @author esra
  */
-public class UpdateCategoryServlet extends HttpServlet {
+public class getUserInfoServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,22 +34,30 @@ public class UpdateCategoryServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
-        JSONObject json = new JSONObject();
+  response.setContentType("application/json;charset=UTF-8");
         try {
-            String name = request.getParameter("name");
-            int catid = Integer.parseInt(request.getParameter("catid"));
-            int effectedRows = CategoryDAO.updateCategoryName(catid, name);
-            if (effectedRows > 0) {
-                json.put("key", 1);
-                json.put("message", "Category name Updated successfully");
+            JSONObject json=new JSONObject();
+            HttpSession session = request.getSession();
+            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
+                json.put("key", -1);
+                json.put("message", "invalided session");
             } else {
-                json.put("key", 0);
-                json.put("message", "error ,try again");
+                 User user1 = (User) session.getAttribute("user");
+                int id = user1.getId();
+            User user=UserDAO.getUserInfo(id);
+           if(user!=null){
+            json = user.jsonobject(user);
+           }
+           else{
+           json.put("key",0);
+
+           }
             }
             response.getWriter().write(json.toString());
-        } catch (Exception e) {
-            System.out.println(e.toString());
+
+        } catch (Exception ex) {
+            Logger.getLogger(DisplayRealtyinfo.class.getName()).log(Level.SEVERE, null, ex);
+       System.out.println(ex);
         }
     }
 

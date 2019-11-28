@@ -5,19 +5,23 @@
  */
 package servlet;
 
-import DataBase.CategoryDAO;
+import DataBase.UserDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
+import javaClasses.User;
+import javaClasses.Validation;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 
 /**
  *
  * @author esra
  */
-public class UpdateCategoryServlet extends HttpServlet {
+public class changePasswordServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,19 +37,34 @@ public class UpdateCategoryServlet extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
         try {
-            String name = request.getParameter("name");
-            int catid = Integer.parseInt(request.getParameter("catid"));
-            int effectedRows = CategoryDAO.updateCategoryName(catid, name);
-            if (effectedRows > 0) {
-                json.put("key", 1);
-                json.put("message", "Category name Updated successfully");
+            HttpSession session = request.getSession();
+            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
+                json.put("key", -1);
+                json.put("message", "invalided session");
             } else {
-                json.put("key", 0);
-                json.put("message", "error ,try again");
+                User user = new User();
+                Validation val = new Validation();
+                User user1 = (User) session.getAttribute("user");
+                int id = user1.getId();
+                String currentPassword = request.getParameter("currentpassword");
+                String newPassword = request.getParameter("newpassword");
+                //check user validtion    
+                if (val.val_password(currentPassword) && val.isRequired(currentPassword)
+                        && (val.val_password(newPassword) && val.isRequired(newPassword))) {
+                    if (UserDAO.changeUserPassword(currentPassword, newPassword, id) > 0) {
+                        json.put("1", "Updated Suessfully");
+                    } else {
+                        json.put("0", "wrong Password ");
+                    }
+                } else {
+                    json.put("Key", 0);
+                    json.put("Message", "error try again");
+                }
+
             }
             response.getWriter().write(json.toString());
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
     }
 

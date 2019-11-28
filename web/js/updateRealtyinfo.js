@@ -10,7 +10,8 @@ $(document).ready(function () {
         return vars;
     }
     ;
-    $('#update').click(function () {
+    $('#update').click(function (e) {
+        e.preventDefault();
         $('#des').hide();
         $('#description').hide();
         $('#update').hide();
@@ -25,12 +26,10 @@ $(document).ready(function () {
     $('.Display-realty').submit(function (e) {
         var id = getUrlVars()["id"];
         var description = $('#updatedescription').val();
-        alert(id);
-        alert(description);
         e.preventDefault();
         var that = $(this);
         $.ajax({
-            url: 'http://localhost:8080/finalPojest/UpdateRealtyinfo',
+            url: 'http://localhost:9090/finalPojest/UpdateRealtyinfo',
             type: "GET",
             data: {
                 id: id,
@@ -42,7 +41,6 @@ $(document).ready(function () {
                 } 
                else 
                 if (result['key'] === 1) {
-//                    alert(result['message']);
                     Swal.fire({
                         type: 'error',
                         title: result['message'],
@@ -50,9 +48,8 @@ $(document).ready(function () {
                         animation: "slide-from-top"
                     });
 
-                    location.replace('http://localhost:8080/finalPojest/DisplayRealtyinfo.jsp' + "?id=" + id);
+                    location.replace('http://localhost:9090/finalPojest/DisplayRealtyinfo.jsp' + "?id=" + id);
                 } else if (result['key'] === 0) {
-//                    alert(result['message']);
                     Swal.fire({
                         type: 'error',
                         title: result['message'],

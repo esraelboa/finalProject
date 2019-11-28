@@ -1,0 +1,16 @@
+.card-title{
+    padding: 20px 20px 0px 20px;
+    text-align: right;
+    font-weight: 500;
+}
+.form-control1{
+    border: none;
+    border-bottom: 2px solid #b6590d;
+    padding-bottom: 1px;
+}
+/*.form-row {
+    padding-bottom: 10px;
+}*/
+.buttom{
+    text-align: center;
+}

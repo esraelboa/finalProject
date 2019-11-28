@@ -38,6 +38,7 @@ public class getCommercialRealties extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
         try {
+            //for search get all realties with address which's name of C-Realties with same inputted name
             ArrayList<Realty> l = CommercialRealtiesDAO.searchForAddress(request.getParameter("address"));
             if (l.size() > 0) {
                 JSONArray ja = new Realty().displayAllRealty(l);

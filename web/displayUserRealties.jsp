@@ -15,12 +15,13 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/DisplayRealtyUser.css">
         <link href="https://fonts.googleapis.com/css?family=Changa&display=swap" rel="stylesheet"> 
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     </head>
-    <body>  
+    <body>    
         <!--check session validaty--> 
-        <%  if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")) {
-        response.sendRedirect("http://localhost:8080/finalPojest/loginForm.jsp");
-        }%> 
+        <%  if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
+                response.sendRedirect("http://localhost:9090/finalPojest/loginForm.jsp");
+            }%> 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <!--logo-->
             <a class="navbar-brand" href="index.jsp">
@@ -38,20 +39,39 @@
                     <li class="nav-item">
                         <a class="nav-link" href="displayResidentRealtyInfo.jsp">ساكن به</a>
                     </li>
-            </div>
-            <% if ((session.getAttribute("user") != null) || (session.getAttribute("user") != "")) {  
-                User user = (User) session.getAttribute("user");
-                pageContext.setAttribute("name", user.getFirstName());
-            %><ul class="navbar-nav mr-auto">
-                <li class="nav-item ">
-                    <h5 class="align-baseline pt-2 pl-2">  مرحبا بك : ${name}  </h5>    
-                </li> 
 
+                    <li class="nav-item mt-1 mr-3">
+                        <form class="search-box" id="search"> 
+                            <div class="input-group">
+                                <div class="input-group-prepend">  
+                                    <select id="catogories" class="form-control form-inline">
+                                    </select>
+                                    <input class="form-control form-inline" id="address" placeholder="العنوان الالكتروني للعقار" type="search" data-toggle="tooltip" data-placement="top" title="الرجاء ادخال العنوان الرقمي للعقار الذي تريد البحث عنه ">
+                                    <input id="btn" class="btn form-control form-inline" type="submit" value="بحث">
+                                </div>
+                            </div>
+                        </form> 
+                    </li>
+            </div>
+            <% if ((session.getAttribute("user") != null) || (session.getAttribute("user") != "")) {
+                    User user = (User) session.getAttribute("user");
+                    pageContext.setAttribute("name", user.getFirstName());
+            %><ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link align-baseline pt-2 pl-2 dropdown-toggle"  id="n" data-toggle="dropdown">
+                        مرحبا بك : ${name}  </a>    
+                    <div  class="dropdown-menu" aria-labelledby="n">
+                        <a class="dropdown-item" href="updateUserinfo.jsp">
+                            <i class="fas fa-user-cog"></i>
+                            تعديل بيانات حساب</a>
+                    </div>
+                </li> 
                 <li class="nav-item pr-2">
                     <a class="btn" href="LogoutServlet" onclick="alert('logout successfully')">
                         تسجيل الخروج</a>                        
                 </li>                    
-            </ul>                </ul>
+            </ul>         
+        </ul>
 
         <% }%>  
     </nav>
@@ -59,24 +79,32 @@
     <div class="container">
         <div class="card mt-3 pb-2">
             <div class="card-body">
-                <div class="tab-content">
-                    <div id="realties" class="tab-pane active ">
-                        <div class="row mr-5 ">                                
-                            <div class="col-8 mr-4">
-                                <div class=" table table-striped mr-5 mt-2 text-center" id="realtiesData"></div>                   
-                            </div>   
-                        </div>  
-                    </div>
+                <div class="row mr-5">
+                    <h4 class="text-right  pr-1">عقاراتي </h4>
+                    <button id="show" class=" btn text-right mr-2"><i  class="fas fa-angle-down"></i></button> 
+                    <button id="hide" class=" btn text-right mr-2"><i  class="fas fa-angle-up"></i></button>
+                </div>
+                <div id="realties">
+                    <div class="row mr-5 ">                                
+                        <div class="col-8 mr-4">
+                            <div class=" table table-striped mr-5 mt-2 text-center" id="realtiesData"></div>                   
+                        </div>   
+                    </div>  
+                </div>
+                  <div class="row mr-5">
+                    <h4 class="text-right  pr-1">عقاراتي التجارية</h4>
+                    <button id="show" class=" btn text-right mr-2"><i  class="fas fa-angle-down"></i></button> 
+                    <button id="hide" class=" btn text-right mr-2"><i  class="fas fa-angle-up"></i></button>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
     <!-- add Resident Modal -->
     <div class="modal fade" id="addResidentModal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="margin-top: 100px">
                 <div class="modal-header ">
-                    <h5 class="modal-title" id="modalLabel">اضافة ساكن:</h5>
+                    <h5 class="modal-title" id="modalLabel">اضافة مستأجر:</h5>
                     <button type="button" class="close mr-auto ml-2" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -97,15 +125,17 @@
                                 <label class="">العنوان</label>
                             </div>
                             <div class="col-6">
-                                <input id="address" class="form-control" type="text" required>
+                                <input id="resAddress" class="form-control" type="text" required>
                             </div>   
                         </div>
                         <div class="form-row mt-2">
                             <div class="col-4">  
                                 <label class="">نوع العقار</label>
                             </div>
-                            <div class="col-6">
-                                <input id="realtytype" class="form-control" type="text" required>
+                            <div class="col-6 text-right">
+                                <input type="radio" name="gender" value="0">سكني 
+                                <br>
+                                <input type="radio" name="gender" value="1"> تجاري
                             </div>   
                         </div>
                     </form>
@@ -117,8 +147,8 @@
             </div>
         </div>
     </div>
-    
-     <!-- add Resident Modal -->
+
+    <!-- add Resident Modal -->
     <div class="modal fade" id="addCommercialRealtiesModal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="margin-top: 100px">
@@ -144,7 +174,7 @@
                                 <label class="">رقم الرخصة</label>
                             </div>
                             <div class="col-6">
-                                <input id=" licensenumber" class="form-control" type="text" required>
+                                <input id="CRlicensenumber" class="form-control" type="text" required>
                             </div>   
                         </div>
                         <div class="form-row mt-2">
@@ -152,18 +182,18 @@
                                 <label class="">الوصف</label>
                             </div>
                             <div class="col-6">
-                                <input id="description" class="form-control" type="text" required>
+                                <input id="CRdescription" class="form-control" type="text" required>
                             </div>   
                         </div>
-                          
-                            <div class="form-row mt-2">
-                                    <div class="col-4">
-                                        <label class="col-form-label">التصنيفات</label>
-                                    </div>                         
-                                    <div class="col-6">
-                                        <select id="catogory" class="form-control pt-0 pb-0"></select>
-                                    </div>
-                                </div>
+
+                        <div class="form-row mt-2">
+                            <div class="col-4">
+                                <label class="col-form-label">التصنيفات</label>
+                            </div>                         
+                            <div class="col-6">
+                                <select id="catogoryList" class="form-control pt-0 pb-0"></select>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -173,10 +203,12 @@
             </div>
         </div>
     </div>
+
 </body>
 
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/script.js"></script>
 <script src="js/displayUserRealties.js"></script>
 </html>

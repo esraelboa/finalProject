@@ -8,8 +8,7 @@ body{
 h3{
     color: #b6590d; 
     font-size: 30px;
-    margin-right: 60px;
-    padding-right: 20px;
+  
     padding-top: 10px;
 }
 p{
@@ -51,14 +50,6 @@ input{    border: 2px solid #b6590d;
     border-color: #b6590d;
 }
 
-button, input {
-
-    overflow: visible;
-    text-align: center;
-    width: 150px;
-    margin-top: 30px;
-
-}
 
 button, input, optgroup, select, textarea {
     margin: 0;
@@ -69,7 +60,7 @@ button, input, optgroup, select, textarea {
 
 textarea {
     margin: 0;
-        margin-top: 0px;
+    margin-top: 0px;
     margin-top: 0px;
     font-family: inherit;
     font-size: inherit;

@@ -1,37 +1,32 @@
 /*start register form*/
 body{
     font-weight: 400;
-     /*background-image: linear-gradient(#C6DAE3, #62AACB , #fff);*/
-       background: #35A0B1;
-        font-family: 'Changa', sans-serif;
+    /*background-image: linear-gradient(#C6DAE3, #62AACB , #fff);*/
+    background: #35A0B1;
+    font-family: 'Changa', sans-serif;
 }
 .form-body{
- color: #b6590d;  
+    color: #b6590d;  
 
 }
 .container{
     padding:60px;
-      background: #35A0B1;
-      max-width: 1400px;
-      padding-top: 30px;
+    background: #35A0B1;
+    max-width: 1400px;
+    padding-top: 30px;
 }
 
 .card-container{
     padding: 20px 50px 20px 20px;
     border-radius: 6px;
-    border-color: linear-gradient(120deg,#3498db,#8e44ad);
-    /*box-shadow: 5px 5px 5px 5px grey;*/ 
     width: 800px;
-right:190px;
+    right:190px;
 }
 .card-navigation{
     margin-bottom: 10px;
     padding-right: 50px;
 }
-.tab-content{
-    margin: 20px 20px 20px 20px;
-padding-right: 100px;
-}
+
 .form-header{
     padding: 20px 20px 20px 20px;
     text-align: center;
@@ -46,13 +41,13 @@ small{
     color:gray
 }
 .card-footer{
-border-top:1px solid rgba(0, 0, 0, 0.14);
+    border-top:1px solid rgba(0, 0, 0, 0.14);
 }
 .pull-left{
     float: left;
 }
 
-.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
     margin-bottom: .5rem;
     font-weight: 500;
     line-height: 1.2;
@@ -62,14 +57,14 @@ border-top:1px solid rgba(0, 0, 0, 0.14);
 .form-control {
     border: none;
     border-bottom: 2px solid #b6590d;
-     color: #b6590d;
-     padding-bottom: 1px;
+    color: #b6590d;
+    padding-bottom: 1px;
 }
 
 .mt-2, .my-2 {
     margin-top: .5rem !important;
     margin: 30px 0;
-        margin-top: 30px;
+    margin-top: 30px;
 }
 .buttom{
     text-align: center;
@@ -89,7 +84,7 @@ border-top:1px solid rgba(0, 0, 0, 0.14);
     align: center;
 }
 .form-row {
-padding-bottom: 10px;
+    padding-bottom: 10px;
 }
 /*
 .form-register{

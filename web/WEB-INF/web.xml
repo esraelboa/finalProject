@@ -45,10 +45,6 @@
         <servlet-class>servlet.InsertCommercialRealtiesServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>displayCommercialRealtiesInfo</servlet-name>
-        <servlet-class>servlet.displayCommercialRealtiesInfo</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>InsertRealtyServlet</servlet-name>
         <servlet-class>servlet.InsertRealtyServlet</servlet-class>
     </servlet>
@@ -100,6 +96,18 @@
         <servlet-name>UpdateCommercialRealtyInfo</servlet-name>
         <servlet-class>servlet.UpdateCommercialRealtyInfo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getCommercialRealtiesByCategory</servlet-name>
+        <servlet-class>servlet.getCommercialRealtiesByCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getUserInfoServlet</servlet-name>
+        <servlet-class>servlet.getUserInfoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>changePasswordServlet</servlet-name>
+        <servlet-class>servlet.changePasswordServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletlogin</servlet-name>
         <url-pattern>/servletlogin</url-pattern>
@@ -143,10 +151,6 @@
     <servlet-mapping>
         <servlet-name>InsertCommercialRealtiesServlet</servlet-name>
         <url-pattern>/InsertCommercialRealtiesServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>displayCommercialRealtiesInfo</servlet-name>
-        <url-pattern>/displayCommercialRealtiesInfo</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>InsertRealtyServlet</servlet-name>
@@ -199,6 +203,18 @@
     <servlet-mapping>
         <servlet-name>UpdateCommercialRealtyInfo</servlet-name>
         <url-pattern>/UpdateCommercialRealtyInfo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getCommercialRealtiesByCategory</servlet-name>
+        <url-pattern>/getCommercialRealtiesByCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getUserInfoServlet</servlet-name>
+        <url-pattern>/getUserInfoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>changePasswordServlet</servlet-name>
+        <url-pattern>/changePasswordServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

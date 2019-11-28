@@ -3,8 +3,8 @@ $(document).ready(function () {
 //get select elemant 
     let cities = $('#cities');
     let incity = $('#incity');
-    const citiesUrl = 'http://localhost:8080/finalPojest/getAllCityServlet?type=1';
-    const incityUrl = 'http://localhost:8080/finalPojest/getAllCityServlet?type=2';
+    const citiesUrl = 'http://localhost:9090/finalPojest/getAllCityServlet?type=1';
+    const incityUrl = 'http://localhost:9090/finalPojest/getAllCityServlet?type=2';
     fillList(cities, citiesUrl);
     fillList(incity, incityUrl);
     var reatyid;
@@ -60,7 +60,7 @@ $(document).ready(function () {
 
         e.preventDefault();
         $.ajax({
-            url: "http://localhost:8080/finalPojest/InsertRealtyServlet",
+            url: "http://localhost:9090/finalPojest/InsertRealtyServlet",
             type: "POST",
             data: {
                 realtyNumber: realtyNumber,
@@ -71,12 +71,12 @@ $(document).ready(function () {
             dataType: "json",
             success: function (result) {
                 if (result['key'] === -1) {
-                    location.replace('http://localhost:8080/finalPojest/loginForm.jsp');
+                    location.replace('http://localhost:9090/finalPojest/loginForm.jsp');
                 } else if (result['key'] === 0) {
                     alert(result['message']);
                 } else if (result['key'] === 1) {
                     reatyid = result['id'];
-                    location.href = 'http://localhost:8080/finalPojest/DisplayRealtyinfo.jsp' + "?id=" + reatyid;
+                    location.href = 'http://localhost:9090/finalPojest/DisplayRealtyinfo.jsp' + "?id=" + reatyid;
                 }
             },
             error: function () {

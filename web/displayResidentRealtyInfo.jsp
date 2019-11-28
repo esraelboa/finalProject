@@ -21,7 +21,7 @@
     <body>
         <!--check session validaty--> 
         <%  if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")) {
-        response.sendRedirect("http://localhost:8080/finalPojest/loginForm.jsp");
+        response.sendRedirect("http://localhost:9090/finalPojest/loginForm.jsp");
         }%> 
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -41,13 +41,32 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="#residentRealtyData">ساكن به</a>
                     </li>
+                    
+                    <li class="nav-item mt-1 mr-3">
+                        <form class="search-box" id="search"> 
+                            <div class="input-group">
+                                <div class="input-group-prepend">  
+                                    <select id="catogories" class="form-control form-inline">
+                                    </select>
+                                    <input class="form-control form-inline" id="address" placeholder="العنوان الالكتروني للعقار" type="search" data-toggle="tooltip" data-placement="top" title="الرجاء ادخال العنوان الرقمي للعقار الذي تريد البحث عنه ">
+                                    <input id="btn" class="btn form-control form-inline" type="submit" value="بحث">
+                                </div>
+                            </div>
+                        </form> 
+                    </li>
             </div>
             <%  
                 User user = (User) session.getAttribute("user");
                 pageContext.setAttribute("name", user.getFirstName());
             %><ul class="navbar-nav mr-auto">
-                <li class="nav-item ">
-                    <h5 class="align-baseline pt-2 pl-2">  مرحبا بك : ${name}  </h5>    
+               <li class="nav-item dropdown">
+                    <a class="nav-link align-baseline pt-2 pl-2 dropdown-toggle"  id="n" data-toggle="dropdown">
+                        مرحبا بك : ${name}  </a>    
+                    <div  class="dropdown-menu" aria-labelledby="n">
+                        <a class="dropdown-item" href="updateUserinfo.jsp">
+                            <i class="fas fa-user-cog"></i>
+                            تعديل بيانات حساب</a>
+                    </div>
                 </li> 
 
                 <li class="nav-item pr-2">
@@ -72,7 +91,7 @@
                                     <th> </th>
                                 </tr>
                                 <tr>
-                                    <td id="address"></td> 
+                                    <td id="residentAddress"></td> 
                                     <td >
                                         <div id="residentId" hidden></div>
                                         <div id="description"></div>
@@ -119,5 +138,7 @@
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/script.js"></script>
 <script src="js/displayResidentRealtyInfo.js"></script>
+
 </html>

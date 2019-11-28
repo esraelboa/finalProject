@@ -58,7 +58,7 @@ public class SearchServlet extends HttpServlet {
                 json.put("id", realty.getId());
                 json.put("Lng", realty.getPosition().getLng());
                 json.put("Lat", realty.getPosition().getLat());
-                json.put("Description", realty.getDescription());
+                json.put("Description", realty.getDescription()+"");
             } else {
                 json.put("key", 0);
                 json.put("message", "error ,not exites address");
