@@ -1,15 +1,15 @@
 *{
     box-sizing: border-box;
-font-family: 'Changa', sans-serif;
+    font-family: 'Changa', sans-serif;
 }
 .t{
-   font-weight: 400;
-   margin: 1px;
-   border-radius: 2px 2px 0 0;   
+    font-weight: 400;
+    margin: 1px;
+    border-radius: 2px 2px 0 0;   
 }
 .gm-style .gm-style-iw-c{
     border-radius: 0;
-     box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
+    box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
 }
 body {
     font-family: 'Changa', sans-serif;
@@ -22,15 +22,15 @@ body {
 }
 .main-bar a:link {
     text-decoration: none;
-    border-bottom: 2px solid #b6590d;
+    /*border-bottom: 2px solid #b6590d;*/
 }
 
 .main-bar a:visited {
-    text-decoration: none;
+    /*text-decoration: none;*/
 }
 
 .main-bar a:hover {
-    border-bottom: 2px solid #b6590d;
+    /*border-bottom: 2px solid #b6590d;*/
 }
 
 .main-bar a:active {
@@ -44,17 +44,15 @@ card-body{
     padding-right: 210px;
 }
 .search-box{
+    font-size: 1.25rem;
     margin-top:0px;
-        margin-right: 250px;
-         margin-bottom: 0px;
-/*    margin-top: 19px;
-    margin-right: 395px;
-    margin-bottom: 2px;*/
+    margin-right: 150px;
+    margin-bottom: 0px;
+
 }
 #map{
     width: 760px;
     height: 365px;
-    /*margin-right: 40px;*/
 }
 .fun-section .card{
     padding-bottom: 10px;padding-top: 10px;

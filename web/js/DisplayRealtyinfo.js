@@ -1,5 +1,6 @@
 $(document).ready(function () {
     $('#hideRealtyResidents').hide();
+
     //get id form url function  
     function getUrlVars() {
         var vars = {};

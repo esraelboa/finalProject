@@ -10,41 +10,23 @@ body {
 .main-bar{
     font-size: 1.25rem;
 }
+.main-bar a:link {
+    text-decoration: none;
+    border-bottom: 2px solid #b6590d;
+}
+
+.main-bar a:visited {
+    text-decoration: none;
+}
+
+.main-bar a:hover {
+    border-bottom: 2px solid #b6590d;
+}
+
+.main-bar a:active {
+    border-bottom: 2px solid #b6590d;
+}
 
 .btn{
  border-color: #b6590d;
 }
-.sidebar {
-
-  width: 200px;
-  position: fixed;
-  height: 100%;
-}
-.sidebar li{
-  
-  display: block;
-  color: black;
-  padding: 16px;
-  text-decoration: none;
-}
-th ,td{
-    /*align-text: center;*/
-}
-/*
-th, td, p, input {
-    
-   border-bottom: 2px solid #b6590d;*/
-/*   font:14px Verdana;
-        }
-        table, th, td 
-        {
-            border: solid 1px #DDD;
-            border-collapse: collapse;
-            padding: 15px 15px;
-            text-align: center;
-            border-color: #b6590d;
-            
-        }
-        th {
-            font-weight:bold;*/
-        /*}*/

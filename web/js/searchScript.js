@@ -13,7 +13,6 @@ $(document).ready(function () {
     var addressFromUrl = '';
     addressFromUrl = getUrlVars()["address"].replace(/%20/g, " ");
     var catid = getUrlVars()["catid"];
-    console.log('here bitch' + catid);
 //testing lenght of address to know where's belonges to
     var a = addressFromUrl.split('.');
     if (catid !== '0') {

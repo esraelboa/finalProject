@@ -91,7 +91,7 @@ public class CommercialRealtiesDAO {
 
         Connection c = PostgreSql.getConnection();
         String sql = "select commercialrealties.id,commercialrealties.realtyname,licensenumber,category.name,commercialrealties.description from commercialrealties\n"
-                + "inner join category on category.catid = commercialRealties.id where commercialRealties.id=?";
+                + "inner join category on category.catid = commercialRealties.categoryid where commercialRealties.id=?";
         PreparedStatement pstmt = c.prepareStatement(sql);
         pstmt.setInt(1, id);
         ResultSet rs = pstmt.executeQuery();

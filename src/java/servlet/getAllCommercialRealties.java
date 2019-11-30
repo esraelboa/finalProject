@@ -6,7 +6,6 @@
 package servlet;
 
 import DataBase.CommercialRealtiesDAO;
-import DataBase.ResidentDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import javaClasses.CommercialRealties;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -39,29 +37,28 @@ public class getAllCommercialRealties extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
         try {
-
             //get all C-Realties for User wich's owne it
-//             HttpSession session = request.getSession();
-//            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
-//                json.put("key", -1);
-//                json.put("message", "invalided session");
-//            } else {
-// User user = (User) session.getAttribute("user");
-// int residentId=user.getId();
-            ArrayList<CommercialRealties> commercialRealties = CommercialRealtiesDAO.getAllCommercialRealties(Integer.parseInt(request.getParameter("id")));
-            if (commercialRealties.size() > 0) {
-                json.put("realties", commercialRealties);
+            HttpSession session = request.getSession();
+            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
+                json.put("key", -1);
+                json.put("message", "invalided session");
             } else {
-                json.put("key", 0);
-                json.put("message", "You have no realty");
-            }
+                User user = (User) session.getAttribute("user");
+                int residentId = user.getId();
+                ArrayList<CommercialRealties> commercialRealties = CommercialRealtiesDAO.getAllCommercialRealties(residentId);
+                if (commercialRealties.size() > 0) {
+                    json.put("realties", commercialRealties);
+                } else {
+                    json.put("key", 0);
+                    json.put("message", "You have no realty");
+                }
 
-//            }
+            }
             response.getWriter().write(json.toString());
         } catch (Exception ex) {
             System.out.println(ex.toString());
             System.out.println(ex.getMessage());
-            
+
         }
     }
 

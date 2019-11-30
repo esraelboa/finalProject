@@ -4,6 +4,7 @@
     Author     : esra
 --%>
 
+<%@page import="javaClasses.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html  lang="ar" dir="rtl" >
@@ -12,7 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="css/bootstrap.min.css.map">
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/stylecssbs.css">
+      <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/addRealty_Style.css">
         <link href="https://fonts.googleapis.com/css?family=Changa&display=swap" rel="stylesheet"> 
     </head>
@@ -22,7 +23,7 @@
         response.sendRedirect("http://localhost:9090/finalPojest/loginForm.jsp");
         }%>
         <!--start of upper bar-->
-       <nav class="navbar navbar-expand-lg navbar-light bg-light">
+             <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <!--logo-->
             <a class="navbar-brand" href="index.jsp">
                 <img src="image/logo2.png"width="55px" height="60px" class="d-inline-block align-top" alt="website logo">                
@@ -30,20 +31,51 @@
             <!--main page links-->
             <div class="main-bar justify-content-center">
                 <ul class="navbar-nav ">
-                    <li class="nav-item pl-3">
+                    <li class="nav-item">
                         <a class="nav-link active" href="index.jsp">الرئيسية</a>
                     </li>
-         <% if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {%>  
-                    <li class="nav-item pl-3">
-                        <a class="nav-link " href="#footer">حول</a>
+                    <li class="nav-item mt-1">
+                        <form class="search-box" id="search"> 
+                            <div class="input-group">
+                                <div class="input-group-prepend">  
+                                    <select id="catogories" class="form-control form-inline">
+                                    </select>
+                                    <input class="form-control form-inline" id="address" placeholder="العنوان الالكتروني للعقار" type="search" data-toggle="tooltip" data-placement="top" title="الرجاء ادخال العنوان الرقمي للعقار الذي تريد البحث عنه او الاسم التجاري ">
+                                    <input id="btn" class="btn form-control form-inline" type="submit" value="بحث">
+                                </div>
+                            </div>
+                        </form> 
                     </li>
-               
-                    <li class="nav-item pl-3">
-                        <a class="nav-link " href="#search">البحث عن عقار</a>
-                    </li> <%} %>
                 </ul>
-            </div>                
-        </nav>
+            </div>  
+            <% if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {%>  
+            <div class="nav-item mr-5 pr-5 mr-auto">  
+                <a class="btn login" href="loginForm.jsp"> تسجيل الدخول </a> 
+            </div>
+            <%} else {
+                User user = (User) session.getAttribute("user");
+                pageContext.setAttribute("name", user.getFirstName());
+            %>
+            <ul class="navbar-nav mr-auto ">
+                <li class="nav-item dropdown">
+                    <a class="nav-link align-baseline pt-2 pl-2 dropdown-toggle"  id="n" data-toggle="dropdown">
+                        مرحبا بك : ${name}  </a>    
+                    <div  class="dropdown-menu" aria-labelledby="n">
+                        <a class="dropdown-item" href="updateUserinfo.jsp">
+                            <i class="fas fa-user-cog"></i>
+                            تعديل بيانات حساب</a>
+                    </div>
+                </li> 
+                <li class="nav-item pr-2">
+                    <a class="btn" href="LogoutServlet" onclick="alert('logout successfully')">
+                        تسجيل الخروج</a>                        
+                </li>                    
+            </ul>
+        </ul>
+
+        <% }%>
+
+    </nav>
         <!--End of upper bar-->
         <div class="container">
             <div class="card mt-3 pb-2">
@@ -99,6 +131,7 @@
         <script src="js/popper.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/addRealtyScript.js"></script>
+          <script src="js/script.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj6bSQBi8o4w7eUm5a8cJ-EpTmf4n_WTo"></script>
     </body>
 </html>

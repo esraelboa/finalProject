@@ -8,15 +8,15 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" >
     <head>        
-        <title> Address Generator</title>
+        <title>عنون عقارك</title>
         <meta charset="UTF-8">
         <meta name=”viewport” content=”width=device-width, initial-scale=1.0">      
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/bootstrap.min.css.map">
         <link rel="stylesheet" href="css/style.css">
+                <!--<link rel="stylesheet" href="css/DisplayRealtyinfo_Style.css">-->
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-
         <link href="https://fonts.googleapis.com/css?family=Changa&display=swap" rel="stylesheet"> 
     </head>
     <body>        
@@ -28,9 +28,17 @@
             <!--main page links-->
             <div class="main-bar justify-content-center">
                 <ul class="navbar-nav ">
-                    <li class="nav-item">
+                    <li class="nav-item ml-2">
                         <a class="nav-link active" href="index.jsp">الرئيسية</a>
                     </li>
+                 <% if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) { }else{
+                  User user = (User) session.getAttribute("user");
+                  if(user.isIsAdmin()){%> 
+                 <li class="nav-item">
+                        <a class="nav-link " href="addRealty.jsp">اضافة عقار</a>
+                    </li>
+                    <%}
+               }%>
                     <li class="nav-item mt-1">
                         <form class="search-box" id="search"> 
                             <div class="input-group">

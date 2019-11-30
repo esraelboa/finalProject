@@ -38,11 +38,11 @@ public class UpdateCommercialRealtyInfo extends HttpServlet {
          response.setContentType("application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
         try {
-//            HttpSession session = request.getSession(false);
-//            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
-//                json.put("key", -1);
-//                json.put("message", "invalided session");
-//            } else {
+            HttpSession session = request.getSession(false);
+            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
+                json.put("key", -1);
+                json.put("message", "invalided session");
+            } else {
                CommercialRealties commercialRealty =new CommercialRealties();
                commercialRealty.setId(Integer.parseInt(request.getParameter("id")));
                commercialRealty.setRealtyName(request.getParameter("realtyName"));
@@ -59,7 +59,7 @@ public class UpdateCommercialRealtyInfo extends HttpServlet {
                     json.put("Key", 0);
                     json.put("Message", "error try again");
                 }
-//            }
+            }
             response.getWriter().write(json.toString());
         } catch (Exception e) {
             System.out.println(e);

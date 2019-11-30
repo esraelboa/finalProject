@@ -1,4 +1,34 @@
 $(document).ready(function () {
+    $('#hideR').hide();
+    $('#hideCR').hide();
+    $('#realties').hide();
+    $('#Crealties').hide();
+    $('#Rmessage').hide();
+    $('#CRmessage').hide();
+//show realties table btn
+    $('#showR').click(function () {
+        $('#showR').hide();
+        $('#hideR').show();
+        $('#realties').show();
+    });
+//hide realties table btn
+    $('#hideR').click(function () {
+        $('#hideR').hide();
+        $('#showR').show();
+        $('#realties').hide();
+    });
+//show Crealties table btn
+    $('#showCR').click(function () {
+        $('#showCR').hide();
+        $('#hideCR').show();
+        $('#Crealties').show();
+    });
+//hide realties table btn
+    $('#hideCR').click(function () {
+        $('#hideCR').hide();
+        $('#showCR').show();
+        $('#Crealties').hide();
+    });
 
     //get all Realties
     var realties = [];
@@ -10,16 +40,19 @@ $(document).ready(function () {
             if (result['key'] === -1) {
                 alert(result['message']);
             } else {
-
-                for (var i = 0; i < result['realties'].length; i++) {
-                    var obj = {"id": result['realties'][i].realtyid,
-                        "رقم العقار": result['realties'][i].realtynumber,
-                        "العنوان": result['realties'][i].address,
-                        " ": '<a class="btn" href="DisplayRealtyinfo.jsp?id=' + result['realties'][i].realtyid + '">عرض تفاصيل</a>',
-                        "": '<button class="btn AddResbtn" data-toggle="modal" data-target="#addResidentModal" value="' + result['realties'][i].realtyid + '" >اضافة مستأجر</button>'};
-                    realties.push(obj);
+                if (result['key'] !== 0) {
+                    for (var i = 0; i < result['realties'].length; i++) {
+                        var obj = {"id": result['realties'][i].realtyid,
+                            "رقم العقار": result['realties'][i].realtynumber,
+                            "العنوان": result['realties'][i].address,
+                            " ": '<a class="btn" href="DisplayRealtyinfo.jsp?id=' + result['realties'][i].realtyid + '">عرض تفاصيل</a>',
+                            "": '<button class="btn AddResbtn" data-toggle="modal" data-target="#addResidentModal" value="' + result['realties'][i].realtyid + '" >اضافة مستأجر</button>'};
+                        realties.push(obj);
+                    }
+                    createRealtiesTable(realties);
+                } else {
+                    $('#Rmessage').html('لايوجد لديك عقارات تملكها <a href="addRealty.jsp">اضف الان</a>');
                 }
-                createRealtiesTable(realties);
             }
         },
         error: function () {
@@ -47,7 +80,7 @@ $(document).ready(function () {
         table += '</table>';
         $('#realtiesData').html(table);
     }
-   
+
     fillDropDownWitheCategories();
 //fill dropDownList with Categories
     function fillDropDownWitheCategories() {
@@ -137,4 +170,39 @@ $(document).ready(function () {
 
         });
     });
+
+    // display C-Realties 
+    $.ajax({
+        url: "http://localhost:9090/finalPojest/getAllCommercialRealties",
+        type: 'GET',
+        data: {
+
+        },
+        dataType: "json",
+        success: function (result) {
+            if(result['key']!==0){
+            var Crealties = result['realties'];
+            var table = '';
+            var th = '<tr><th></th><th>رقم الرخصة</th><th>الاسم التجاري</th><th></th><th></th><tr>';
+            table += th;
+            for (var i = 0; i < Crealties.length; i++) {
+                //console.log(Crealties[i].realtyName);
+                table += '<tr>';
+                table += '<td>' + (i + 1) + '</td>';
+                table += '<td>' + Crealties[i].licenseNumber + '</td>';
+                table += '<td>' + Crealties[i].realtyName + '</td>';
+                table += '<td><a class="btn" href="displayCommercialRealtyInfo.jsp?id='+Crealties[i].id+'"> عرض تفاصيل</a>';
+                table += '</tr>';
+            }
+            table += '</table>';
+            $('#CRrealtiesData').html(table);
+        }else{
+            $('#CRmessage').html('لايجود لديك عقارات تجارية،يمكنك <a href="addRealty.jsp">اضافة عقار</a> وجعله تجاري');
+        }
+        },
+        error: function () {
+            console.log("Error");
+        }
+    });
+
 });

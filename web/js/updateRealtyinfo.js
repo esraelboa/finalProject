@@ -2,6 +2,7 @@ $(document).ready(function () {
     $('#updatedescription').hide();
     $('#lid').hide();
     $('#subupdate').hide();
+    $('#cancelUpateDes').hide();
     function getUrlVars() {
         var vars = {};
         var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
@@ -15,15 +16,24 @@ $(document).ready(function () {
         $('#des').hide();
         $('#description').hide();
         $('#update').hide();
-
+        $('#cancelUpateDes').show();
         $('#updatedescription').show();
         $('#lid').show();
         $('#subupdate').show();
 
     });
 
-
+ $('#cancelUpateDes').click(function(e){
+     e.preventDefault();
+       $('#des').show();
+        $('#description').show();
+      $('#updatedescription').hide();
+    $('#lid').hide();
+    $('#subupdate').hide();
+        $('#cancelUpateDes').hide();
+ });
     $('.Display-realty').submit(function (e) {
+       
         var id = getUrlVars()["id"];
         var description = $('#updatedescription').val();
         e.preventDefault();

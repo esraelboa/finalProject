@@ -79,22 +79,36 @@
     <div class="container">
         <div class="card mt-3 pb-2">
             <div class="card-body">
+                <div class="card-title text-right pr-3 pt-4 pb-2">
+                    <h3><i class="fas fa-cog ml-2 "></i>ادارة العقارات  </h3><hr>                       
+                </div> 
                 <div class="row mr-5">
                     <h4 class="text-right  pr-1">عقاراتي </h4>
-                    <button id="show" class=" btn text-right mr-2"><i  class="fas fa-angle-down"></i></button> 
-                    <button id="hide" class=" btn text-right mr-2"><i  class="fas fa-angle-up"></i></button>
+                    <button id="showR" class=" btn text-right mr-2"><i  class="fas fa-angle-down"></i></button> 
+                    <button id="hideR" class=" btn text-right mr-2"><i  class="fas fa-angle-up"></i></button>
                 </div>
                 <div id="realties">
                     <div class="row mr-5 ">                                
                         <div class="col-8 mr-4">
+                            <div id="Rmessage" class=" text-center alert alert-warning" role="alert" >
+                            </div>
                             <div class=" table table-striped mr-5 mt-2 text-center" id="realtiesData"></div>                   
                         </div>   
                     </div>  
                 </div>
-                  <div class="row mr-5">
+                <div class="row mr-5 mt-3">
                     <h4 class="text-right  pr-1">عقاراتي التجارية</h4>
-                    <button id="show" class=" btn text-right mr-2"><i  class="fas fa-angle-down"></i></button> 
-                    <button id="hide" class=" btn text-right mr-2"><i  class="fas fa-angle-up"></i></button>
+                    <button id="showCR" class=" btn text-right mr-2"><i  class="fas fa-angle-down"></i></button> 
+                    <button id="hideCR" class=" btn text-right mr-2"><i  class="fas fa-angle-up"></i></button>
+                </div>
+                <div id="Crealties">
+                    <div class="row mr-5 ">                                
+                        <div class="col-8 mr-4">
+                            <div class=" table table-striped mr-5 mt-2 text-center" id="CRrealtiesData"></div> 
+                            <div id="CRmessage" class=" text-center alert alert-warning" role="alert" >
+                            </div>
+                        </div>   
+                    </div>  
                 </div>
             </div>
         </div>
