@@ -15,19 +15,17 @@ $(document).ready(function () {
     var catid = getUrlVars()["catid"];
 //testing lenght of address to know where's belonges to
     var a = addressFromUrl.split('.');
+  
     if (catid !== '0') {
    searchforCRwithCategoryidRequest(catid);
-    } else {
-        if (addressFromUrl.length === 0) {
-//        alert('الحقل فارغ الرجاء ادخال العنوان الالكتروني للعقار ');
-        } else {
+    } 
             if (a.length >= 4) {
                 searchforAddressRequest(addressFromUrl);
             } else if (a.length === 1) {
                 searchforCRNamesRequest(addressFromUrl);
             }
-        }
-    }
+   
+    
     fillDropDownWitheCategories();
 //fill dropDownList with Categories
     function fillDropDownWitheCategories() {
@@ -196,6 +194,7 @@ $(document).ready(function () {
         } else {
             console.log(address);
             var ad = address.split(".");
+            console.log(ad);
             if (ad.length === 0) {
                 alert('الحقل فارغ الرجاء ادخال العنوان الالكتروني للعقار');
             } else if (ad.length >= 4) {

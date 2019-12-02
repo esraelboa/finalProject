@@ -9,24 +9,20 @@ body {
 }
 .main-bar{
     font-size: 1.25rem;
-}
-.main-bar a:link {
-    text-decoration: none;
-    border-bottom: 2px solid #b6590d;
+      /*text-decoration: none;*/
 }
 
 .main-bar a:visited {
-    text-decoration: none;
+    /*text-decoration: none;*/
 }
 
 .main-bar a:hover {
-    border-bottom: 2px solid #b6590d;
+    /*border-bottom: 2px solid #b6590d;*/
 }
 
 .main-bar a:active {
-    border-bottom: 2px solid #b6590d;
+    /*border-bottom: 2px solid #b6590d;*/
 }
-
 .btn{
  border-color: #b6590d;
 }

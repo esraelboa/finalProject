@@ -46,7 +46,7 @@ $(document).ready(function () {
                             "رقم العقار": result['realties'][i].realtynumber,
                             "العنوان": result['realties'][i].address,
                             " ": '<a class="btn" href="DisplayRealtyinfo.jsp?id=' + result['realties'][i].realtyid + '">عرض تفاصيل</a>',
-                            "": '<button class="btn AddResbtn" data-toggle="modal" data-target="#addResidentModal" value="' + result['realties'][i].realtyid + '" >اضافة مستأجر</button>'};
+                            "": '<button class="btn AddResbtn" data-toggle="modal" data-target="#addResidentModal" value="' + result['realties'][i].realtyid + '" >اضافة عنوان فرعي</button>'};
                         realties.push(obj);
                     }
                     createRealtiesTable(realties);

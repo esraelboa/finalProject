@@ -15,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 
 /**
@@ -39,11 +38,7 @@ public class DisplayCommercialRealtyInfo extends HttpServlet {
         try {
             JSONObject json = new JSONObject();
             int CRid = Integer.parseInt(request.getParameter("id"));
-            HttpSession session = request.getSession();
-            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
-                json.put("key", -1);
-                json.put("message", "invalided session");
-            } else {
+        
                 CommercialRealties realty = CommercialRealtiesDAO.displayCommercialRealtyInfo(CRid);
                 if (realty != null) {
                     Marker marker = CommercialRealtiesDAO.getCommercialRealtyPosition(CRid);
@@ -53,7 +48,6 @@ public class DisplayCommercialRealtyInfo extends HttpServlet {
                 } else {
                     json.put("key", 0);
                 }
-            }
             response.getWriter().write(json.toString());
 
         } catch (Exception ex) {

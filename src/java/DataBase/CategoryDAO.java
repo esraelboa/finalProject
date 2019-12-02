@@ -49,11 +49,12 @@ public class CategoryDAO {
         int effectedRows = pstmt.executeUpdate();
         return effectedRows;
     }
+
     public static ArrayList<Category> getAllCatogries() throws Exception {
         ArrayList<Category> list = new ArrayList<>();
         ResultSet rs;
         Connection c = PostgreSql.getConnection();
-        String sql = "select catid,name from category";
+        String sql = "select catid,name from category where active=true";
         PreparedStatement pstmt = c.prepareStatement(sql);
         rs = pstmt.executeQuery();
         while (rs.next()) {
@@ -63,5 +64,16 @@ public class CategoryDAO {
             list.add(catogray);
         }
         return list;
+    }
+
+    public static int deleteCategory(int catid) throws Exception {
+        Connection c = PostgreSql.getConnection();
+        String sql = "  update category \n"
+                + "  set active = false\n"
+                + "  where catid=?";
+        PreparedStatement pstmt = c.prepareStatement(sql);
+        pstmt.setInt(1, catid);
+        int effectedRows = pstmt.executeUpdate();
+        return effectedRows;
     }
 }

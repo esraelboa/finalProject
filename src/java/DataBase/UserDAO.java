@@ -83,7 +83,7 @@ public class UserDAO {
         return user;
     }
 
-    public static User get_email_password(String email, String password) throws Exception {
+    public static User login(String email, String password) throws Exception {
         User us = null;
         PreparedStatement ps;
         ResultSet rs;

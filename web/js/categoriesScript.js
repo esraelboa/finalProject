@@ -74,7 +74,7 @@ $(document).ready(function () {
             success: function (result) {
 
                 var table = '';
-                var th = '<tr><th></th><th>الاسم</th><th></th></tr>';
+                var th = '<tr><th></th><th>الاسم</th><th></th><th></th></tr>';
                 table += th;
                 for (var i = 0; i < result.length; i++) {
                     table += '<tr>';
@@ -103,6 +103,7 @@ $(document).ready(function () {
         categoryid = $(this).val();
         $('#UpdateCategoryName').modal('show');
     });
+
 //update Category name 
     $('#updatecatName').click(function (e) {
         var name = $('#inputname').val();

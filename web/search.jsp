@@ -28,14 +28,12 @@
                         <a class="nav-link active" href="index.jsp">الرئيسية</a>
                     </li>
                     <li class="nav-item mt-1">
-                        <form class="search-box" id="search"> 
-                            <div class="input-group">
-                                <div class="input-group-prepend">  
-                                    <select id="catogories" class="form-control form-inline">
-                                    </select>
-                                    <input class="form-control form-inline" id="address" placeholder="العنوان الالكترني للعقار" type="search" data-toggle="tooltip" data-placement="top" title="الرجاء ادخال العنوان الرقمي للعقار الذي تريد البحث عنه ">
-                                    <input  class="btn form-control form-inline" type="submit" value="بحث">
-                                </div>
+                         <form class="search-box" id="search"> 
+                            <div class="form-row form-inline" >
+                                <select id="catogories" class="form-control">
+                                </select>
+                                <input class="form-control mr-2" id="address" placeholder="العنوان الالكتروني للعقار" type="search" data-toggle="tooltip" data-placement="top" title="الرجاء ادخال العنوان الرقمي للعقار الذي تريد البحث عنه او الاسم التجاري ">
+                                <input class="btn mr-2 " type="submit" value="بحث">
                             </div>
                         </form> 
                     </li>

@@ -212,7 +212,7 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (result) {
                    if (result['key'] === 1) {
-                        alert(result['message']);
+                        alert("تم تسجيل الدخول بنجاح");
                         location.replace('http://localhost:9090/finalPojest/index.jsp');
                     } else if (result['key'] === 0) {
                         alert(result['message']);

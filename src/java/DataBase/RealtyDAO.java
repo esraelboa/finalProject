@@ -3,7 +3,6 @@ package DataBase;
 import static DataBase.PostgreSql.getConnection;
 import java.sql.*;
 import java.util.ArrayList;
-import javaClasses.CommercialRealties;
 import javaClasses.Marker;
 import javaClasses.Realty;
 
@@ -14,15 +13,6 @@ public class RealtyDAO {
         String sql = "select realtynumber from realty where realtynumber=?";
         PreparedStatement pstmt = c.prepareStatement(sql);
         pstmt.setInt(1, realty.getRealtyNumber());
-        ResultSet rs = pstmt.executeQuery();
-        return !rs.next();
-    }
-
-    public static Boolean checklicenseNumber(CommercialRealties commercialRealties) throws Exception {
-        Connection c = PostgreSql.getConnection();
-        String sql = "select licenseNumber from commercialRealties where licenseNumber=?";
-        PreparedStatement pstmt = c.prepareStatement(sql);
-        pstmt.setInt(1, commercialRealties.getLicenseNumber());
         ResultSet rs = pstmt.executeQuery();
         return !rs.next();
     }
@@ -190,25 +180,8 @@ public class RealtyDAO {
         return list;
     }
 
-    public static boolean editRealtyinfo(Realty realty) throws Exception {
-        PreparedStatement pstmt = null;
-        ResultSet rs;
-        
-        Connection c = PostgreSql.getConnection();
-        String sql = "UPDATE public.realty SET description=? WHERE id=?";
-        boolean rowUbdated = false;
-        pstmt = c.prepareStatement(sql);
-        pstmt.setString(1, realty.getDescription());
-        pstmt.setInt(2, realty.getId());
 
-        rowUbdated = pstmt.executeUpdate() > 0;
-        pstmt.close();
-        c.close();
-
-        return rowUbdated;
-    }
-
-    public static  boolean updateeditRealtyinfo(Realty realty) throws Exception {
+    public static  boolean updateRealtyinfo(Realty realty) throws Exception {
         PreparedStatement pstmt = null;
         ResultSet rs;
         Connection c = PostgreSql.getConnection();

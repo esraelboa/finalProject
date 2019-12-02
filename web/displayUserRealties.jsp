@@ -33,25 +33,24 @@
                     <li class="nav-item pl-3">
                         <a class="nav-link" href="index.jsp">الرئيسية</a>
                     </li>
-                    <li class="nav-item active ml-2">
+                    <li class="nav-item ml-2">
                         <a class="nav-link" id="myrealties" href="#realties">عقاراتي</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item ml-3">
                         <a class="nav-link" href="displayResidentRealtyInfo.jsp">ساكن به</a>
                     </li>
 
-                    <li class="nav-item mt-1 mr-3">
+                    <li class="nav-item mt-1 mr-2">
                         <form class="search-box" id="search"> 
-                            <div class="input-group">
-                                <div class="input-group-prepend">  
-                                    <select id="catogories" class="form-control form-inline">
-                                    </select>
-                                    <input class="form-control form-inline" id="address" placeholder="العنوان الالكتروني للعقار" type="search" data-toggle="tooltip" data-placement="top" title="الرجاء ادخال العنوان الرقمي للعقار الذي تريد البحث عنه ">
-                                    <input id="btn" class="btn form-control form-inline" type="submit" value="بحث">
-                                </div>
+                            <div class="form-row form-inline" >
+                                <select id="catogories" class="form-control">
+                                </select>
+                                <input class="form-control mr-2" id="address" placeholder="العنوان الالكتروني للعقار" type="search" data-toggle="tooltip" data-placement="top" title="الرجاء ادخال العنوان الرقمي للعقار الذي تريد البحث عنه او الاسم التجاري ">
+                                <input id="btn" class="btn mr-2 " type="submit" value="بحث">
                             </div>
                         </form> 
                     </li>
+                </ul>
             </div>
             <% if ((session.getAttribute("user") != null) || (session.getAttribute("user") != "")) {
                     User user = (User) session.getAttribute("user");
@@ -67,7 +66,7 @@
                     </div>
                 </li> 
                 <li class="nav-item pr-2">
-                    <a class="btn" href="LogoutServlet" onclick="alert('logout successfully')">
+                    <a class="btn" href="LogoutServlet" onclick="">
                         تسجيل الخروج</a>                        
                 </li>                    
             </ul>         
@@ -118,7 +117,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="margin-top: 100px">
                 <div class="modal-header ">
-                    <h5 class="modal-title" id="modalLabel">اضافة مستأجر:</h5>
+                    <h5 class="modal-title" id="modalLabel">اضافة عنوان فرعي:</h5>
                     <button type="button" class="close mr-auto ml-2" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -167,7 +166,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="margin-top: 100px">
                 <div class="modal-header ">
-                    <h5 class="modal-title" id="modalLabel">اضافة عقار تجاري:</h5>
+                    <h5 class="modal-title" id="modalLabel">الرجاء ادخال بيانات العقار التجاري</h5>
                     <button type="button" class="close mr-auto ml-2" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

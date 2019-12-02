@@ -108,6 +108,10 @@
         <servlet-name>changePasswordServlet</servlet-name>
         <servlet-class>servlet.changePasswordServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteCategoryServlet</servlet-name>
+        <servlet-class>servlet.DeleteCategoryServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletlogin</servlet-name>
         <url-pattern>/servletlogin</url-pattern>
@@ -215,6 +219,10 @@
     <servlet-mapping>
         <servlet-name>changePasswordServlet</servlet-name>
         <url-pattern>/changePasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteCategoryServlet</servlet-name>
+        <url-pattern>/DeleteCategoryServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

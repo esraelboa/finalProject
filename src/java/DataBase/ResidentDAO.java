@@ -34,15 +34,6 @@ public class ResidentDAO {
         return id;
     }
 
-//    public static Boolean checkResidentIdCount(int residentid) throws Exception {
-//        Connection c = PostgreSql.getConnection();
-//        String sql = "select count(id )from resident where residentid=?";
-//        PreparedStatement pstmt = c.prepareStatement(sql);
-//        pstmt.setInt(1, residentid);
-//        ResultSet rs = pstmt.executeQuery();
-//        rs.next();
-//        return rs.getInt("count") == 0;
-//    }
     public static Boolean checkResidentAddress(String address) throws Exception {
         Connection c = PostgreSql.getConnection();
         String sql = "select * from resident where address=?";

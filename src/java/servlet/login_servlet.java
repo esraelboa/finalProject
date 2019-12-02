@@ -31,7 +31,7 @@ public class login_servlet extends HttpServlet {
             //check validty of user email and password 
             if (val.val_password(password) && (val.val_email(email)) && (val.isRequired(email))) {
                
-                User user = UserDAO.get_email_password(email, password);
+                User user = UserDAO.login(email, password);
 
                 if (user != null) {
                    // session.invalidate();
