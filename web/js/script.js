@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    
+    $('h3').fadeIn();
     fillDropDownWitheCategories();
     function fillDropDownWitheCategories() {
         $('#catogories').empty();

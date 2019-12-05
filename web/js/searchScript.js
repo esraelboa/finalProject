@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     //get Address form url function
     function getUrlVars() {
         var vars = {};
@@ -11,36 +10,23 @@ $(document).ready(function () {
     ;
 //get address by calling funtion
     var addressFromUrl = '';
-    addressFromUrl = getUrlVars()["address"].replace(/%20/g, " ");
+    //addressFromUrl = getUrlVars()["address"].replace(/%20/g, " ");
+   addressFromUrl = decodeURIComponent(getUrlVars()["address"]);
     var catid = getUrlVars()["catid"];
+
 //testing lenght of address to know where's belonges to
     var a = addressFromUrl.split('.');
-  
+
     if (catid !== '0') {
-   searchforCRwithCategoryidRequest(catid);
-    } 
-            if (a.length >= 4) {
-                searchforAddressRequest(addressFromUrl);
-            } else if (a.length === 1) {
-                searchforCRNamesRequest(addressFromUrl);
-            }
-   
-    
-    fillDropDownWitheCategories();
-//fill dropDownList with Categories
-    function fillDropDownWitheCategories() {
-        $('#catogories').empty();
-        var optiones = '<option value="0">التصنيفات</option>';
-        var catURL = 'http://localhost:9090/finalPojest/getAllCategoriesServlet';
-        $.getJSON(catURL, function (data) {
-            for (var i = 0; i < data.length; i++) {
-                optiones += '<option value="' + data[i].catid + '">' + data[i].name + '</option>';
-            }
-            $('#catogories').html(optiones);
-        });
-        $('select option[value="0"]').attr("selected", true);
+        searchforCRwithCategoryidRequest(catid);
+    } else {
+        if (a.length >= 4) {
+            searchforAddressRequest(addressFromUrl);
+        } else if (a.length === 1) {
+            searchforCRNamesRequest(addressFromUrl);
+        }
     }
-    ;
+
     // initaliaz options for map object 
     var opt = {
         center: {lat: 32.885353, lng: 13.180161},

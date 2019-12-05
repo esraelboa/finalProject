@@ -49,8 +49,14 @@
                 pageContext.setAttribute("name", user.getFirstName());
             %>
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item ">
-                    <h5 class="align-baseline pt-2 pl-2">  مرحبا بك : ${name}  </h5>    
+              <li class="nav-item dropdown">
+                    <a class="nav-link align-baseline pt-2 pl-2 dropdown-toggle"  id="n" data-toggle="dropdown">
+                        مرحبا بك : ${name}  </a>    
+                    <div  class="dropdown-menu" aria-labelledby="n">
+                        <a class="dropdown-item" href="updateUserinfo.jsp">
+                            <i class="fas fa-user-cog"></i>
+                            تعديل بيانات حساب</a>
+                    </div>
                 </li> 
                 <li class="nav-item pr-2">
                     <a class="btn" href="LogoutServlet" onclick="alert('logout successfully')">

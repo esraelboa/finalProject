@@ -34,15 +34,13 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="index.jsp">الرئيسية</a>
                     </li>
-                    <li class="nav-item mt-1">
+                     <li class="nav-item mt-1">
                         <form class="search-box" id="search"> 
-                            <div class="input-group">
-                                <div class="input-group-prepend">  
-                                    <select id="catogories" class="form-control form-inline">
-                                    </select>
-                                    <input class="form-control form-inline" id="address" placeholder="العنوان الالكتروني للعقار" type="search" data-toggle="tooltip" data-placement="top" title="الرجاء ادخال العنوان الرقمي للعقار الذي تريد البحث عنه او الاسم التجاري ">
-                                    <input id="btn" class="btn form-control form-inline" type="submit" value="بحث">
-                                </div>
+                            <div class="form-row form-inline" >
+                                <select id="catogories" class="form-control">
+                                </select>
+                                <input class="form-control mr-2" id="address" placeholder="العنوان الالكتروني للعقار" type="search" data-toggle="tooltip" data-placement="top" title="الرجاء ادخال العنوان الرقمي للعقار الذي تريد البحث عنه او الاسم التجاري ">
+                                <input id="btn" class="btn mr-2 " type="submit" value="بحث">
                             </div>
                         </form> 
                     </li>
@@ -67,7 +65,7 @@
                     </div>
                 </li> 
                 <li class="nav-item pr-2">
-                    <a class="btn" href="LogoutServlet" onclick="alert('logout successfully')">
+                    <a class="btn" href="LogoutServlet" >
                         تسجيل الخروج</a>                        
                 </li>                    
             </ul>
@@ -117,7 +115,7 @@
                                 <div class="from-row mb-3">
                                     <textarea id="description" class="form-control" rows="3" data-toggle="tooltip" title="ادخل وصف للمكان الموجود به العقار"></textarea> 
                                 </div>
-                                <input class="btn float-left" type="submit" value="اضافة">  
+                                <button id="addRealty" class="btn float-left">اضافة</button>  
                             </form>
                         </div>          
                         <div class="col-8" data-toggle="tooltip" data-placement="top" title="حد موقع عقارك على الخريطة">

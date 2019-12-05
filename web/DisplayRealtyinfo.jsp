@@ -137,8 +137,8 @@
                         <div id="map"></div>
                     </div>
                 </div>   
-                <div class="row  mt-2 mr-4">
-                    <h3 >مستأجرين هذا العقار:</h3>
+                <div class="row  mt-3 mr-4">
+                    <h3 >العناويين الفرعية لهذا العقار:</h3>
                     <button class="btn mr-3" id="showRealtyResidents">
                         <i  id="showicon" class="fas fa-angle-down"></i>
                     </button>

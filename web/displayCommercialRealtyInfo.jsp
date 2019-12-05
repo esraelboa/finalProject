@@ -75,7 +75,7 @@
                     </div>
                 </li> 
                 <li class="nav-item pr-2">
-                    <a class="btn" href="LogoutServlet" onclick="alert('logout successfully')">
+                    <a class="btn" href="LogoutServlet" onclick="">
                         تسجيل الخروج</a>                        
                 </li>                    
             </ul>

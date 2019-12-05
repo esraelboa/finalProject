@@ -63,13 +63,12 @@
                     </div>
                 </li> 
                 <li class="nav-item pr-2">
-                    <a class="btn" href="LogoutServlet" onclick="alert('logout successfully')">
+                    <a class="btn" href="LogoutServlet" onclick="">
                         تسجيل الخروج</a>                        
                 </li>                    
             </ul>
 
             <% }%>
-
         </nav>
         <% User user = (User) session.getAttribute("user");
             if (!user.isIsAdmin()) {
@@ -108,42 +107,42 @@
                         <button id="hideAllCategories" class=" btn text-right mr-2"><i  class="fas fa-angle-up"></i></button>
                     </div>
                     <div id="allCategoriesSection">
-                    <div class="row mr-5 text-center mb-3 "> 
+                        <div class="row mr-5 text-center mb-3 "> 
                             <input id="input" class="input-group-text" type="search"  placeholder="بحث سريع...">
-                    </div>  
-                    <div class="row mr-5 ">                                
-                        <div class="col-8 mr-4">
-                            <div id="allCategories" class="table table-striped mr-5 mt-2 text-center" ></div>                   
-                        </div>   
-                    </div>  
-                </div>
+                        </div>  
+                        <div class="row mr-5 ">                                
+                            <div class="col-8 mr-4">
+                                <div id="allCategories" class="table table-striped mr-5 mt-2 text-center" ></div>                   
+                            </div>   
+                        </div>  
+                    </div>
                 </div>    
             </div>
         </div>
-  <div class="modal fade" id="UpdateCategoryName" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content"style="margin-top: 100px">
-                <div class="modal-header ">
-                    <h5 class="modal-title" id="modalLabel">تعديل اسم التصنيف :</h5>
-                    <button type="button" class="close mr-auto ml-2" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mr-2">
-                        <label> اسم التصنيف</label>
+        <div class="modal fade" id="UpdateCategoryName" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content"style="margin-top: 100px">
+                    <div class="modal-header ">
+                        <h5 class="modal-title" id="modalLabel">تعديل اسم التصنيف :</h5>
+                        <button type="button" class="close mr-auto ml-2" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="row mr-3 text-center">
-                        <input id="inputname" class="mr-3" requrid>
+                    <div class="modal-body">
+                        <div class="row mr-2">
+                            <label> اسم التصنيف</label>
+                        </div>
+                        <div class="row mr-3 text-center">
+                            <input id="inputname" class="mr-3" requrid>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button  id="updatecatName" type="button" class="btn ml-2">حفظ</button>
-                    <button type="button" class="btn" data-dismiss="modal">الغاء الامر</button>
+                    <div class="modal-footer">
+                        <button  id="updatecatName" type="button" class="btn ml-2">حفظ</button>
+                        <button type="button" class="btn" data-dismiss="modal">الغاء الامر</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
         <script src="js/jquery-3.4.1.min.js"></script>

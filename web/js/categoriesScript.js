@@ -35,7 +35,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (result) {
                 if (result['key'] === 1) {
-                    alert("تمت العملية بنجاح");
+                    alert("تمت اضافة تصنيف جديد بنجاح");
                     fillallCategoriestable();
                     $('#allCategoriesSection').show();
                 } else {
@@ -81,6 +81,7 @@ $(document).ready(function () {
                     table += '<td>' + (i + 1) + '</td>';
                     table += '<td>' + result[i].name + '</td>';
                     table += '<td><button class="btn btnCatId" value="' + result[i].catid + '">تعديل الاسم </button></td>';
+                    table += '<td><button  class="btn "style="color:#d70000; " value="' + result[i].catid + '" ><i class="fas fa-minus-circle" ></i></button></td>';
                     table += '</tr>';
                 }
                 table += '';
@@ -91,6 +92,7 @@ $(document).ready(function () {
             }
         });
     }
+
 //search in all categories table
     $("#input").on("keyup", function () {
         var value = $(this).val().toLowerCase();
@@ -101,7 +103,11 @@ $(document).ready(function () {
     var categoryid;
     $('#allCategories').on('click', 'button', function () {
         categoryid = $(this).val();
-        $('#UpdateCategoryName').modal('show');
+        if ($(this).hasClass('btnCatId')) {
+            $('#UpdateCategoryName').modal('show');
+        } else {
+            deleteCategory(categoryid);
+        }
     });
 
 //update Category name 
@@ -116,8 +122,8 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (result) {
-                if (result['key'], 1) {
-                    alert("تمت العملية بنجاح");
+                if (result['key']===1) {
+                    alert("تمت تحديث اسم التصنيف بنجاح");
                     $('#UpdateCategoryName').modal('hide');
                     fillallCategoriestable();
                 } else {
@@ -129,6 +135,26 @@ $(document).ready(function () {
             }
         });
     });
-
+function deleteCategory(catid){
+            $.ajax({
+            url: "http://localhost:9090/finalPojest/DeleteCategoryServlet",
+            type: 'POST',
+            data: {
+                catid: catid
+            },
+            dataType: "json",
+            success: function (result) {
+                if (result['key']===1) {
+                    alert("تم حدف التصنيف بنجاح");
+                    fillallCategoriestable();
+                } else {
+                    alert("خطا الرجاء المحاولة مرة اخرى");
+                }
+            },
+            error: function () {
+                console.log("Error");
+            }
+        });
+}
 });
 

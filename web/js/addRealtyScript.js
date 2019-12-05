@@ -51,14 +51,16 @@ $(document).ready(function () {
 
 
 //submit add realty form
-    $('.add-realty').submit(function (e) {
+    $('#addRealty').click(function (e) {
         //get fileds and marker values 
+        console.log('addddd');
+          e.preventDefault();
         var realtyNumber = $('#realtyNumber').val(),
                 description = $('#description').val(),
                 lng = marker.getPosition().lat(),
                 lat = marker.getPosition().lng();
 
-        e.preventDefault();
+      
         $.ajax({
             url: "http://localhost:9090/finalPojest/InsertRealtyServlet",
             type: "POST",

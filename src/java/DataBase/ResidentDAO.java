@@ -76,7 +76,7 @@ public class ResidentDAO {
         Resident resident = null;
         Connection c = PostgreSql.getConnection();
         String sql = "select resident.id,resident.address,resident.description\n"
-                + "from resident where residentid=?";
+                + "from resident where residentid=? and realtytype=0";
         PreparedStatement pstmt = c.prepareStatement(sql);
         pstmt.setInt(1, residentid);
         ResultSet rs = pstmt.executeQuery();

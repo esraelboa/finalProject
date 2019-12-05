@@ -70,11 +70,10 @@
                     </div>
                 </li> 
                 <li class="nav-item pr-2">
-                    <a class="btn" href="LogoutServlet" onclick="alert('logout successfully')">
+                    <a class="btn" href="LogoutServlet" onclick="">
                         تسجيل الخروج</a>                        
                 </li>                    
             </ul>
-
             <% }%>
 
         </nav>
@@ -84,8 +83,6 @@
             <!--section one-->
             <% if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {%>  
             <div class="row justify-content-center mt-3">
-               
-               
             </div>
             <div class="row mt-2">
                 <div id="slide" class="carousel slide carousel-fade w-100" data-ride="carousel">
@@ -94,7 +91,7 @@
                             <div class="carousel-item active">
                                 <img src="image/logo2.png" class="d-block" alt="...">
                                 <div class="carousel-caption d-none d-md-block">
-                                    <h3 style="margin-bottom: 170px;margin-right: 220px;padding-right: 100px;">احصل على عنوان الكتروني لاي عقار تملكه بعنون عقارك الان</h3>
+                                    <h3  style="margin-bottom: 170px;margin-right: 220px;padding-right: 100px;">احصل على عنوان الكتروني لاي عقار تملكه بعنون عقارك الان</h3>
                                 </div>
                             </div>
                             <div class="carousel-item">
