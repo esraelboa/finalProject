@@ -46,7 +46,7 @@ $(document).ready(function () {
                             "رقم العقار": result['realties'][i].realtynumber,
                             "العنوان": result['realties'][i].address,
                             " ": '<a class="btn" href="DisplayRealtyinfo.jsp?id=' + result['realties'][i].realtyid + '">عرض تفاصيل</a>',
-                            "": '<button class="btn AddResbtn" data-toggle="modal" data-target="#addResidentModal" value="' + result['realties'][i].realtyid + '" >اضافة عنوان فرعي</button>'};
+                            "": '<button class="btn AddResbtn"  value="' + result['realties'][i].realtyid + '" >اضافة عنوان فرعي</button>'};
                         realties.push(obj);
                     }
                     createRealtiesTable(realties);
@@ -98,56 +98,61 @@ $(document).ready(function () {
     ;
 
     var insertedId;
+    var realtyid, email, address;
+    $('#realtiesData').on('click', 'button', function (e) {
+        realtyid = $(this).val();
+        $('#addResidentModal').modal('show');
+    });
 
     $('#addResident').click(function (e) {
-        var realtyid = $('.AddResbtn').val(),
-                email = $('#email').val(),
-                address = $('#resAddress').val(),
-                realtytype = $("input[type='radio']:checked").val();
+        email = $('#email').val();
+        address = $('#resAddress').val();
+        var realtytype = $("input[type='radio']:checked").val();
 
-        e.preventDefault();
-
-        $.ajax({
-            url: "http://localhost:9090/finalPojest/InsertResidentServlet",
-            type: 'POST',
-            data: {
-                realtyid: realtyid,
-                email: email,
-                address: address,
-                realtytype: realtytype
-            },
-            dataType: "json",
-            success: function (result) {
-                if (result['key'] === 1) {
-                    if (realtytype === '1') {
-                        $('#addCommercialRealtiesModal').modal('show');
+        if (realtytype === '0') {
+            e.preventDefault();
+            $.ajax({
+                url: "http://localhost:9090/finalPojest/InsertResidentServlet",
+                type: 'POST',
+                data: {
+                    realtyid: realtyid,
+                    email: email,
+                    address: address
+                },
+                dataType: "json",
+                success: function (result) {
+                    if (result['key'] === 1) {
+                        alert('تمت اضافة عنوان فرعي بنجاح');
                         $('#addResidentModal').modal('hide');
-                        insertedId = result['id'];
-
-                    } else if (realtytype === '0') {
-                        alert('تمت عملية بنجاح');
+                    } else if (result['Key'] === 0) {
+                        alert('الرجاء التأكد من ادخال بيانات بشكل صحيح');
+                    } else if (result['key'] === -2) {
+                        alert('عنوان موجود مسبقا ، الرجاء ادخال عنوان اخر');
                     }
-                } else {
-                    console.log(result['message']);
+                },
+                error: function () {
+                    console.log("Error");
                 }
-            },
-            error: function () {
-                console.log("Error");
-            }
-        });
-
+            });
+        } else if (realtytype === '1') {
+            $('#addCommercialRealtiesModal').modal('show');
+            $('#addResidentModal').modal('hide');
+        }
     });
+
     $('#addCommercialRealties').click(function (e) {
         var realtyname = $('#realtyName').val(),
                 licensenumber = $('#CRlicensenumber').val(),
                 description = $('#CRdescription').val(),
                 selectedOpt = $('#catogoryList option:selected').val();
-
         e.preventDefault();
         $.ajax({
             url: "http://localhost:9090/finalPojest/InsertCommercialRealtiesServlet",
             type: 'POST',
             data: {
+                realtyid: realtyid,
+                email: email,
+                address: address,
                 realtyName: realtyname,
                 licenseNumber: licensenumber,
                 description: description,
@@ -161,8 +166,14 @@ $(document).ready(function () {
                 } else if (result['key'] === 0) {
                     alert("خطا الرجاء المحاولة مرة اخرى");
                 } else if (result['key'] === 1) {
-                    alert('تمت عملية بنجاح');
+                    alert('تمت اضافة عقار تجاري بنجاح');
                     $('#addCommercialRealtiesModal').modal('hide');
+                } else if (result['key'] === -2) {
+                    alert('عنوان موجود مسبقا ، الرجاء ادخال عنوان اخر');
+                    $('#addCommercialRealtiesModal').modal('hide');
+                    $('#addResidentModal').modal('show');
+                } else if (result['key'] === -3) {
+                    alert('رقم الرخصة غير صحيح');
                 }
             },
             error: function () {

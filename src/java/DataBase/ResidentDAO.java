@@ -51,7 +51,7 @@ public class ResidentDAO {
         PreparedStatement pstmt1 = c.prepareStatement(getRealtyAddress);
         pstmt1.setInt(1, resident.getRealtyId());
         ResultSet rs = pstmt1.executeQuery();
-        if (rs.next()) {
+        if (rs.next()){
             String address = rs.getString("address");
             resident.setAddress(address + "," + resident.getAddress());
             if (checkResidentAddress(resident.getAddress())) {

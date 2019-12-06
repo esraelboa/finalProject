@@ -96,7 +96,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (result) {
                 if (result['key'] === 0) {
-                    alert("لايوجد عقار بهذا العنوان");
+                    alert("لايوجد عقار بهذا الاسم");
                 } else {
                     var realties = result["realties"];
                     fillResultListWithCR(realties);

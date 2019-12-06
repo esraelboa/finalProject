@@ -34,7 +34,7 @@
                         <a class="nav-link" href="index.jsp">الرئيسية</a>
                     </li>
                     <li class="nav-item ml-2">
-                        <a class="nav-link" id="myrealties" href="#realties">عقاراتي</a>
+                        <a class="nav-link active" id="myrealties" href="#realties">عقاراتي</a>
                     </li>
                     <li class="nav-item ml-3">
                         <a class="nav-link" href="displayResidentRealtyInfo.jsp">ساكن به</a>
@@ -178,7 +178,7 @@
                                 <lable class="">إسم العقار</lable>
                             </div>
                             <div class="col-6">
-                                <input id="realtyName"class="form-control" type="text" required>
+                                <input id="realtyName"class="form-control" type="text" required="true">
                             </div>
                         </div>
 
@@ -187,7 +187,7 @@
                                 <label class="">رقم الرخصة</label>
                             </div>
                             <div class="col-6">
-                                <input id="CRlicensenumber" class="form-control" type="text" required>
+                                <input id="CRlicensenumber" class="form-control" type="text" required="true">
                             </div>   
                         </div>
                         <div class="form-row mt-2">
@@ -195,7 +195,7 @@
                                 <label class="">الوصف</label>
                             </div>
                             <div class="col-6">
-                                <input id="CRdescription" class="form-control" type="text" required>
+                                <input id="CRdescription" class="form-control" type="text" required="true">
                             </div>   
                         </div>
 

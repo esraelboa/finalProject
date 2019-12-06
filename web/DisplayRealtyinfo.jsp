@@ -35,9 +35,9 @@
             <div class="main-bar justify-content-center">
                 <ul class="navbar-nav ">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.jsp">الرئيسية</a>
+                        <a class="nav-link " href="index.jsp">الرئيسية</a>
                     </li>
-                    <li class="nav-item active ml-2">
+                    <li class="nav-item  ml-2">
                         <a class="nav-link" id="myrealties" href="displayUserRealties.jsp">عقاراتي</a>
                     </li>
                     <li class="nav-item">

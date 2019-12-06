@@ -52,7 +52,6 @@ public class RealtyDAO {
         //get address from point number
         address = rs.getString("Address");
         int count = rs.getInt("Count");
-        System.out.println(count);
         rs.close();
         //check if loction avaliable 
         if ((address != null && count == 3) && checkRealtyNumber(realty) && checkUserRealtyCount(realty)) {

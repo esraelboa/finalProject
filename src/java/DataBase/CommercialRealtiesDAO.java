@@ -5,6 +5,7 @@
  */
 package DataBase;
 
+import static DataBase.ResidentDAO.checkResidentAddress;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ import javaClasses.Category;
 import javaClasses.CommercialRealties;
 import javaClasses.Marker;
 import javaClasses.Realty;
+import javaClasses.Resident;
 
 /**
  *
@@ -21,41 +23,94 @@ import javaClasses.Realty;
  */
 public class CommercialRealtiesDAO {
 
-    public static Boolean checklicenseNumber(CommercialRealties commercialrealties) throws Exception {
+    public static Boolean checklicenseNumber(int licenseNumber) throws Exception {
         Connection c = PostgreSql.getConnection();
         String sql = "select licenseNumber from commercialRealties where licenseNumber=?";
         PreparedStatement pstmt = c.prepareStatement(sql);
-        pstmt.setInt(1, commercialrealties.getLicenseNumber());
+        pstmt.setInt(1, licenseNumber);
 
         ResultSet rs = pstmt.executeQuery();
         return !rs.next();
     }
 
+//    public static int insertCommercialRealties(CommercialRealties commercialrealties) throws Exception {
+//        int id = 0;
+//
+//        Connection con = PostgreSql.getConnection();
+//
+//        if (checklicenseNumber(commercialrealties.getLicenseNumber())) {
+//
+//            String sql = "insert  into commercialrealties(realtyname, licensenumber, description, residentid,categoryid) VALUES (?,?,?,?,?);";
+//            PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+//            pstmt.setString(1, commercialrealties.getRealtyName());
+//            pstmt.setInt(2, commercialrealties.getLicenseNumber());
+//            pstmt.setString(3, commercialrealties.getDescription());
+//            pstmt.setInt(4, commercialrealties.getResident().getId());
+//            pstmt.setInt(5, commercialrealties.getCategory().getCatId());
+//
+//            pstmt.executeUpdate();
+//            ResultSet rsu = pstmt.getGeneratedKeys();
+//            rsu.next();
+//            id = rsu.getInt(1);
+//
+//        } else {
+//            System.out.println("error");
+//
+//        }
+//        return id;
+//    }
+
     public static int insertCommercialRealties(CommercialRealties commercialrealties) throws Exception {
-        int id = 0;
+        Resident resident = commercialrealties.getResident();
+        int residentid = 0, CRid = 0;
+        Connection c = null;
+        PreparedStatement pstmt1 = null;
+        PreparedStatement pstmt2 = null;
 
-        Connection con = PostgreSql.getConnection();
+        c = PostgreSql.getConnection();
+        //genurate Sub-address 
+        String getRealtyAddress = "select address from realty where id=?";
+        pstmt1 = c.prepareStatement(getRealtyAddress);
+        pstmt1.setInt(1, resident.getRealtyId());
+        ResultSet rs = pstmt1.executeQuery();
+        if (rs.next()) {
+            c.setAutoCommit(false);
+            String address = rs.getString("address");
+            resident.setAddress(address + "," + resident.getAddress());
+            //check if there's anther same sub-address
+            if (checkResidentAddress(resident.getAddress())) {
+                //insert Resident query
+                String insertResident = "insert into resident(ownerid,realtyid,residentid,address,realtytype) values(?,?,?,?,?);";
+                pstmt2 = c.prepareStatement(insertResident, Statement.RETURN_GENERATED_KEYS);
+                pstmt2.setInt(1, resident.getOwnerId());
+                pstmt2.setInt(2, resident.getRealtyId());
+                pstmt2.setInt(3, resident.getResidentId());
+                pstmt2.setString(4, resident.getAddress());
+                pstmt2.setInt(5, resident.getRealtyType());
+                pstmt2.executeUpdate();
+                ResultSet rsu1 = pstmt2.getGeneratedKeys();
+                rsu1.next();
+                residentid = rsu1.getInt(1);
+                //insert CR query      
+                String sql = "insert  into commercialrealties(realtyname, licensenumber, description, residentid,categoryid) VALUES (?,?,?,?,?);";
+                PreparedStatement pstmt = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                pstmt.setString(1, commercialrealties.getRealtyName());
+                pstmt.setInt(2, commercialrealties.getLicenseNumber());
+                pstmt.setString(3, commercialrealties.getDescription());
+                pstmt.setInt(4, residentid);
+                pstmt.setInt(5, commercialrealties.getCategory().getCatId());
+                pstmt.executeUpdate();
+                ResultSet rsu = pstmt.getGeneratedKeys();
+                rsu.next();
+                CRid = rsu.getInt(1);
+                c.commit();
 
-        if (checklicenseNumber(commercialrealties)) {
-
-            String sql = "insert  into commercialrealties(realtyname, licensenumber, description, residentid,categoryid) VALUES (?,?,?,?,?);";
-            PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, commercialrealties.getRealtyName());
-            pstmt.setInt(2, commercialrealties.getLicenseNumber());
-            pstmt.setString(3, commercialrealties.getDescription());
-            pstmt.setInt(4, commercialrealties.getResident().getId());
-            pstmt.setInt(5, commercialrealties.getCategory().getCatId());
-
-            pstmt.executeUpdate();
-            ResultSet rsu = pstmt.getGeneratedKeys();
-            rsu.next();
-            id = rsu.getInt(1);
-
-        } else {
-            System.out.println("error");
-
+            } else {
+                System.out.println("error in address");
+                c.rollback();
+            }
         }
-        return id;
+        return CRid;
     }
 
     public static ArrayList<Realty> searchForAddress(String address) throws Exception {
@@ -150,22 +205,22 @@ public class CommercialRealtiesDAO {
         ArrayList<Realty> list = new ArrayList<>();
         Realty realty = null;
         Connection c = PostgreSql.getConnection();
-        String sql = "select  commercialrealties.id,realtyname,St_x(realty.position) as lng,St_y(realty.position) as lat from commercialrealties \n" +
-"                inner join resident on commercialrealties.residentid=resident.id\n" +
-"                inner join realty on realty.id=resident.realtyid\n" +
-"                inner join category on category.catid = commercialRealties.categoryid where category.catid=?";
+        String sql = "select  commercialrealties.id,realtyname,St_x(realty.position) as lng,St_y(realty.position) as lat from commercialrealties \n"
+                + "                inner join resident on commercialrealties.residentid=resident.id\n"
+                + "                inner join realty on realty.id=resident.realtyid\n"
+                + "                inner join category on category.catid = commercialRealties.categoryid where category.catid=?";
         PreparedStatement pstmt = c.prepareStatement(sql);
         pstmt.setInt(1, catId);
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
-           Marker marker = new Marker();
+            Marker marker = new Marker();
             realty = new Realty();
             realty.setId(rs.getInt("id"));
             marker.setLng(rs.getDouble("lng"));
             marker.setLat(rs.getDouble("lat"));
             realty.setPosition(marker);
             realty.setDescription(rs.getString("realtyname"));
-            list.add(realty);  
+            list.add(realty);
         }
         return list;
     }

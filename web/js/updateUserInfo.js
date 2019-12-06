@@ -79,6 +79,8 @@ $(document).ready(function () {
             $('#password_error').html("الحقل مطلوب");
             $('#password_error').show();
             error_password = true;
+        }else{
+               $('#password_error').hide();
         }
     }
 
@@ -89,6 +91,8 @@ $(document).ready(function () {
             $('#re_password_error').html("الحقل مطلوب");
             $('#re_password_error').show();
             error_rePassword = true;
+        }else{
+             $('#re_password_error').hide();
         }
     }
 
@@ -184,7 +188,8 @@ $(document).ready(function () {
             success: function (result) {
                 if (result['key'] === 0) {
                     alert("حاول مجددأ");
-                } else {
+              
+                } else if (result['key'] === 1){
                     alert("تم التعديل بنجاح");
                 }
             },

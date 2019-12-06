@@ -52,9 +52,12 @@ public class changePasswordServlet extends HttpServlet {
                 if (val.val_password(currentPassword) && val.isRequired(currentPassword)
                         && (val.val_password(newPassword) && val.isRequired(newPassword))) {
                     if (UserDAO.changeUserPassword(currentPassword, newPassword, id) > 0) {
-                        json.put("1", "Updated Suessfully");
+                      json.put("key", 1);
+                       json.put("message", "Updated Suessfully");
+            
                     } else {
-                        json.put("0", "wrong Password ");
+                       json.put("key", 0);
+                       json.put("message", "wrong Password ");
                     }
                 } else {
                     json.put("Key", 0);

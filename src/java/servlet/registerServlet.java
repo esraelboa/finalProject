@@ -39,9 +39,9 @@ public class registerServlet extends HttpServlet {
             // insert user 
                 int id = UserDAO.insertUser(user);
             //create user session 
-               
-                HttpSession sassion = request.getSession();
-                sassion.setAttribute("user", user);
+                user.setId(id);
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
             //fill json object in sussecc 
                 jsobj.put("key", 1);
                 jsobj.put("message", "sing up successfully");

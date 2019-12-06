@@ -7,10 +7,13 @@
 package servlet;
 
 import DataBase.CommercialRealtiesDAO;
+import static DataBase.CommercialRealtiesDAO.checklicenseNumber;
+import DataBase.ResidentDAO;
 import java.io.IOException;
 import javaClasses.Category;
 import javaClasses.CommercialRealties;
 import javaClasses.Resident;
+import javaClasses.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,43 +38,60 @@ public class InsertCommercialRealtiesServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          response.setContentType("application/json;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
-        CommercialRealties  realtie=new  CommercialRealties();
+        CommercialRealties realtie = new CommercialRealties();
         int reaaltiesId;
-        try{
-        HttpSession session =request.getSession();
-     if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")){  
-           json.put("key", -1);
-           json.put("message", "invalided session");
-           
-        }else{
-          
-            realtie.setRealtyName(request.getParameter("realtyName"));
-            realtie.setLicenseNumber(Integer.parseInt(request.getParameter("licenseNumber")));
-            realtie.setDescription(request.getParameter("description"));
-            Resident resident=new Resident();
-            resident.setId(Integer.parseInt(request.getParameter("residentId")));
-            realtie.setResident(resident);
-            Category category=new Category();
-            category.setCatId(Integer.parseInt(request.getParameter("categoryId")));
-            realtie.setCategory(category);
-           
-       
-     reaaltiesId = CommercialRealtiesDAO.insertCommercialRealties(realtie);
+        try {
+            HttpSession session = request.getSession();
+            if ((session.getAttribute("user") == null) || (session.getAttribute("user") == "")) {
+                json.put("key", -1);
+                json.put("message", "invalided session");
 
-                if (reaaltiesId > 0) {
-                    json.put("key", 1);
-                    json.put("message", "realty inserted successfully");
-                    json.put("id",reaaltiesId );
+            } else {
+                //get all data from request
+                User user = (User) session.getAttribute("user");
+                Resident resident = new Resident();
+                String email = request.getParameter("email");
+                resident.setOwnerId(user.getId());
+                resident.setRealtyId(Integer.parseInt(request.getParameter("realtyid")));
+                resident.setAddress(request.getParameter("address"));
+                resident.setRealtyType(1);
+                realtie.setRealtyName(request.getParameter("realtyName"));
+                realtie.setLicenseNumber(Integer.parseInt(request.getParameter("licenseNumber")));
+                realtie.setDescription(request.getParameter("description"));
+                realtie.setResident(resident);
+                Category category = new Category();
+                category.setCatId(Integer.parseInt(request.getParameter("categoryId")));
+                realtie.setCategory(category);
+                //check resident Email
+                resident.setResidentId(ResidentDAO.checkResidentEmail(email));
+                if (resident.getResidentId() != 0) {
+                    //check licenseNumber for C-realty
+                    if (checklicenseNumber(realtie.getLicenseNumber())) {
+                        //insert C-realty Function
+                        reaaltiesId = CommercialRealtiesDAO.insertCommercialRealties(realtie);
+                        //check if insert been successfully
+                        if (reaaltiesId > 0) {
+                            json.put("key", 1);
+                            json.put("message", "realty inserted successfully");
+                            json.put("id", reaaltiesId);
+                        } else {
+                            json.put("key", -2);
+                            json.put("message", "please Enter anthor address");
+                        }
+                    }else{
+                         json.put("key", -3);
+                         json.put("message", "Douplicate License Number");
+                    }
                 } else {
-                    json.put("key", 0);
-                    json.put("message", "error ");
+                    json.put("Key", 0);
+                    json.put("message", "resident email not found");
                 }
-        }
-  response.getWriter().write(json.toString());
+            }
+            response.getWriter().write(json.toString());
 
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex.toString());
         }
     }
