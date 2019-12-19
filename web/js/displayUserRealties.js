@@ -31,59 +31,62 @@ $(document).ready(function () {
     });
 
     //get all Realties
-    var realties = [];
-    $.ajax({
-        url: "http://localhost:9090/finalPojest/getAllUserrRealtiesServlet",
-        type: "GET",
-        dataType: "json",
-        success: function (result) {
-            if (result['key'] === -1) {
-                alert(result['message']);
-            } else {
-                if (result['key'] !== 0) {
-                    for (var i = 0; i < result['realties'].length; i++) {
-                        var obj = {"id": result['realties'][i].realtyid,
-                            "رقم العقار": result['realties'][i].realtynumber,
-                            "العنوان": result['realties'][i].address,
-                            " ": '<a class="btn" href="DisplayRealtyinfo.jsp?id=' + result['realties'][i].realtyid + '">عرض تفاصيل</a>',
-                            "": '<button class="btn AddResbtn"  value="' + result['realties'][i].realtyid + '" >اضافة عنوان فرعي</button>'};
-                        realties.push(obj);
-                    }
-                    createRealtiesTable(realties);
-                } else if (result['key'] === 0) {
-                    $('#Rmessage').html('لايوجد لديك عقارات تملكها <a href="addRealty.jsp">اضف الان</a>');
-                    $('#Rmessage').show();
-                }
-            }
-        },
-        error: function () {
-            console.log("Error");
-        }
-    });
+
+    getAllUSerRealties();
+    function getAllUSerRealties() {
+        var list = [];
+        $.ajax({
+            url: "http://localhost:9090/finalPojest/getAllUserrRealtiesServlet",
+            type: "GET",
+            dataType: "json",
+            success: function (result) {
+                if (result['key'] === -1) {
+                    alert(result['message']);
+                } else {
+                    if (result['key'] !== 0) {
+                        for (var i = 0; i < result['realties'].length; i++) {
+                            var obj = {"id": result['realties'][i].realtyid,
+                                "رقم العقار": result['realties'][i].realtynumber,
+                                "العنوان": result['realties'][i].address,
+                                " ": '<a class="btn" href="DisplayRealtyinfo.jsp?id=' + result['realties'][i].realtyid + '">عرض تفاصيل</a>',
+                                "": '<button class="btn AddResbtn"  value="' + result['realties'][i].realtyid + '" >اضافة عنوان فرعي</button>',
+                                "  ": '<button class="btn "style="color:#d70000; "  value="' + result['realties'][i].realtyid + '" ><i class="fas fa-minus-circle" ></i></button>'};
+                            list.push(obj);
+                        }
 //create table of all realties data 
-    function createRealtiesTable(list) {
-//create table
-        var table = '';
+                        var table = '';
 //        create table head
-        var th = '<tr><th></th><th>رقم العقار</th><th>العنوان</th><th> </th><th> </th></tr>';
+                        var th = '<tr><th></th><th>رقم العقار</th><th>العنوان</th><th> </th><th> </th><th> </th></tr>';
 //marge it all togther table head  with thable 
-        table += th;
+                        table += th;
 //create  table rows and marge it all togher
-        for (var row = 0; row < list.length; row++) {
-            table += '<tr>';
-            table += '<td>' + (row + 1) + '</td>';
-            table += '<td>' + list[row]['رقم العقار'] + '</td>';
-            table += '<td>' + list[row]['العنوان'] + '</td>';
-            table += '<td>' + list[row][' '] + '</td>';
-            table += '<td>' + list[row][''] + '</td>';
-            table += '</tr>';
-        }
-        table += '</table>';
-        $('#realtiesData').html(table);
+                        for (var row = 0; row < list.length; row++) {
+                            table += '<tr>';
+                            table += '<td>' + (row + 1) + '</td>';
+                            table += '<td>' + list[row]['رقم العقار'] + '</td>';
+                            table += '<td>' + list[row]['العنوان'] + '</td>';
+                            table += '<td>' + list[row][' '] + '</td>';
+                            table += '<td>' + list[row][''] + '</td>';
+                            table += '<td>' + list[row]['  '] + '</td>';
+                            table += '</tr>';
+                        }
+                        table += '</table>';
+                        $('#realtiesData').html(table);
+                    } else if (result['key'] === 0) {
+                        $('#Rmessage').html('لايوجد لديك عقارات تملكها <a href="addRealty.jsp">اضف الان</a>');
+                        $('#Rmessage').show();
+                    }
+                }
+            },
+            error: function () {
+                console.log("Error");
+            }
+        });
     }
 
+
     fillDropDownWitheCategories();
-//fill dropDownList with Categories
+//fill dropDownList with Categories in Cr Form
     function fillDropDownWitheCategories() {
         $('#catogories').empty();
         var optiones = '<option value="0">التصنيفات</option>';
@@ -96,14 +99,19 @@ $(document).ready(function () {
         });
     }
     ;
-
+//get id from buttons
     var insertedId;
     var realtyid, email, address;
     $('#realtiesData').on('click', 'button', function (e) {
         realtyid = $(this).val();
-        $('#addResidentModal').modal('show');
-    });
+        if ($(this).hasClass('AddResbtn')) {
+            $('#addResidentModal').modal('show');
+        } else {
+            $('#deleteRealtyModal').modal('show');
+        }
 
+    });
+//add sub Address form 
     $('#addResident').click(function (e) {
         email = $('#email').val();
         address = $('#resAddress').val();
@@ -139,7 +147,7 @@ $(document).ready(function () {
             $('#addResidentModal').modal('hide');
         }
     });
-
+//add Crealty form
     $('#addCommercialRealties').click(function (e) {
         var realtyname = $('#realtyName').val(),
                 licensenumber = $('#CRlicensenumber').val(),
@@ -216,5 +224,27 @@ $(document).ready(function () {
             console.log("Error");
         }
     });
-
+//delete realty
+    $('#deleteRealty').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: "http://localhost:9090/finalPojest/DeleteRealtyServlet",
+            type: 'POST',
+            data: {
+                realtyid: realtyid
+            },
+            dataType: "json",
+            success: function (result) {
+                if (result['key'] === 1) {
+                    alert("تم حدف العقار بنجاح");
+                    $('#deleteRealtyModal').modal('hide');
+                    $('#realtiesData').html("");
+                    getAllUSerRealties();
+                }
+            },
+            error: function () {
+                console.log("Error");
+            }
+        });
+    });
 });

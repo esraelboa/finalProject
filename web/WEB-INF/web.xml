@@ -112,6 +112,14 @@
         <servlet-name>DeleteCategoryServlet</servlet-name>
         <servlet-class>servlet.DeleteCategoryServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteRealtyServlet</servlet-name>
+        <servlet-class>servlet.DeleteRealtyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addCommercialRealtyServlet</servlet-name>
+        <servlet-class>servlet.addCommercialRealtyServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletlogin</servlet-name>
         <url-pattern>/servletlogin</url-pattern>
@@ -223,6 +231,14 @@
     <servlet-mapping>
         <servlet-name>DeleteCategoryServlet</servlet-name>
         <url-pattern>/DeleteCategoryServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteRealtyServlet</servlet-name>
+        <url-pattern>/DeleteRealtyServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addCommercialRealtyServlet</servlet-name>
+        <url-pattern>/addCommercialRealtyServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

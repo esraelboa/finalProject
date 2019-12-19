@@ -146,9 +146,9 @@
                                 <label class="">نوع العقار</label>
                             </div>
                             <div class="col-6 text-right">
-                                <input type="radio" name="gender" value="0">سكني 
+                                <input type="radio" name="Rtype" value="0">سكني 
                                 <br>
-                                <input type="radio" name="gender" value="1"> تجاري
+                                <input type="radio" name="Rtype" value="1"> تجاري
                             </div>   
                         </div>
                     </form>
@@ -178,7 +178,7 @@
                                 <lable class="">إسم العقار</lable>
                             </div>
                             <div class="col-6">
-                                <input id="realtyName"class="form-control" type="text" required="true">
+                                <input id="realtyName"class="form-control" type="text" required="true"data-toggle="tooltip" title="ادخل الاسم التجاري لعقارك">
                             </div>
                         </div>
 
@@ -187,7 +187,7 @@
                                 <label class="">رقم الرخصة</label>
                             </div>
                             <div class="col-6">
-                                <input id="CRlicensenumber" class="form-control" type="text" required="true">
+                                <input id="CRlicensenumber" class="form-control" type="text" required="true" data-toggle="tooltip" title="ادخل رقم الرخصة لنشاطك التجاري">
                             </div>   
                         </div>
                         <div class="form-row mt-2">
@@ -195,7 +195,9 @@
                                 <label class="">الوصف</label>
                             </div>
                             <div class="col-6">
-                                <input id="CRdescription" class="form-control" type="text" required="true">
+                             
+                            <textarea id="CRdescription" class="form-control" rows="3" data-toggle="tooltip" title="ادخل وصف لعقارك التجاري كامواعيد العمل"></textarea> 
+
                             </div>   
                         </div>
 
@@ -216,7 +218,29 @@
             </div>
         </div>
     </div>
-
+        <div class="modal fade" id="deleteRealtyModal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content"style="margin-top: 100px">
+                    <div class="modal-header ">
+                        <h5 class="modal-title" id="modalLabel">حدف هذا العقار</h5>
+                        <button type="button" class="close mr-auto ml-2" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mr-2 text-right ml-2">
+                            <p>
+                                هذا العقار قد يحتوي على عناوين فرعية، هل انت متأكد من حدف هذا العقار ؟
+                            </p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button  id="deleteRealty" type="button" class="btn ml-2">نعم</button>
+                        <button type="button" class="btn" data-dismiss="modal">الغاء الامر</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 
 <script src="js/jquery-3.4.1.min.js"></script>

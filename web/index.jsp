@@ -123,9 +123,9 @@
                     </h2>
                     <hr>
                     <p>
-                      
-                      رمز بسيط وسهل يتكون من اربع خانات تعبر عن المنطقة الجغرافية في ليبيا ومكان عقارك على الخريطة وايضا وصف اضافي للوصول الدقيق لمكان
-                    عقارك
+
+                        رمز بسيط وسهل يتكون من اربع خانات تعبر عن المنطقة الجغرافية في ليبيا ومكان عقارك على الخريطة وايضا وصف اضافي للوصول الدقيق لمكان
+                        عقارك
                     </p>
 
                 </div>
@@ -161,18 +161,18 @@
             <div class=" row justify-content-center bg-light p-4 text-center" style="color: #000;">
                 عنون عقارك يتيح لك كل ماتحتاجه للوصول لك و الى اي مكان على الخريطة
             </div>
-             <div class=" row justify-content-center bg-light p-4 text-center" style="color: #000;">
-                 <div class="col">
-                      <img src="image/cmp.png" style="width: 400px;"> 
-                 </div>
-                 <div class="col">
-                <ul class="text-right">
-                    <li>رمر مميز وبسيط لكل عقار</li>
-                    <li> الوصول بكل سهولة الى مكان العقار</li>
-                    <li> الوصول الى الاماكن التجارية باسمائها وايضا تصنيفاتها</li>
-                    <li>عملي ... يشمل العشوائيات وتطور البناء والمناطق خارج المخططات </li>
-                </ul>
-                 </div>
+            <div class=" row justify-content-center bg-light p-4 text-center" style="color: #000;">
+                <div class="col">
+                    <img src="image/cmp.png" style="width: 400px;"> 
+                </div>
+                <div class="col">
+                    <ul class="text-right">
+                        <li>رمر مميز وبسيط لكل عقار</li>
+                        <li> الوصول بكل سهولة الى مكان العقار</li>
+                        <li> الوصول الى الاماكن التجارية باسمائها وايضا تصنيفاتها</li>
+                        <li>عملي ... يشمل العشوائيات وتطور البناء والمناطق خارج المخططات </li>
+                    </ul>
+                </div>
             </div>
             <%} else {
                 User user = (User) session.getAttribute("user");
@@ -184,7 +184,12 @@
                             <img src="image/addRealtyy.png" class="card-img-top w-50" style="margin-right: 150px">
                             <div class="card-body">
                                 <p class="mb-2">اضف عقارك وتحصل على عنوان الكتروني له</p>
-                                <a class="btn mb-2" href="addRealty.jsp"> اضافة عقار</a> 
+                                <button class="btn dropdown-toggle"  data-toggle="dropdown"> اضافة عقار </button>
+                                <div class="dropdown-menu">
+                                    <a class="" href="addRealty.jsp"> اضافة عقار </a> 
+                                    <a class="dropdown-item" href="addCommercialRealty.jsp">اضافة عقار تجاري</a>
+                                </div>
+
                             </div>
                         </div>
                     </div> 

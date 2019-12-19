@@ -62,7 +62,8 @@ public class CommercialRealtiesDAO {
 
     public static int insertCommercialRealties(CommercialRealties commercialrealties) throws Exception {
         Resident resident = commercialrealties.getResident();
-        int residentid = 0, CRid = 0;
+        int residentid = 0; 
+        int CRid = 0;
         Connection c = null;
         PreparedStatement pstmt1 = null;
         PreparedStatement pstmt2 = null;
@@ -110,6 +111,7 @@ public class CommercialRealtiesDAO {
                 c.rollback();
             }
         }
+
         return CRid;
     }
 
@@ -205,10 +207,11 @@ public class CommercialRealtiesDAO {
         ArrayList<Realty> list = new ArrayList<>();
         Realty realty = null;
         Connection c = PostgreSql.getConnection();
-        String sql = "select  commercialrealties.id,realtyname,St_x(realty.position) as lng,St_y(realty.position) as lat from commercialrealties \n"
-                + "                inner join resident on commercialrealties.residentid=resident.id\n"
-                + "                inner join realty on realty.id=resident.realtyid\n"
-                + "                inner join category on category.catid = commercialRealties.categoryid where category.catid=?";
+        String sql = "select  commercialrealties.id,realtyname,St_x(realty.position) as lng,St_y(realty.position) as lat "
+                + "from commercialrealties \n"
+                + "inner join resident on commercialrealties.residentid=resident.id\n"
+                + "inner join realty on realty.id=resident.realtyid\n"
+                + "inner join category on category.catid = commercialRealties.categoryid where category.catid=?";
         PreparedStatement pstmt = c.prepareStatement(sql);
         pstmt.setInt(1, catId);
         ResultSet rs = pstmt.executeQuery();
