@@ -84,7 +84,7 @@
                 <div class="row mr-5 ">                                
                     <div class="col-8 mr-4">
                         <div class=" mr-5 mt-2 text-center" >
-                            <table class="table">
+                            <table  id="residentinfo" class="table">
                                 <tr>
                                     <th>العنوان</th>
                                     <th>وصف موقع العقار</th>
@@ -92,7 +92,7 @@
                                 </tr>
                                 <tr>
                                     <td id="residentAddress"></td> 
-                                    <td >
+                                    <td>
                                         <div id="residentId" hidden></div>
                                         <div id="description"></div>
                                     </td>              
@@ -101,6 +101,9 @@
                                     </td>
                                 </tr>
                             </table>
+                             <div id="warningMessage" class=" text-center alert alert-warning" role="alert" >
+                           
+                             </div>
                         </div> 
                     </div> 
                 </div>  

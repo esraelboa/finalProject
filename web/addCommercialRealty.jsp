@@ -26,9 +26,9 @@
     </style>
     <body>
         <!--check session validaty--> 
-        <% // if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")) {
-//        response.sendRedirect("http://localhost:9090/finalPojest/loginForm.jsp");
-//        }%>
+        <%  if((session.getAttribute("user") == null)||(session.getAttribute("user") == "")) {
+        response.sendRedirect("http://localhost:9090/finalPojest/loginForm.jsp");
+        }%>
         <!--start of upper bar-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <!--logo-->

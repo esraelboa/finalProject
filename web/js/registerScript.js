@@ -147,12 +147,7 @@ $(document).ready(function () {
                 phoneNumber = $("#phone").val(),
                 password = $("#password").val(),
                 passwordComfirm = $("#password").val();
-        var error_fname = false,
-                error_lname = false,
-                error_email = false,
-                error_phone = false,
-                error_password = false,
-                error_rePassword = false;
+
         error_fname = check_name(firstName, $('#fname_error'));
         error_lname = check_name(lastName, $('#lname_error'));
         check_email();
@@ -187,7 +182,7 @@ $(document).ready(function () {
             });
 
         } else {
-            console.log("filed");
+             alert("الرجاء التأكد من ادخال كافة البيانات المطلوبة‬");
             return false;
 
         }
@@ -197,11 +192,8 @@ $(document).ready(function () {
         var email = $("#email").val()
                 , password = $("#password").val();
 
-        var error_email = false,
-                error_password = false;
-
-        check_email();
-        check_password();
+       check_email();
+       check_password();
         if (error_email === false && error_password === false) {
             e.preventDefault();
             $.ajax({
@@ -215,7 +207,7 @@ $(document).ready(function () {
                         alert("تم تسجيل الدخول بنجاح");
                         location.replace('http://localhost:9090/finalPojest/index.jsp');
                     } else if (result['key'] === 0) {
-                        alert(result['message']);
+                        alert("الرجاء التأكد من ادخال البيانات الصحيحة");
                     }
                 },
                 error: function () {
@@ -224,7 +216,7 @@ $(document).ready(function () {
                 }
             });
         } else {
-            console.log("filed");
+      alert("الرجاء التأكد من ادخال كافة البيانات المطلوبة‬");
             return false;
         }
     });

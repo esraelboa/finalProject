@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    $('#residentinfo').hide();
+    $('#warningMessage').hide();
     //   get resident realty info   
     $.ajax({
         url: " http://localhost:9090/finalPojest/getResidentInfoServlet",
@@ -11,6 +13,10 @@ $(document).ready(function () {
                 $('#residentId').html(result['id']);
                 $('#residentAddress').html(result['address']);
                 $('#description').html(result['description']);
+             $('#residentinfo').show();
+            }else if(result['key'] === 0){
+                $('#warningMessage').html('لايوجد لديك عقار ساكن به'); 
+                $('#warningMessage').show();
             }
         },
         error: function () {

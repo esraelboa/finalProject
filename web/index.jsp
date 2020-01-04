@@ -33,9 +33,14 @@
                         } else {
                             User user = (User) session.getAttribute("user");
                             if (user.isIsAdmin()) {%> 
-                    <li class="nav-item">
-                        <a class="nav-link " href="addRealty.jsp">اضافة عقار</a>
-                    </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"  id="addRealtyList" data-toggle="dropdown">
+                        اضافة عقار </a>    
+                    <div  class="dropdown-menu" aria-labelledby="addRealtyList">
+                        <a class="dropdown-item" href="addRealty.jsp"> اضافة عقار </a> 
+                        <a class="dropdown-item" href="addCommercialRealty.jsp">اضافة عقار تجاري</a>
+                    </div>
+                </li> 
                     <%}
                         }%>
                     <li class="nav-item mt-1">
@@ -185,8 +190,8 @@
                             <div class="card-body">
                                 <p class="mb-2">اضف عقارك وتحصل على عنوان الكتروني له</p>
                                 <button class="btn dropdown-toggle"  data-toggle="dropdown"> اضافة عقار </button>
-                                <div class="dropdown-menu">
-                                    <a class="" href="addRealty.jsp"> اضافة عقار </a> 
+                                <div class="dropdown-menu text-right">
+                                    <a class="dropdown-item" href="addRealty.jsp"> اضافة عقار </a> 
                                     <a class="dropdown-item" href="addCommercialRealty.jsp">اضافة عقار تجاري</a>
                                 </div>
 

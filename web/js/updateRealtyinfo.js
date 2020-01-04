@@ -23,17 +23,18 @@ $(document).ready(function () {
 
     });
 
- $('#cancelUpateDes').click(function(e){
-     e.preventDefault();
-       $('#des').show();
+    $('#cancelUpateDes').click(function (e) {
+        e.preventDefault();
+        $('#des').show();
         $('#description').show();
-      $('#updatedescription').hide();
-    $('#lid').hide();
-    $('#subupdate').hide();
+        $('#updatedescription').hide();
+        $('#lid').hide();
+        $('#subupdate').hide();
         $('#cancelUpateDes').hide();
- });
+        $('#update').show();
+    });
     $('.Display-realty').submit(function (e) {
-       
+
         var id = getUrlVars()["id"];
         var description = $('#updatedescription').val();
         e.preventDefault();
@@ -46,10 +47,9 @@ $(document).ready(function () {
                 description: description},
             dataType: "json",
             success: function (result) {
-                   if (result['key'] === -1) {
+                if (result['key'] === -1) {
                     alert("الرجاء تسجيل الدخول");
-                } 
-               else 
+                } else
                 if (result['key'] === 1) {
                     Swal.fire({
                         type: 'error',

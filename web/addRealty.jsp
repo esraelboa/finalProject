@@ -103,7 +103,8 @@
                                 </div>
                                 <div class="form-row mb-3">
                                     <div class="col-4">
-                                        <label class="col-form-label">رقم المبنى:</label>   
+                                        <label class="col-form-label">رقم المبنى:</label>
+                                        <div id="realtyNumberError" class="invalid-feedback"></div>
                                     </div>   
                                     <div class="col-8">
                                         <input id="realtyNumber" class="form-control pt-0 pb-0 rnumber" pattern= "[0-9]+" required data-toggle="tooltip" title="ادخل رقم العقار المسجل في السجل العقاري"> 

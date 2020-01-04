@@ -7,7 +7,7 @@ $(document).ready(function () {
     const incityUrl = 'http://localhost:9090/finalPojest/getAllCityServlet?type=2';
     fillList(cities, citiesUrl);
     fillList(incity, incityUrl);
-    var reatyid;
+    var realtyid;
     //fill dropdown with json
        function fillList(dropdown, url) {
         dropdown.empty();
@@ -53,14 +53,14 @@ $(document).ready(function () {
 //submit add realty form
     $('#addRealty').click(function (e) {
         //get fileds and marker values 
-        console.log('addddd');
-          e.preventDefault();
+
         var realtyNumber = $('#realtyNumber').val(),
                 description = $('#description').val(),
                 lng = marker.getPosition().lat(),
                 lat = marker.getPosition().lng();
-
-      
+          e.preventDefault();
+          console.log(realtyNumber);
+       if(realtyNumber!=='' && realtyNumber!==null){
         $.ajax({
             url: "http://localhost:9090/finalPojest/InsertRealtyServlet",
             type: "POST",
@@ -75,9 +75,9 @@ $(document).ready(function () {
                 if (result['key'] === -1) {
                     location.replace('http://localhost:9090/finalPojest/loginForm.jsp');
                 } else if (result['key'] === 0) {
-                    alert(result['message']);
+                    alert("خطأ حاول مرة اخرى");
                 } else if (result['key'] === 1) {
-                    reatyid = result['id'];
+                    realtyid = result['id'];
                     location.href = 'http://localhost:9090/finalPojest/DisplayRealtyinfo.jsp' + "?id=" + reatyid;
                 }
             },
@@ -85,7 +85,9 @@ $(document).ready(function () {
                 console.log("Error");
             }
         });
-
+    }else{
+        alert('الرجاء التأكد من ادخال البيانات المطلوبة');
+    }
     });
 
 });
