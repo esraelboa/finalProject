@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('#hideRealtyResidents').hide();
-
+ $('#alertmessage').hide();
     //get id form url function  
     function getUrlVars() {
         var vars = {};
@@ -70,6 +70,7 @@ $(document).ready(function () {
             success: function (result) {
                 if (result['key'] === 0) {
                     $('#alertmessage').html('ﻻيوجد مستأجرين لهذا العقار<a class="mr-3"href="displayUserRealties.jsp">اضف مستأجر الان</a>');
+                 $('#alertmessage').show();
                 } else {
                     var table = '<table>', row = 0;
                     var th = '<tr><th></th><th>نوع النشاط</th><th>العنوان</th></tr>';

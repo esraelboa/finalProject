@@ -104,7 +104,6 @@ $(document).ready(function () {
                         var latlng = {lng: realties[i].lat, lat: realties[i].lng};
                         map.setCenter(latlng);
                         var content = '<div id="iw_container"><div class="iw-title">' + realties[i].description + '</div></div>';
-                        //   placeCMarker(latlng, '<div class="card"> <h5 class="t">'+realties[i].description+'</h5>'+'<div class="card-body"> عرض تفاصيل </div></div>');
                         placeCRMarker(latlng, content);
                     }
                 }

@@ -59,7 +59,6 @@ $(document).ready(function () {
                 lng = marker.getPosition().lat(),
                 lat = marker.getPosition().lng();
           e.preventDefault();
-          console.log(realtyNumber);
        if(realtyNumber!=='' && realtyNumber!==null){
         $.ajax({
             url: "http://localhost:9090/finalPojest/InsertRealtyServlet",
@@ -78,7 +77,7 @@ $(document).ready(function () {
                     alert("خطأ حاول مرة اخرى");
                 } else if (result['key'] === 1) {
                     realtyid = result['id'];
-                    location.href = 'http://localhost:9090/finalPojest/DisplayRealtyinfo.jsp' + "?id=" + reatyid;
+                    location.href = 'http://localhost:9090/finalPojest/DisplayRealtyinfo.jsp' + "?id=" + realtyid;
                 }
             },
             error: function () {

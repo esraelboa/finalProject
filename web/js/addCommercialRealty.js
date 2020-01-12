@@ -97,9 +97,11 @@ $(document).ready(function () {
                 if (result['key'] === -1) {
                     location.replace('http://localhost:9090/finalPojest/loginForm.jsp');
                 } else if (result['key'] === 0) {
-                    alert(result['message']);
+                 alert("خطأ حاول مرة اخرى");
                 } else if (result['key'] === 1) {
-                      alert(result['message']);
+                 alert("تمت ااضافه عقار تجاري بنجاح");
+                  var realtyid = result['id'];
+                  location.href = 'http://localhost:9090/finalPojest/displayCommercialRealtyInfo.jsp' + "?id=" + realtyid;
                 }
             },
             error: function () {
